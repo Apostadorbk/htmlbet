@@ -1,0 +1,12 @@
+A estrutura de pastas desse projeto é organizado da seguinte maneira:
+
+├── Pasta do framework (Exemplo: codeigniter):
+	├── Pasta system extraida do system.rar
+	├── Pasta com os arquivos do projeto deste repositório (exemplo: theo)
+
+
+Teste com o BD está na model: Usuarios_model.php
+A função é a all_users_information() que retorna os dados de tb_users join com tb_persons
+O controlador é o Usuario.php onde está a função get() onde pega os dados dos usuários
+
+O banco de dados é o "db_theo.sql"

@@ -1,0 +1,17 @@
+.selecionado {
+	background-color: red !important;
+}
+
+.btn-disabled {
+	background-color: grey !important;
+	margin: 0 5px;
+}
+
+.btn {
+	margin: 0 5px;
+}
+
+.center-600 {
+	max-width: 600px;
+    margin: 0 auto;
+}

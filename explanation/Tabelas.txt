@@ -1,0 +1,102 @@
+
+OBSERVAÇÃO NOS CAMPOS PADRÕES DE TODAS AS TABELAS:
+	- Toda a tabela tem o ID proprio formado por 
+		id + nome da tabela singular
+	- Toda a tabela que tiver uma chave estrangeira é formado por
+		id + nome da tabela estrangeira no singular;
+	- Toda tabela tem a data de registro da inserção da linha na tabela formado
+		dteregister que tem por padrão a hora atual;
+
+------------------------------------------------------------------------------------
+
+TABELA: tb_persons = pessoas
+	Refere-se os dados pessoal do usuario ou seja não é usado no sistema pra validar nada;
+	A pessoa é só dados complementar dos usuário que não serve diretamente para ter acesso
+	ao sistema;
+
+	CAMPOS:
+		desfirstname = o primeiro nome
+		deslastname = o sobrenome
+		desemail = o email
+		intphone =  o numero do telefone
+		desphoto = o nome da foto inclusive com o nome da extensão;
+
+------------------------------------------------------------------------------------
+
+TABELA: tb_users = os "usuarios" (dados de acesso) das pessoas;
+	Refere-se os dados que é usado de fato no sistema pra validar os dados;
+	O usuário de fato é o vai acessar o sistema.
+	Ter um id da pessoa aqui facilita que o acesso a dados de um usuário parte de ponto
+	principal que é a entidade q de fato usa o sistema;
+	Futuramente recuperar os dados de endereço quando for vender algo com uma tabela futura de
+	carrinho de compra que terá o idperson;
+
+	RELAÇÃO:
+		idperson = referencia pessoa;
+
+	CAMPOS:
+		deslogin = login do usuário;
+		despassword = senha do usuário
+		intactive = se o usuario é ativo = 1 e inativo = 0, por default é ativo
+		dtelastlogin = data do ultimo login no formato (YYYY-MM-DD HH:MM:SS)
+
+		CONSTANTE DE ATIVO:
+			ativo = 1
+			inativo = 0
+
+------------------------------------------------------------------------------------
+
+TABELA: tb_roles = vínculos do usuário
+	Refere-se qual o vínculo do usuario;
+
+	RELAÇÃO:
+		iduser = referencia usuário;
+
+	CAMPOS:
+		introle = o cargo atribuido
+		intlevel = o nível de privilégio
+		dteappointment = data de admissão no formato (YYYY-MM-DD HH:MM:SS)
+
+
+		CONSTANTES DE CARGO:
+			visitante = 1
+			administrador = 10
+			professor = 20
+			diretor = 30
+			aluno = 40
+			contador = 50
+
+		CONSTANTE DE NÍVEL DE PRIVILÉGIO:
+			(definir algo aqui)
+
+------------------------------------------------------------------------------------
+
+TABELA: tb_userspasswordsrecoveries = recuperaçao de senha do usuário
+	Refere-se a recuperação da senha do usuário com link via email;
+
+	RELAÇÃO:
+		iduser = referencia usuário;
+
+	CAMPOS:
+		desip = o IP do usuário;
+		dterecovery = a data de recuperação e vai indicar se já foi recuperado, caso ja recuperado vai ser
+			setado a data do momento de acesso caso ainda não tá NULL;
+			No formato (YYYY-MM-DD HH:MM:SS)
+
+------------------------------------------------------------------------------------
+
+TABELA: tb_addresses = endereço da pessoa
+	Refere-se o endereço da pessoa;
+
+	RELAÇÃO:
+		idperson = referencia pessoa;
+
+	CAMPOS:
+		desaddress = o endereço
+		descomplement = o complemento
+		descity = a cidade
+		desstate = o estado
+		descountry = o país
+		intzipcode = o CEP
+		intnumber = número da casa
+

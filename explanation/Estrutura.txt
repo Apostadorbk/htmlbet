@@ -1,0 +1,8 @@
+Administador:
+	últimas apostas realizadas
+		Mostrando qual cambista que confirmou o nome do apostador
+
+	Usuários registrados:
+		Mostrando todos os cambistas cadastrados e seu status
+
+
