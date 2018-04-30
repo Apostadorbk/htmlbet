@@ -14,7 +14,10 @@
 
 
         <!-- Angular -->
-        <script type="text/javascript" src="<?php echo base_url('assets/home/app/lib/angular.js') ?>"></script>
+        <script type="text/javascript" src="<?php echo base_url('assets/home/app/lib/angular.min.js') ?>"></script>
+        <script type="text/javascript" src="<?php echo base_url('assets/home/app/lib/angular-animate.min.js') ?>"></script>
+        <script type="text/javascript" src="<?php echo base_url('assets/home/app/lib/angular-sanitize.min.js') ?>"></script>
+        <script type="text/javascript" src="<?php echo base_url('assets/home/app/lib/ui-bootstrap-tpls-2.5.0.min.js') ?>"></script>
         <!-- <script type="text/javascript" src="<?php echo base_url('assets/home/app/lib/angular-messages.js') ?>"></script> -->
         <!-- <script type="text/javascript" src="<?php echo base_url('assets/home/app/lib/angular-locale_pt-br.js') ?>"></script> -->
 
@@ -23,7 +26,7 @@
 
         <!-- Controllers -->
         <script type="text/javascript" src="<?php echo base_url('assets/home/app/js/controllers/homeCtrl.js') ?>"></script>
-        <!-- <script type="text/javascript" src="<?php echo base_url('assets/home/app/js/controllers/cambistaCtrl.js') ?>"></script> -->
+        <script type="text/javascript" src="<?php echo base_url('assets/home/app/js/controllers/countryCtrl.js') ?>"></script>
 
         <!-- Directives -->
         <script type="text/javascript" src="<?php echo base_url('assets/home/app/lib/betting/betting-services.js') ?>"></script>

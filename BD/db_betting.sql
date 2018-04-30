@@ -71,12 +71,27 @@ CREATE TABLE `tb_enderecos` (
 
 
 CREATE TABLE `tb_country` (
-	`idcountry` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-	`country_id` int(11) UNSIGNED NOT NULL,
-	`country_name` varchar(32) NOT NULL,
+	`idcountry` int(11) UNSIGNED NOT NULL,
+	`descountry` varchar(40) NOT NULL,
+	`intactive` tinyint(3) UNSIGNED DEFAULT '0',
+	`intbetting` int(10) UNSIGNED DEFAULT '0',
+	`intclick` int(10) UNSIGNED DEFAULT '0',
 	`dteregistro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   	CONSTRAINT `PK_country` PRIMARY KEY (`idcountry`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+CREATE TABLE `tb_league` (
+	`idleague` int(11) UNSIGNED NOT NULL,
+	`idcountry` int(11) UNSIGNED NOT NULL,
+	`desleague` varchar(50) NOT NULL,
+	`dteregistro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  	CONSTRAINT `PK_league` PRIMARY KEY (`idleague`),
+  	CONSTRAINT `FK_league_country` FOREIGN KEY (`idcountry`) 
+		REFERENCES `tb_country` (`idcountry`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 
 

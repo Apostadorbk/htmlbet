@@ -7,7 +7,7 @@ class Country extends BASE_Controller {
 		parent::__construct("country");
 
 		// Adicionar as bibliotecas que não precisam ser instanciadas
-		$this->getLibrary(['constant', 'redirect', 'session', 'apicountry']);
+		$this->getLibrary(['constant', 'apicountry']);
 
 		// Inicialização da sessão
 		//Session::init();
@@ -59,7 +59,14 @@ class Country extends BASE_Controller {
 	
 	
 	public function index() {
-		echo 'Index de Country';
+
+		//echo 'Index de Country';
+
+		
+		echo '<pre>';
+		var_dump( APICountry::getById('166') );
+		echo '</pre>';
+		
 	}
 
 

@@ -1,6 +1,8 @@
 angular.module("homeApp", [
 	"bet",
-	"ui"
+	"ngAnimate", 
+	"ngSanitize", 
+	"ui.bootstrap"
 	/*"ngMessages", 
 	"ui",
 	"validate"*/

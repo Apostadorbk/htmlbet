@@ -19,6 +19,7 @@
         <link rel="apple-touch-icon" sizes="72x72" href="<?php echo base_url('assets/img/icons/apple-touch-icon-72x72.png') ?>">
         <link rel="apple-touch-icon" sizes="114x114" href="<?php echo base_url('assets/img/icons/apple-touch-icon-114x114.png') ?>">
 
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 
         <style type="text/css">
             
@@ -103,6 +104,28 @@
             #main-tab-content .single-result {
                 background-color: transparent;
                 width: 100%;
+            }
+
+            /* Lista de países */
+            .panel-default>.panel-heading {
+                padding: 0;
+            }
+
+            .panel-default>.panel-heading a {
+                display: inline-block;
+                height: 32px;
+                width: 100%;
+                line-height: 32px;
+                padding-left: 12px;
+            }
+
+            .panel-open {
+                border-color: #0055ff;
+            }
+
+            .panel-open > .panel-heading {
+                background-color: #0000ff;
+                color: #ff8c1a;
             }
 
         </style>

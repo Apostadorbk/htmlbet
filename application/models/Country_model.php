@@ -14,7 +14,7 @@ class Country_model extends Database {
 
 
 	public function getall() { // OK
-		$results = $this->select("SELECT idcountry, descountry, intapostas, intcliques FROM tb_country");
+		$results = $this->select("SELECT idcountry, descountry, intactive, intbetting, intclick FROM tb_country WHERE intactive = '1'");
 
 		return $this->encoded($results, 'descountry');
 	}

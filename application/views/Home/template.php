@@ -72,7 +72,7 @@
                                                         <div class="col-md-3">
                                                           <h5><i class="fa fa-users" aria-hidden="true"></i> Teams List</h5>
                                                           <div class="img-hover">
-                                                             <img src="<?php echo base_url('assets/img/blog/1.jpg') ?>" alt="" class="img-responsive">
+                                                             <!-- <img src="<?php echo base_url('assets/img/blog/1.jpg') ?>" alt="" class="img-responsive"> -->
                                                              <div class="overlay"><a href="teams.html">+</a></div>
                                                           </div>
                                                         </div>
@@ -80,7 +80,7 @@
                                                         <div class="col-md-3">
                                                           <h5><i class="fa fa-futbol-o" aria-hidden="true"></i> Players List</h5>
                                                           <div class="img-hover">
-                                                             <img src="<?php echo base_url('assets/img/blog/2.jpg') ?>" alt="" class="img-responsive">
+                                                             <!-- <img src="<?php echo base_url('assets/img/blog/2.jpg') ?>" alt="" class="img-responsive"> -->
                                                              <div class="overlay"><a href="players.html">+</a></div>
                                                           </div>
                                                         </div>
@@ -88,7 +88,7 @@
                                                         <div class="col-md-3">
                                                           <h5><i class="fa fa-gamepad" aria-hidden="true"></i> Results Info</h5>
                                                           <div class="img-hover">
-                                                             <img src="<?php echo base_url('assets/img/blog/3.jpg') ?>" alt="" class="img-responsive">
+                                                             <!-- <img src="<?php echo base_url('assets/img/blog/3.jpg') ?>" alt="" class="img-responsive"> -->
                                                              <div class="overlay"><a href="results.html">+</a></div>
                                                           </div>
                                                         </div>
@@ -479,24 +479,37 @@
                                                     </div>
                                                 </div>
 
-                                                <!-- Widget Categories-->
-                                                <div class="panel-box">
+                                                <!-- Lista de países -->
+                                                <div class="panel-box" ng-controller="countryCtrl">
                                                     <div class="titles no-margin">
-                                                        <h4><a href="">{{::title.country}}</a></h4>
+                                                        <h4><a href="">{{::main.title}}</a></h4>
                                                     </div>
+
                                                     <div class="info-panel">
-                                                        <ul class="list" ui-accordions>
-                                                            <li ng-repeat="country in countries" idcountry="{{::country.idcountry}}" ui-accordion>
-                                                                <div>
-                                                                    <i class="fa fa-check"></i>
-                                                                    <a href="">{{::country.descountry}}</a>
+                                                        
+                                                        <uib-accordion close-others="oneAtATime">
+
+                                                            <div uib-accordion-group class="panel-default" ng-click="setCountrySelected(country)" ng-repeat="country in main.allCountries" heading="{{::country.descountry}}" ng-show="isCountryActive(country)">
+                                                                
+                                                                <div class="btn-group-vertical" role="group" style="width: 100%">
+                                                                    <a ng-repeat="league in country.leagues" class="btn btn-default" ng-click="selectLeague(league)">
+                                                                        {{::league.desleague}}
+                                                                    </a>
                                                                 </div>
-                                                                <div>Conteudo do {{::country.descountry}}</div>
-                                                            </li>
-                                                        </ul>
+
+                                                            </div>
+
+                                                        </uib-accordion>
+    
+                                                        <div class="btn-group btn-group-justified" role="group">
+                                                            <div class="btn-group" role="group">
+                                                                <button type="button" class="btn btn-default" ng-click="loadCountry()">Carrega mais regiões</button>
+                                                            </div>
+                                                        </div>
                                                     </div>
+
                                                 </div>
-                                                <!-- End Widget Categories-->
+                                                <!-- Lista de países -->
 
                                             </aside>
                                             <!-- End Sidebars -->
@@ -514,7 +527,7 @@
                                                         <div class="row">
                                                             <div class="col-md-4">
                                                                 <div class="img-hover">
-                                                                   <img src="img/blog/1.jpg" alt="" class="img-responsive">
+                                                                   <!-- <img src="img/blog/1.jpg" alt="" class="img-responsive"> -->
                                                                    <div class="overlay"><a href="single-news.html">+</a></div>
                                                                 </div>
                                                             </div>
@@ -532,7 +545,7 @@
                                                         <div class="row">
                                                             <div class="col-md-4">
                                                                 <div class="img-hover">
-                                                                   <img src="img/blog/2.jpg" alt="" class="img-responsive">
+                                                                   <!-- <img src="img/blog/2.jpg" alt="" class="img-responsive"> -->
                                                                    <div class="overlay"><a href="single-news.html">+</a></div>
                                                                 </div>
                                                             </div>
@@ -550,7 +563,7 @@
                                                         <div class="row">
                                                             <div class="col-md-4">
                                                                 <div class="img-hover">
-                                                                   <img src="img/blog/3.jpg" alt="" class="img-responsive">
+                                                                   <!-- <img src="img/blog/3.jpg" alt="" class="img-responsive"> -->
                                                                    <div class="overlay"><a href="single-news.html">+</a></div>
                                                                 </div>
                                                             </div>
@@ -568,7 +581,7 @@
                                                         <div class="row">
                                                             <div class="col-md-4">
                                                                 <div class="img-hover">
-                                                                   <img src="img/blog/4.jpg" alt="" class="img-responsive">
+                                                                   <!-- <img src="img/blog/4.jpg" alt="" class="img-responsive"> -->
                                                                    <div class="overlay"><a href="single-news.html">+</a></div>
                                                                 </div>
                                                             </div>
@@ -603,7 +616,7 @@
 
                                                                 <div class="goals-result">
                                                                     <a href="single-team.html">
-                                                                        <img src="img/clubs-logos/por.png" alt="">
+                                                                        <!-- <img src="img/clubs-logos/por.png" alt=""> -->
                                                                         Portugal
                                                                     </a>
 
@@ -613,7 +626,7 @@
                                                                     </span>
 
                                                                     <a href="single-team.html">
-                                                                        <img src="img/clubs-logos/esp.png" alt="">
+                                                                        <!-- <img src="img/clubs-logos/esp.png" alt=""> -->
                                                                         Spain
                                                                     </a>
                                                                 </div>
@@ -626,7 +639,7 @@
 
                                                                 <div class="goals-result">
                                                                     <a href="single-team.html">
-                                                                        <img src="img/clubs-logos/rusia.png" alt="">
+                                                                        <!-- <img src="img/clubs-logos/rusia.png" alt=""> -->
                                                                         Rusia
                                                                     </a>
 
@@ -636,7 +649,7 @@
                                                                     </span>
 
                                                                     <a href="single-team.html">
-                                                                        <img src="img/clubs-logos/colombia.png" alt="">
+                                                                        <!-- <img src="img/clubs-logos/colombia.png" alt=""> -->
                                                                          Colombia
                                                                     </a>
                                                                 </div>
@@ -649,7 +662,7 @@
 
                                                                 <div class="goals-result">
                                                                     <a href="single-team.html">
-                                                                        <img src="img/clubs-logos/uru.png" alt="">
+                                                                        <!-- <img src="img/clubs-logos/uru.png" alt=""> -->
                                                                         Uruguay
                                                                     </a>
 
@@ -659,7 +672,7 @@
                                                                     </span>
 
                                                                     <a href="single-team.html">
-                                                                        <img src="img/clubs-logos/por.png" alt="">
+                                                                        <!-- <img src="img/clubs-logos/por.png" alt=""> -->
                                                                          Portugal
                                                                     </a>
                                                                 </div>
@@ -672,7 +685,7 @@
 
                                                                 <div class="goals-result">
                                                                     <a href="single-team.html">
-                                                                        <img src="img/clubs-logos/uru.png" alt="">
+                                                                        <!-- <img src="img/clubs-logos/uru.png" alt=""> -->
                                                                         Uruguay
                                                                     </a>
 
@@ -682,7 +695,7 @@
                                                                     </span>
 
                                                                     <a href="single-team.html">
-                                                                        <img src="img/clubs-logos/por.png" alt="">
+                                                                        <!-- <img src="img/clubs-logos/por.png" alt=""> -->
                                                                          Portugal
                                                                     </a>
                                                                 </div>
@@ -695,7 +708,7 @@
 
                                                                 <div class="goals-result">
                                                                     <a href="single-team.html">
-                                                                        <img src="img/clubs-logos/uru.png" alt="">
+                                                                        <!-- <img src="img/clubs-logos/uru.png" alt=""> -->
                                                                         Uruguay
                                                                     </a>
 
@@ -705,7 +718,7 @@
                                                                     </span>
 
                                                                     <a href="single-team.html">
-                                                                        <img src="img/clubs-logos/por.png" alt="">
+                                                                        <!-- <img src="img/clubs-logos/por.png" alt=""> -->
                                                                          Portugal
                                                                     </a>
                                                                 </div>
@@ -718,7 +731,7 @@
 
                                                                 <div class="goals-result">
                                                                     <a href="single-team.html">
-                                                                        <img src="img/clubs-logos/uru.png" alt="">
+                                                                        <!-- <img src="img/clubs-logos/uru.png" alt=""> -->
                                                                         Uruguay
                                                                     </a>
 
@@ -728,7 +741,7 @@
                                                                     </span>
 
                                                                     <a href="single-team.html">
-                                                                        <img src="img/clubs-logos/por.png" alt="">
+                                                                        <!-- <img src="img/clubs-logos/por.png" alt=""> -->
                                                                          Portugal
                                                                     </a>
                                                                 </div>
@@ -741,7 +754,7 @@
 
                                                                 <div class="goals-result">
                                                                     <a href="single-team.html">
-                                                                        <img src="img/clubs-logos/uru.png" alt="">
+                                                                        <!-- <img src="img/clubs-logos/uru.png" alt=""> -->
                                                                         Uruguay
                                                                     </a>
 
@@ -751,7 +764,7 @@
                                                                     </span>
 
                                                                     <a href="single-team.html">
-                                                                        <img src="img/clubs-logos/por.png" alt="">
+                                                                        <!-- <img src="img/clubs-logos/por.png" alt=""> -->
                                                                          Portugal
                                                                     </a>
                                                                 </div>
@@ -764,7 +777,7 @@
 
                                                                 <div class="goals-result">
                                                                     <a href="single-team.html">
-                                                                        <img src="img/clubs-logos/por.png" alt="">
+                                                                        <!-- <img src="img/clubs-logos/por.png" alt=""> -->
                                                                         Portugal
                                                                     </a>
 
@@ -774,7 +787,7 @@
                                                                     </span>
 
                                                                     <a href="single-team.html">
-                                                                        <img src="img/clubs-logos/esp.png" alt="">
+                                                                        <!-- <img src="img/clubs-logos/esp.png" alt=""> -->
                                                                         Spain
                                                                     </a>
                                                                 </div>
@@ -787,7 +800,7 @@
 
                                                                 <div class="goals-result">
                                                                     <a href="single-team.html">
-                                                                        <img src="img/clubs-logos/uru.png" alt="">
+                                                                        <!-- <img src="img/clubs-logos/uru.png" alt=""> -->
                                                                         Uruguay
                                                                     </a>
 
@@ -797,7 +810,7 @@
                                                                     </span>
 
                                                                     <a href="single-team.html">
-                                                                        <img src="img/clubs-logos/por.png" alt="">
+                                                                        <!-- <img src="img/clubs-logos/por.png" alt=""> -->
                                                                          Portugal
                                                                     </a>
                                                                 </div>
@@ -810,7 +823,7 @@
 
                                                                 <div class="goals-result">
                                                                     <a href="single-team.html">
-                                                                        <img src="img/clubs-logos/por.png" alt="">
+                                                                        <!-- <img src="img/clubs-logos/por.png" alt=""> -->
                                                                         Portugal
                                                                     </a>
 
@@ -820,7 +833,7 @@
                                                                     </span>
 
                                                                     <a href="single-team.html">
-                                                                        <img src="img/clubs-logos/esp.png" alt="">
+                                                                        <!-- <img src="img/clubs-logos/esp.png" alt=""> -->
                                                                         Spain
                                                                     </a>
                                                                 </div>
@@ -881,7 +894,7 @@
                                                             <div class="live-on">
                                                                 <a href="#">
                                                                     Live on
-                                                                    <img src="img/img-theme/espn.gif" alt="">
+                                                                    <!-- <img src="img/img-theme/espn.gif" alt=""> -->
                                                                 </a>
                                                             </div>
                                                         </div>
@@ -903,7 +916,7 @@
                                                         <div class="col-lg-12">
                                                             <div class="timeline-result">
                                                                 <div class="team-timeline">
-                                                                    <img src="img/clubs-logos/colombia.png" alt="club-logo">
+                                                                    <!-- <img src="img/clubs-logos/colombia.png" alt="club-logo"> -->
                                                                     <a href="single-team.html">Col</a>
                                                                 </div>
                                                                 <ul class="timeline">
@@ -944,7 +957,7 @@
                                                                    </li>
                                                                 </ul>
                                                                 <div class="team-timeline">
-                                                                    <img src="img/clubs-logos/arg.png" alt="club-logo">
+                                                                    <!-- <img src="img/clubs-logos/arg.png" alt="club-logo"> -->
                                                                     <a href="single-team.html">Arg</a>
                                                                 </div>
                                                             </div>
@@ -983,7 +996,7 @@
                                                         <tr>
                                                             <td class="text-left number">1 <i class="fa fa-caret-up" aria-hidden="true"></i></td>
                                                             <td class="text-left">
-                                                                <img src="img/clubs-logos/colombia.png" alt="Colombia"><span>Colombia</span>
+                                                                <!-- <img src="img/clubs-logos/colombia.png" alt="Colombia"><span>Colombia</span> -->
                                                             </td>
                                                             <td>38</td>
                                                             <td>26</td>
@@ -998,7 +1011,7 @@
                                                         <tr>
                                                             <td class="text-left number">2 <i class="fa fa-caret-up" aria-hidden="true"></i></td>
                                                             <td class="text-left">
-                                                                <img src="img/clubs-logos/bra.png" alt="Brazil"><span>Brazil</span>
+                                                                <!-- <img src="img/clubs-logos/bra.png" alt="Brazil"><span>Brazil</span> -->
                                                             </td>
                                                             <td>38</td>
                                                             <td>24</td>
@@ -1013,7 +1026,7 @@
                                                         <tr>
                                                             <td class="text-left number">3 <i class="fa fa-caret-up" aria-hidden="true"></i></td>
                                                             <td class="text-left">
-                                                                <img src="img/clubs-logos/arg.png" alt="Argentina"><span>Argentina</span>
+                                                                <!-- <img src="img/clubs-logos/arg.png" alt="Argentina"><span>Argentina</span> -->
                                                             </td>
                                                             <td>38</td>
                                                             <td>22</td>
@@ -1028,7 +1041,7 @@
                                                         <tr>
                                                             <td class="text-left number">4<i class="fa fa-caret-down" aria-hidden="true"></i></td>
                                                             <td class="text-left">
-                                                                <img src="img/clubs-logos/japan.png" alt="Japan"><span>Japan</span>
+                                                                <!-- <img src="img/clubs-logos/japan.png" alt="Japan"><span>Japan</span> -->
                                                             </td>
                                                             <td>38</td>
                                                             <td>20</td>
@@ -1043,7 +1056,7 @@
                                                         <tr>
                                                             <td class="text-left number">5  <i class="fa fa-caret-up" aria-hidden="true"></td>
                                                             <td class="text-left">
-                                                                <img src="img/clubs-logos/sen.png" alt="Senegal"><span>Senegal</span>
+                                                                <!-- <img src="img/clubs-logos/sen.png" alt="Senegal"><span>Senegal</span> -->
                                                             </td>
                                                             <td>38</td>
                                                             <td>19</td>
@@ -1058,7 +1071,7 @@
                                                         <tr>
                                                             <td class="text-left number">6<i class="fa fa-caret-down" aria-hidden="true"></i></td>
                                                             <td class="text-left">
-                                                                <img src="img/clubs-logos/pol.png" alt="Poland"><span>Poland</span>
+                                                                <!-- <img src="img/clubs-logos/pol.png" alt="Poland"><span>Poland</span> -->
                                                             </td>
                                                             <td>38</td>
                                                             <td>18</td>
@@ -1073,7 +1086,7 @@
                                                         <tr>
                                                             <td class="text-left number">7<i class="fa fa-caret-down" aria-hidden="true"></i></td>
                                                             <td class="text-left">
-                                                                <img  src="img/clubs-logos/rusia.png" alt="Russia"><span>Russia</span>
+                                                                <!-- <img  src="img/clubs-logos/rusia.png" alt="Russia"><span>Russia</span> -->
                                                             </td>
                                                             <td>38</td>
                                                             <td>18</td>
@@ -1088,7 +1101,7 @@
                                                         <tr>
                                                             <td class="text-left number">8<i class="fa fa-caret-up" aria-hidden="true"></i></td>
                                                             <td class="text-left">
-                                                                <img src="img/clubs-logos/irn.png" alt="Iran"><span>Iran</span>
+                                                                <!-- <img src="img/clubs-logos/irn.png" alt="Iran"><span>Iran</span> -->
                                                             </td>
                                                             <td>38</td>
                                                             <td>12</td>
@@ -1103,7 +1116,7 @@
                                                         <tr>
                                                             <td class="text-left number">9 <i class="fa fa-circle" aria-hidden="true"></i></td>
                                                             <td class="text-left">
-                                                                <img src="img/clubs-logos/esp.png" alt="Spain"><span>Spain</span>
+                                                                <!-- <img src="img/clubs-logos/esp.png" alt="Spain"><span>Spain</span> -->
                                                             </td>
                                                             <td>38</td>
                                                             <td>26</td>
@@ -1118,7 +1131,7 @@
                                                         <tr>
                                                             <td class="text-left number">10<i class="fa fa-circle" aria-hidden="true"></i></td>
                                                             <td class="text-left">
-                                                                <img src="img/clubs-logos/fra.png" alt="France"><span>France</span>
+                                                                <!-- <img src="img/clubs-logos/fra.png" alt="France"><span>France</span> -->
                                                             </td>
                                                             <td>38</td>
                                                             <td>24</td>
@@ -1133,7 +1146,7 @@
                                                         <tr>
                                                             <td class="text-left number">11<i class="fa fa-caret-up" aria-hidden="true"></i></td>
                                                             <td class="text-left">
-                                                                <img src="img/clubs-logos/aus.png" alt="Australia"><span>Australia</span>
+                                                                <!-- <img src="img/clubs-logos/aus.png" alt="Australia"><span>Australia</span> -->
                                                             </td>
                                                             <td>38</td>
                                                             <td>22</td>
@@ -1148,7 +1161,7 @@
                                                         <tr>
                                                             <td class="text-left number">12<i class="fa fa-caret-up" aria-hidden="true"></i></td>
                                                             <td class="text-left">
-                                                                <img src="img/clubs-logos/mex.png" alt="Mexico"><span>Mexico</span>
+                                                                <!-- <img src="img/clubs-logos/mex.png" alt="Mexico"><span>Mexico</span> -->
                                                             </td>
                                                             <td>38</td>
                                                             <td>20</td>
@@ -1163,7 +1176,7 @@
                                                         <tr>
                                                             <td class="text-left number">13 <i class="fa fa-circle" aria-hidden="true"></i></td>
                                                             <td class="text-left">
-                                                                <img src="img/clubs-logos/pan.png" alt="Panama"><span>Panama</span>
+                                                                <!-- <img src="img/clubs-logos/pan.png" alt="Panama"><span>Panama</span> -->
                                                             </td>
                                                             <td>38</td>
                                                             <td>19</td>
@@ -1178,7 +1191,7 @@
                                                         <tr>
                                                             <td class="text-left number">14<i class="fa fa-caret-down" aria-hidden="true"></i></td>
                                                             <td class="text-left">
-                                                                <img src="img/clubs-logos/bel.png" alt="Belgium"><span>Belgium</span>
+                                                                <!-- <img src="img/clubs-logos/bel.png" alt="Belgium"><span>Belgium</span> -->
                                                             </td>
                                                             <td>38</td>
                                                             <td>18</td>
@@ -1193,7 +1206,7 @@
                                                         <tr>
                                                             <td class="text-left number">15<i class="fa fa-caret-up" aria-hidden="true"></i></td>
                                                             <td class="text-left">
-                                                                <img  src="img/clubs-logos/eng.png" alt="England"><span>England</span>
+                                                                <!-- <img  src="img/clubs-logos/eng.png" alt="England"><span>England</span> -->
                                                             </td>
                                                             <td>38</td>
                                                             <td>18</td>
@@ -1208,7 +1221,7 @@
                                                         <tr>
                                                             <td class="text-left number">16<i class="fa fa-caret-down" aria-hidden="true"></i></td>
                                                             <td class="text-left">
-                                                                <img src="img/clubs-logos/srb.png" alt="Serbia"><span>Serbia</span>
+                                                                <!-- <img src="img/clubs-logos/srb.png" alt="Serbia"><span>Serbia</span> -->
                                                             </td>
                                                             <td>38</td>
                                                             <td>12</td>
