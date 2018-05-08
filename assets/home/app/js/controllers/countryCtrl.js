@@ -1,6 +1,11 @@
 angular.module('homeApp').controller(
 	'countryCtrl', 
-	function ($scope, homeConfig, homeAPI) {
+	function ($rootScope, $scope, homeConfig, homeAPI) {
+
+		/*
+			Buscar as odds dos countries
+			Organizar as Odds por competição
+		*/
 
 		// Informações de Country
 		$scope.main = {
@@ -47,13 +52,41 @@ angular.module('homeApp').controller(
 					});
 					
 					$scope.main.countryAtivos = $scope.main.allCountries.slice(0, $scope.main.qtdAtivos);
+
+					//Buscar a odd do primeiro campeonato
+					$scope.getOddsByCountry($scope.main.countryAtivos[0]);
 				}
 			});
 
 		});
 
+	//////////////////////////////////////////////////////////////////////////////////////////
+	//// ODDS
 
-		$scope.setCountrySelected = function (country) { // OK
+		$scope.odd = [];
+
+		$scope.getOddsByCountry = function (country) {
+
+			var dataAtual = new Date();
+			
+			var send = {
+				idcountry: country.idcountry,
+				idleagues: []
+			};
+
+			country.leagues.forEach(function(element) {
+				send.idleagues.push(element.idleague);
+			});
+
+			homeAPI.homepost('odd/getbycountry', send).then(function (response){
+				console.log( response.data );
+			});
+
+		}
+
+	//////////////////////////////////////////////////////////////////////////////////////////
+
+		$scope.selectCountry = function (country) { // OK
 
 			if ( $scope.selected.country.idcountry == country.idcountry ) {
 				$scope.selected.country = {};
@@ -61,6 +94,7 @@ angular.module('homeApp').controller(
 			} else {
 				$scope.selected.country = country;
 				$scope.selected.actived = true;
+				$scope.getOddsByCountry(country);
 			}
 
 		};
@@ -71,7 +105,7 @@ angular.module('homeApp').controller(
 			} else {
 				return false;
 			}
-		}
+		};
 
 		$scope.loadCountry = function () { // OK
 
@@ -87,8 +121,7 @@ angular.module('homeApp').controller(
 			}
 
 			// console.log($scope.main);
-
-		}
+		};
 
 		$scope.isCountryActive = function (country) { // OK
 			var find = $scope.main.countryAtivos.some(function (element) {
@@ -96,7 +129,7 @@ angular.module('homeApp').controller(
 			});
 
 			return find;
-		}
+		};
 
 		$scope.selectLeague = function (league) {
 			console.log(league);

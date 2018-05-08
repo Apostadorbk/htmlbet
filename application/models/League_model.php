@@ -21,32 +21,40 @@ class League_model extends Database {
 	*/
 
 
-	public function setLeagues($league) { // OK
-		
-		$query = "INSERT INTO tb_league (idleague, idcountry, desleague) VALUES ";
-		$values = [];
-		$index = 0;
+	public function setLeagues($countries) { // OK
 
-		$result = $league['leagues'];
+		$_leagues = [];
 
-		for($i = 0; $i < count($result); $i++) {
-			
-			$query .= "(:idleague".$i.", :idcountry".$i.", :desleague".$i.")";
-
-			if ( $i == (count($result)-1)  ) {
-				$query .= ";";
-			} else {
-				$query .= ",";
+		foreach ($countries as $key => $league) {
+			if ( !empty($league) ) {
+				$_leagues[$key] = $league;
 			}
-
-			$values[":idleague".$i] 	= $result[$i]->league_id;
-			$values[":idcountry".$i] 	= $league['_idcountry'];
-			$values[":desleague".$i] 	= $league['_leagues'][$result[$i]->league_id];
-
 		}
 
-		return $this->query( $query, $values );
-	
+		if ( empty($_leagues) ) {
+			return true;
+		}
+
+		$counter = 0;
+		
+		$query = "INSERT INTO tb_league (idleague, idcountry, desleague) VALUES (:idleague, :idcountry, :desleague);";
+		$values = [];
+		$result = [];
+
+		foreach ($_leagues as $keyCountry => $country) {
+			foreach ($country as $keyLeague => $league) {
+
+				$values[":idleague"] 	= $keyLeague;
+				$values[":idcountry"] 	= $keyCountry;
+				$values[":desleague"] 	= (isset($league[1])) ? $this->decoded($league[1]) : NULL;
+
+				$result[$keyCountry][$keyLeague] = $this->query( $query, $values );
+
+			}
+		}
+		
+		return $result;
+		
 	}
 
 	public function setActiveByCountry($idcountry) { // OK
@@ -72,10 +80,12 @@ class League_model extends Database {
 		return $this->encoded($results, 'desleague');
 	}
 	
-	public function getLeagues() { // OK
-		$results = $this->select("SELECT idleague, idcountry, desleague 
-			FROM tb_league 
-			WHERE intactive = '1'");
+	public function getLeagues($active = true) { // OK
+
+		$sql = "SELECT idleague, idcountry, desleague 
+			FROM tb_league".( ($active) ? " WHERE intactive = '1;'" : ';' );
+
+		$results = $this->select($sql);
 
 		if ( !(count($results) > 0) ) {
 			return false;

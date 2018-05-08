@@ -1,5 +1,8 @@
 angular.module("adminApp", [
-	"ngMessages", 
+	"ngAnimate", 
+	"ngSanitize", 
+	"ui.bootstrap",
+	"validate",
 	"ui",
-	"validate"
+	"storeProvider"
 ]);

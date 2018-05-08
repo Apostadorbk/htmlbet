@@ -35,17 +35,28 @@ class Country extends BASE_Controller {
 
 			switch ($method) {
 
+				case 'get':
+					$this->get();
+				break;
+
 				case 'getall':
 					$this->getall();
 				break;
 
+				/*
 				case 'setcountry':
 					$this->setcountry();
+				break;
+				*/
+
+				// Admin
+				case 'check':
+					$this->check();
 				break;
 
 				// Teste
 				default:
-					$this->index();
+
 				break;
 
 			}
@@ -59,17 +70,21 @@ class Country extends BASE_Controller {
 	
 	
 	public function index() {
-
-		//echo 'Index de Country';
-
-		
+		/*
 		echo '<pre>';
 		var_dump( APICountry::getById('166') );
 		echo '</pre>';
-		
+		*/	
 	}
 
+	public function get() {
 
+		$country = $this->getModel('country');
+
+		echo json_encode($country->get());
+	}
+
+	// Pega todos os paises ativos
 	public function getall() { // OK
 
 		$country = $this->getModel('country');
@@ -79,6 +94,7 @@ class Country extends BASE_Controller {
 		// echo '</pre>';
 	}
 
+	/*
 	public function setcountry() { // OK
 
 		$country = $this->getModel('country');
@@ -90,6 +106,7 @@ class Country extends BASE_Controller {
 		$country->setCountry($results, $listCountry);
 
 	}
+	*/
 
 	/*
 	*	Função getData
@@ -109,5 +126,15 @@ class Country extends BASE_Controller {
 		return $dataJsonDecode;
 	}
 
+	/*
+		Verifica se há nova atualização de países da API
+	*/
+	public function check() {
+
+		echo '<pre>';
+		var_dump( APICountry::check() );
+		echo '</pre>';
+		
+	}
 
 }

@@ -8,7 +8,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 class APICountry {
 	
-	private static $_COUNTRY = [
+	const COUNTRY = [
 		'163'	=> 'Liga dos Campeões',
 		'164'	=> 'Liga da Europa',
 		'165'	=> 'UEFA',
@@ -105,13 +105,14 @@ class APICountry {
 		'272'	=> 'Canadá',
 		'277'	=> 'Jamaica',
 		'285'	=> 'Hong Kong',
-		'287'	=> 'Jordan',
+		'287'	=> 'Jordânia',
 		'289'	=> 'Malásia',
 		'293'	=> 'Catar',
 		'294'	=> 'Arábia Saudita',
 		'296'	=> 'Emirados Árabes',
 		'299'	=> 'Uzbequistão',
-		'336'	=> 'Uganda'
+		'336'	=> 'Uganda',
+		'340'	=> 'Copa do Mundo'
 	];
 
 	public static function country() { // OK
@@ -136,6 +137,7 @@ class APICountry {
 
 	}
 
+	/*
 	public static function getAll($decode = false) { // OK
 
 		if ( $decode ) {
@@ -151,12 +153,30 @@ class APICountry {
 		}
 
 	}
+	*/
 
+	/*
 	public static function getById($index, $decode = false) { // OK
 		if ( $decode )
 			return utf8_decode(self::$_COUNTRY[$index]);
 		else 
 			return self::$_COUNTRY[$index];
+	}
+	*/
+
+	public static function check() {
+
+		$all_countries = self::country();
+		$format = [];
+
+		foreach ($all_countries as $value) {
+			$format[$value->country_id] = $value->country_name;
+		}
+
+		$diff = array_diff_key($format, self::COUNTRY);
+		
+		return $diff;
+
 	}
 
 }

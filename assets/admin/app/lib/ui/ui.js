@@ -9,75 +9,6 @@ angular.module("ui").run(function ($templateCache) {
 });
 
 angular.module("ui").directive(
-	"uiAccordions",
-	function () {
-		return {
-
-			controller: function ($scope, $element, $attrs) {
-
-				var accordions = [];
-
-				this.registerAccordion = function (accordion) {
-					accordions.push(accordion);
-				};
-
-				this.closeAll = function () {
-					accordions.forEach(function (accordion) {
-						accordion.isOpened = false;
-					});
-				};
-
-			}
-
-		};
-	}
-);
-
-angular.module("ui").directive(
-	"uiAccordion",
-	function () {
-
-		return {
-
-			templateUrl: "view/accordion.html",
-			restrict: "AE",
-			scope: {
-				title: "@" // Variavel da tag e do html são iguais
-			},
-			transclude: true,
-			require: "^uiAccordions",
-			link: function (scope, element, attrs, ctrl) {
-				ctrl.registerAccordion(scope);
-				scope.open = function () {
-					ctrl.closeAll();
-					// Mudando de true para false e false para true
-					scope.isOpened = true;
-				};
-			}
-
-		};
-	}
-);
-
-angular.module("ui").directive(
-	"uiAlert",
-	function () {
-
-		return {
-
-			// template: "<div>Alerto inserido com sucesso!</div>",
-			templateUrl: "view/alert.html",
-			replace: true,
-			restrict: "AE",
-			scope: {
-				title: "@"
-			},
-			transclude: true
-
-		};
-});
-
-angular.module("ui").directive(
 	"uiDate",
 	function ($filter) {
 
@@ -88,17 +19,22 @@ angular.module("ui").directive(
 
 				var _formatDate = function (date) {
 
-					date = date.replace(/[^0-9]+/g, "");
+					if ( date ) {
 
-					if (date.length > 2) {
-						date = date.substring(0,2) + "/" + date.substring(2);
+						date = date.replace(/[^0-9]+/g, "");
+
+						if (date.length > 2) {
+							date = date.substring(0,2) + "/" + date.substring(2);
+						}
+
+						if (date.length > 5) {
+							date = date.substring(0,5) + "/" + date.substring(5,9);
+						}
+
+						return date;
+					} else {
+						return '';
 					}
-
-					if (date.length > 5) {
-						date = date.substring(0,5) + "/" + date.substring(5,9);
-					}
-
-					return date;
 				};
 
 				element.bind("keyup", function () {
@@ -109,7 +45,7 @@ angular.module("ui").directive(
 				ctrl.$parsers.push(function (value) {
 					if ( value.length == 10 ) {
 						var dateArray = value.split("/");
-						return new Date(dateArray[2], dateArray[1]-1, dateArray[0]).getTime();
+						return (new Date(dateArray[2], dateArray[1]-1, dateArray[0]).getTime())/1000;
 					}
 				});
 

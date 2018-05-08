@@ -84,6 +84,22 @@ class Database {
 
 	}
 
+	protected function decoded($data, $keyEncoded = NULL) {
+
+		if ( !isset($keyEncoded) ) {
+			return utf8_decode($data);
+		}
+
+		$decoded = $array;
+
+		foreach ($decoded as $key => $value) {
+			$decoded[$key][$keyEncoded] = utf8_decode($value[$keyEncoded]);
+		}
+
+		return $decoded;
+
+	}
+
 }
 
  ?>

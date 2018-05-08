@@ -1,39 +1,29 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+require_once('APICountry.php');
+require_once('Constant_Leagues.php');
+
 /*
 *	Classe Auth
 *
 *	classe responsavel de manipular quem tá autenticado
 */
 class APILeague {
-	
-	private static $_LEAGUE = [
-		'163' 	=>	[
-			'782'	=> 'Grupo A',
-			'783'	=> 'Grupo B',
-			'784'	=> 'Grupo C',
-			'785'	=> 'Grupo D',
-			'786'	=> 'Grupo E',
-			'787'	=> 'Grupo F',
-			'788'	=> 'Grupo G',
-			'789'	=> 'Grupo H',
-			'790' 	=> 'Qualificação',
-			'924'	=> 'Oitavas de Finais',
-			'996'	=> 'Quartas de Finais',
-			'1068'	=> 'Final',
-			'1069'	=> 'Semi Finais'
-		]
-	];
 
-	public static function league($idcountry) { // OK
+	public static function league($idcountry = NULL) { // OK
 
 		$APIkey = Constant::APIKEY;
 
 		$country_id = $idcountry;
+		
+		$url = 'https://apifootball.com/api/?action=get_leagues';
+		$url .= (isset($idcountry)) ? "&country_id={$country_id}" : "";
+		$url .= "&APIkey={$APIkey}";
+
 
 		$curl_options = array(
-		  CURLOPT_URL => "https://apifootball.com/api/?action=get_leagues&country_id=$country_id&APIkey=$APIkey",
+		  CURLOPT_URL => $url,
 		  CURLOPT_RETURNTRANSFER => true,
 		  CURLOPT_HEADER => false,
 		  CURLOPT_TIMEOUT => 30,
@@ -60,6 +50,52 @@ class APILeague {
 		} else {
 			return self::$_LEAGUE[$idcountry];
 		}
+	}
+
+	// Pegando os dados da API e formatando
+	public static function getAllLeagues() { // OK
+
+		$all_leagues = self::league();
+
+		$format = [];
+
+		foreach ($all_leagues as $key => $value) {
+			$format[$value->country_id][$value->league_id] = [$value->country_name, $value->league_name];
+			// $format[$value->country_id][$value->league_id] = [APICountry::COUNTRY[$value->country_id], $value->league_name];
+		}
+
+		return $format;
+	}
+
+	// Checando se os dados da API e se as ligas estão atualizadas
+	public static function check() {
+
+		$all_leagues = self::getAllLeagues(); // Todas as ligas da API
+
+		$diff_league = [];
+
+		foreach ($all_leagues as $keyCountry => $country) {
+
+			if ( isset(LEAGUES[$keyCountry]) ) {
+				$diff_league[$keyCountry] = array_diff_key($country, LEAGUES[$keyCountry]);
+			} else {
+				$diff_league[$keyCountry] = $country;
+			}
+
+		}
+
+		return $diff_league;
+
+	}
+
+	// Retorna todas as ligas definido em Constant_Leagues.php
+	public static function getLeagues() {
+		return LEAGUES;
+	}
+
+	// Pegando os dados de países
+	public static function getCountries() {
+		return APICountry::COUNTRY;
 	}
 
 }

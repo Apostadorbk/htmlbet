@@ -26,7 +26,7 @@ define("SENHASRECUPERADAS", 'tb_senhasrecuperadas');
 
 class Constant {
 
-	const APIKEY = 'f02c25ed19c322b3aaacc8707942ce1273de3348bac51cf0e46ac887755d7eb6';
+	const APIKEY = '781f3b505bca14bccc0fe5211401d43e25d6d07eeb40f2411377755ed228598b';
 
 	// Banco de dados
 	const HOST = "localhost";

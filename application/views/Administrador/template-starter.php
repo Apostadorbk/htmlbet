@@ -280,6 +280,13 @@
                 </li>
 
                 <li>
+                    <a href="" ng-click="selectItem('evento', 'Eventos do sistema')">
+                        <i class="fa fa-link"></i> 
+                        <span>Eventos</span>
+                    </a>
+                </li>
+
+                <li>
                     <a href="#">
                         <i class="fa fa-link"></i> 
                         <span>Another Link</span>
@@ -381,30 +388,37 @@
 
                         </form>
 
-                        <!-- Mensagens de erros -->
-                        <div ng-messages="cadastro.email.$error" ng-if="cadastro.email.$dirty && cadastro.email.$invalid" class="alert alert-danger">
+                        <div ng-if="cadastro.email.$dirty && cadastro.email.$invalid">
 
-                            <div ng-message="required">
+                            <div uib-alert template-url="alert.html" ng-show="cadastro.email.$error.required" class="alert alert-danger">
                                 Por favor preencha o email.
                             </div>
 
-                            <div ng-message="validEmail">
+                            <div uib-alert template-url="alert.html" ng-show="cadastro.email.$error.validEmail" class="alert alert-danger">
                                 O campo email tem um formato inválido.
                             </div>
-
+                            
                         </div>
 
-                        <div ng-if="replySaveContatos">
-                            <div ng-class="{'alert alert-danger': !replySaveContatos.status, 'alert alert-success': replySaveContatos.status}">
-                                {{replySaveContatos.message}}
+                        <div ng-if="!cadastro.email.$dirty || !cadastro.email.$invalid">
+                            <div ng-if="replySaveContatos">
+                                <div ng-class="{'alert alert-danger': !replySaveContatos.status, 'alert alert-success': replySaveContatos.status}">
+                                    {{replySaveContatos.message}}
+                                </div>
                             </div>
                         </div>
+
 
                         <div class="box-footer">
                             <button ng-class="{'btn-disabled': cadastro.$invalid}" ng-click="adicionarContato(contato)" class="btn btn-info pull-right" ng-disabled="cadastro.$invalid">Inserir</button>
                             <button ng-click="saveContatos(contatos)" ng-if="hasContato(contatos)" class="btn btn-info pull-left" ng-disabled="isContatoSelecionado(contatos)">Cadastrar</button>
                             <button class="btn btn-danger pull-left" ng-click="apagarContato(contatos)" ng-if="isContatoSelecionado(contatos)" class="btn btn-info pull-right">Apagar</button>
                         </div>
+
+                        <!-- Template de alerta -->
+                        <script type="text/ng-template" id="alert.html">
+                            <div ng-transclude></div>
+                        </script>
                         <!-- /.box-footer -->
                     </div>
 
@@ -414,7 +428,62 @@
             </div>
             <!-- /Registra Cambista -->
 
+            <!-- Event -->
+            <div class="container" ng-switch-when="evento" ng-controller="eventCtrl">
 
+                <!-- <button ng-click="teste()">Teste</button> -->
+
+                <!-- Date and time range -->
+                <div class="row">
+
+                    <h4>Atualizar os eventos</h4>
+                    <form name="registroEvento" class="form-group">
+
+                        <label>Dia inicial:</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-clock-o"></i>
+                            </div>
+                            <input ui-date type="text" ng-model="send.from" class="form-control pull-right">
+                        </div>
+
+                        <label>Final:</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-clock-o"></i>
+                            </div>
+                            <input ui-date type="text" ng-model="send.to" class="form-control pull-right">
+                        </div>
+                        <!-- /.input group -->
+
+                        <label>Países:</label>
+                        <table ng-show="countries.length > 0" id="evento-lista-paises" class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>País</th>
+                                    <th>Status</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="country in countries">
+                                    <td>{{::country.descountry}}</td>
+                                    <td>{{getMessage(country.idcountry)}}</td>
+                                    <td><button ng-disabled="hasCountry(country.idcountry)" class="btn btn-info pull-left" ng-click="atualizarPais(country)">Atualizar</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                         
+                    </form>
+
+                    <div>
+                        <button ng-click="carregarPaises()" class="btn btn-info pull-left" ng-disabled="countries.length > 0">Carregar países</button>
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- /Event -->
 
         </section>
         <!-- /Main content -->

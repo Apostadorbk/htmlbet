@@ -4,7 +4,6 @@ angular.module("adminApp").controller(
 
 		$scope.contatos = [];
 
-
 		$scope.adicionarContato = function (contato) {
 
 			delete $scope.replySaveContatos;

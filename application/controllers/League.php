@@ -39,8 +39,9 @@ class League extends BASE_Controller {
 					$this->getleagues();
 				break;
 
-				case 'setleague':
-					$this->setleague($params[0]);
+				// Admin
+				case 'set':
+					$this->set();
 				break;
 
 				case 'getleaguebycountry':
@@ -49,6 +50,11 @@ class League extends BASE_Controller {
 
 				case 'setactivebycountry':
 					$this->setactivebycountry($params[0]);
+				break;
+
+				// Admin
+				case 'check':
+					$this->check();
 				break;
 
 				// Teste
@@ -65,6 +71,41 @@ class League extends BASE_Controller {
 
 	}
 	
+	// Setando os dados de ligas no BD
+	public function set() {
+
+		$md_league = $this->getModel('league');
+
+
+		$all_countries = APILeague::getCountries();
+		$all_leagues = APILeague::getLeagues();
+
+		$bd_leagues = $md_league->getLeagues(false); // Pegando todos as ligas independente se tá ativo ou não
+		
+		$format_leagues = [];
+
+		foreach ($bd_leagues as $key => $league) {
+			$format_leagues[$league['idcountry']][$league['idleague']] = [
+				$all_countries[$league['idcountry']],
+				$league['desleague']
+			];
+		}
+		
+		$diff_league = []; // Salvar no BD
+		
+		foreach ($all_leagues as $keyCountry => $country) {
+			if ( isset($format_leagues[$keyCountry]) ) {
+				$diff_league[$keyCountry] = array_diff_key($country, $format_leagues[$keyCountry]);
+			} else {
+				$diff_league[$keyCountry] = $country;
+			}
+		}
+
+		echo '<pre>';
+		var_dump( $md_league->setLeagues($diff_league) );
+		echo '</pre>';
+
+	}
 	
 	public function index() {
 
@@ -99,17 +140,6 @@ class League extends BASE_Controller {
 		
 	}
 
-	public function setleague($idcountry) { // OK
-
-		$data['_idcountry'] = $idcountry;
-		$data['_leagues'] 	= APILeague::getByCountry($idcountry, true);
-		$data['leagues'] 	= APILeague::league($idcountry);
-
-		$league = $this->getModel('league');
-
-		echo json_encode( ['status' => $league->setLeagues($data)] );
-
-	}
 
 	public function setactivebycountry($idcountry) { // OK
 		$league = $this->getModel('league');
@@ -136,7 +166,12 @@ class League extends BASE_Controller {
 		return $dataJsonDecode;
 	}
 
-	public function teste($id) {
+	// Verificando as ligas da API e das Constant_Leagues.php
+	public function check() {
+
+		echo '<pre>';
+		var_dump( APILeague::check() );
+		echo '</pre>';
 
 	}
 

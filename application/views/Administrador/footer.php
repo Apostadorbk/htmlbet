@@ -9,8 +9,10 @@
 		<!-- <script type="text/javascript" src="assets/admin/app/js/admin.js"></script> -->
 
 		<!-- Angular -->
-		<script type="text/javascript" src="<?php echo base_url('assets/admin/app/lib/angular.js') ?>"></script>
-		<script type="text/javascript" src="<?php echo base_url('assets/admin/app/lib/angular-messages.js') ?>"></script>
+		<script type="text/javascript" src="<?php echo base_url('assets/admin/app/lib/angular.min.js') ?>"></script>
+        <script type="text/javascript" src="<?php echo base_url('assets/admin/app/lib/angular-animate.min.js') ?>"></script>
+        <script type="text/javascript" src="<?php echo base_url('assets/admin/app/lib/angular-sanitize.min.js') ?>"></script>
+        <script type="text/javascript" src="<?php echo base_url('assets/admin/app/lib/ui-bootstrap-tpls-2.5.0.min.js') ?>"></script>
 		<!-- <script type="text/javascript" src="<?php echo base_url('assets/admin/app/lib/angular-locale_pt-br.js') ?>"></script> -->
 
 		<!-- App -->
@@ -19,10 +21,12 @@
 		<!-- Controllers -->
 		<script type="text/javascript" src="<?php echo base_url('assets/admin/app/js/controllers/adminCtrl.js') ?>"></script>
 		<script type="text/javascript" src="<?php echo base_url('assets/admin/app/js/controllers/cambistaCtrl.js') ?>"></script>
+		<script type="text/javascript" src="<?php echo base_url('assets/admin/app/js/controllers/eventCtrl.js') ?>"></script>
 
 		<!-- Directives -->
 		<script type="text/javascript" src="<?php echo base_url('assets/admin/app/lib/ui/ui.js') ?>"></script>
 		<script type="text/javascript" src="<?php echo base_url('assets/admin/app/lib/validate/validate.js') ?>"></script>
+		<script type="text/javascript" src="<?php echo base_url('assets/admin/app/lib/store/store.js') ?>"></script>
 
 		<!-- Services -->
 		<script type="text/javascript" src="<?php echo base_url('assets/admin/app/js/services/adminAPIServices.js') ?>"></script>

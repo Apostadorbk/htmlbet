@@ -56,12 +56,6 @@ class Administrador extends BASE_Controller {
 					$this->precadastro();
 				break;
 
-				// Teste
-				default:
-					$this->getLibrary(['country']);
-					$this->teste();
-				break;
-
 			}
 
 			// Atualiza a URL atual acessada
@@ -127,54 +121,10 @@ class Administrador extends BASE_Controller {
 
 	}
 
+	public function seteventbycountry() {
+		$response = $this->getData();
 
-	public function teste() {
 		
-		$country = $this->getModel('country');
-
-		$results = $country->teste();
-
-
-
-		echo '<pre>';
-		var_dump( $results );
-		echo '</pre>';
-
-
-		/*
-		// Geração de Array country
-		$html = "[\n";
-		$i = 0;
-		$total = count($results);
-		foreach ($results as $value) {
-			$html .= "\t'{$value->country_id}'\t=> '{$value->country_name}'";
-
-			if ($i < ($total-1)) {
-				$html .= ",\n";
-			} else {
-				$html .= "\n];";
-			}
-
-			$i++;
-		}
-
-		echo '<pre>';
-		echo $html;
-		echo '</pre>';
-		*/
-
-
-
-
-
-
-		/*
-		echo '<pre>';
-		foreach ($results as $value) {
-			echo "country_: {$value->country_id}\t{$value->country_name}\t{$country[$value->country_id]}\n";
-		}
-		echo '</pre>';
-		*/
 	}
 
 	/*

@@ -489,10 +489,10 @@
                                                         
                                                         <uib-accordion close-others="oneAtATime">
 
-                                                            <div uib-accordion-group class="panel-default" ng-click="setCountrySelected(country)" ng-repeat="country in main.allCountries" heading="{{::country.descountry}}" ng-show="isCountryActive(country)">
+                                                            <div uib-accordion-group class="panel-default" ng-click="selectCountry(country)" ng-repeat="country in main.allCountries" heading="{{::country.descountry}}" ng-show="isCountryActive(country)">
                                                                 
                                                                 <div class="btn-group-vertical" role="group" style="width: 100%">
-                                                                    <a ng-repeat="league in country.leagues" class="btn btn-default" ng-click="selectLeague(league)">
+                                                                    <a ng-repeat="league in country.leagues" class="btn btn-default" ng-click="selectLeague(league)" style="font-size: 1.2rem;">
                                                                         {{::league.desleague}}
                                                                     </a>
                                                                 </div>
@@ -503,7 +503,7 @@
     
                                                         <div class="btn-group btn-group-justified" role="group">
                                                             <div class="btn-group" role="group">
-                                                                <button type="button" class="btn btn-default" ng-click="loadCountry()">Carrega mais regiões</button>
+                                                                <button type="button" class="btn btn-default" ng-click="loadCountry()">Carrega mais</button>
                                                             </div>
                                                         </div>
                                                     </div>
