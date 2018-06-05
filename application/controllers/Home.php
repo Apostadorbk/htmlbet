@@ -34,7 +34,6 @@ class Home extends BASE_Controller {
         } else {
 
 			switch ($method) {
-
 			
 				// Função padrão
 				case 'index':
@@ -72,13 +71,21 @@ class Home extends BASE_Controller {
 	*/
 	public function index() {
 		
-		$data['title'] = "Elite Sports";
+		$page = $this->cachePage('Home/index');
 
-		$this->view([
-			'header',
-			'template',
-			'footer'
-		], $data);
+		if ( !$page->isValid() ) {
+
+			$data["title"] = "Elite Sports";
+			
+			$page->setCache($this->view([
+				'header',
+				'template',
+				'footer'
+			], $data));
+			
+		}
+		
+		echo $page->getCache();
 		
 	}
 
@@ -88,12 +95,13 @@ class Home extends BASE_Controller {
 
 		$data['user'] = Auth::get();
 		
-		$this->view([
+		echo $this->view([
 			'header',
 			'Logged/template',
 			'footer'
 		], $data);
-	}
 	
+	}
 
 }
+

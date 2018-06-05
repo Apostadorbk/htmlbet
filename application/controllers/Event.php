@@ -87,20 +87,20 @@ class Event extends BASE_Controller {
 		// dados do usuario
 		// $params['idcountry'] = '169';
 		// $params['idcountry'] = '170';
-		// $params['idcountry'] = '171';
+		$params['idcountry'] = '222';
 		// $params['from'] = '2018-05-04';
 		
-		// $_result = APIEvent::event($params);
+		$_result = APIEvent::event($params);
 
-		//$_result['data'] = APIEvent::formatEvents($_result['data']);
+		// $_result['data'] = APIEvent::formatEvents($_result['data']);
 
-		/*
+		
 		echo "<pre>";
 		var_dump( $_result );
 		echo "</pre>";
-		*/
+		
 
-		echo json_encode(APILeague::getAllLeagues());
+		//echo json_encode(APILeague::getAllLeagues());
 
 
 

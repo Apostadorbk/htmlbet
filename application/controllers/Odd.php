@@ -11,7 +11,7 @@ class Odd extends BASE_Controller {
 
 		// Inicialização da sessão
 		//Session::init();
-		Time::setTimeZone('PE');
+		Time::setTimeZone('DF');
 	}
 
 	/*
@@ -36,15 +36,13 @@ class Odd extends BASE_Controller {
 
 			switch ($method) {
 
-				case 'getbycountry':
-					$this->getbycountry();
+				case 'get':
+					$this->get();
 				break;
-
-				
 
 				// Teste
 				default:
-					$this->teste($params[0]);
+					$this->teste();
 				break;
 
 			}
@@ -63,16 +61,22 @@ class Odd extends BASE_Controller {
 		
 	}
 
-	public function getbycountry() {
+	public function get() {
 
+		
 		$response = $this->getData();
 		
-		$response['from'] 	= date('Y-m-d', strtotime('now'));
-		$response['to'] 	= date('Y-m-d', strtotime('+1 day'));
+		$response['from'] 	= Time::getDate();
+		$response['to'] 	= Time::getDate([
+			'interval' => [
+				'day' => 2
+			]
+		]);
+		
 		
 		//$result = APIEvent::event($response);
 
-
+		//echo 'Odd - Get';
 
 		echo json_encode( $response );
 	}
@@ -97,8 +101,15 @@ class Odd extends BASE_Controller {
 		return $dataJsonDecode;
 	}
 
-	public function teste($id) {
+	public function teste() {
 
+		$params = [
+			'idmatch' => '284637'
+		];
+
+		echo '<pre>';
+		var_dump(APIOdd::odd($params));
+		echo '</pre>';
 	}
 
 

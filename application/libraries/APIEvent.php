@@ -209,13 +209,15 @@ class APIEvent {
 				case 'match_time':
 
 					self::$match['dtematch'] .= ' ' . $value;
+					/*
 					self::$match['dtematch'] = Time::getDate([
 						'date' => self::$match['dtematch'],
 						'interval' => [
-							'hour' => 5,
-							'sub' => true
+							'hour' => Time::getDiffTime(),
+							'sub' => Time::getSub()
 						]
 					]);
+					*/
 
 				break;
 				

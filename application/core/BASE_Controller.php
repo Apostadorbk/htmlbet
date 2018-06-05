@@ -1,6 +1,11 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+define("DS", DIRECTORY_SEPARATOR);
+
+require_once APPPATH."libraries".DS."Page.php";
+require_once APPPATH."libraries".DS."Json.php";
+
 class BASE_Controller extends CI_Controller {
 
 	protected $controller;
@@ -25,7 +30,7 @@ class BASE_Controller extends CI_Controller {
 	*	@param $controller é uma string com o nome do controlador
 	*	
 	*/
-	public function __construct($controller){
+	public function __construct($controller) {
 		parent::__construct();
 
 		// Setando o nome do controlador
@@ -47,26 +52,40 @@ class BASE_Controller extends CI_Controller {
 	*	@param $data é os dados que vai ser passado para as views
 	*
 	*/
-	protected function view($template = [], $data = []) {
+	protected function view($template = [], $data = []):string {
 
 		$this->options['template'] = $template;
 		$this->options['data'] = $data;
 
+		$html = "";
+
 		if ( count($this->options['template']) > 0 ) {
 
-			$this->load->view(
+			$html .= $this->load->view(
 				$this->baseView.$this->options['template'][0], 
-				$this->options['data']
+				$this->options['data'],
+				true
 			);
 
 			for ($i=1; $i < count($this->options['template']); $i++) { 
-				$this->load->view(
-					$this->baseView.$this->options['template'][$i]
+				$html .= $this->load->view(
+					$this->baseView.$this->options['template'][$i],
+					'',
+					true
 				);
 			}
 
 		}
 
+		return $html;
+	}
+
+	protected function cachePage(string $filename, int $time = 0) {
+		return new Page($filename, $time);
+	}
+	
+	protected function cache(string $filename, int $time = 0) {
+		return new Json($filename, $time);
 	}
 
 	/*
@@ -82,7 +101,7 @@ class BASE_Controller extends CI_Controller {
 	*/
 	protected function getLibrary($classNames = []) {
 		foreach ($classNames as $names) {
-			require_once APPPATH.'libraries/'.ucfirst($names).'.php';
+			require_once APPPATH.'libraries'.DS.ucfirst($names).'.php';
 		}
 	}
 
@@ -91,7 +110,7 @@ class BASE_Controller extends CI_Controller {
 		if ( empty($className) )
 			return false;
 
-		require_once APPPATH.'models\\'.ucfirst($className).'_model.php';
+		require_once APPPATH.'models'.DS.ucfirst($className).'_model.php';
 		$class = ucfirst($className).'_model';
 		return new $class;
 	}

@@ -93,6 +93,18 @@ class APILeague {
 		return LEAGUES;
 	}
 
+	public static function getLeague($idcountry = NULL) {
+		if ( !isset($idcountry) ) {
+			return LEAGUES;
+		}
+
+		if ( isset(LEAGUES[$idcountry]) ) {
+			return LEAGUES[$idcountry];
+		} else {
+			return false;
+		}
+	}
+
 	// Pegando os dados de países
 	public static function getCountries() {
 		return APICountry::COUNTRY;

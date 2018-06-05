@@ -38,11 +38,43 @@ class Time {
 		'TO' => 'America/Araguaia',     
 	);
 
+	private static $DST = [
+		'api' => [
+			'2018' => [
+				'start' => '2018-03-25 02:00:00',
+				'end' => '2018-10-28 03:00:00',
+				'timezone' => 2
+			]
+		],
+		'local' => [
+			'2018' => [
+				'start' => '2018-11-04 00:00:00',
+				'end' => '2018-02-18 00:00:00',
+				'timezone' => -3
+			]
+		]
+	];
+
+	private static $timezone = [
+		'api' => [
+			'timezone' => 1
+		],
+		'local' => [
+			'timezone' => -3
+		]
+	];
+
+	private static $DiffTime = 4; // Diferenã entre o time local e o da API
+	private static $sub = true; // Indica se precisa subtrair o horário
+	private static $year = '2018';
+
 	public static function setTimeZone($state) {
 		return date_default_timezone_set(self::$timezones[$state]);
 	}
 
 	public static function getDate($input = []) { // OK
+
+		self::setTimeZone("DF");
 
 		$date = '';
 		$format = 'Y-m-d H:i:s';
@@ -95,6 +127,14 @@ class Time {
 
 		}
 
+	}
+
+	public static function getDiffTime() {
+		return self::$DiffTime;
+	}
+
+	public static function getSub() {
+		return self::$sub;
 	}
 
 }

@@ -1,6 +1,6 @@
 angular.module('homeApp').controller(
 	'countryCtrl', 
-	function ($rootScope, $scope, homeConfig, homeAPI) {
+	function ($rootScope, $scope, homeConfig, homeAPI, store) {
 
 		/*
 			Buscar as odds dos countries
@@ -11,28 +11,18 @@ angular.module('homeApp').controller(
 		$scope.main = {
 			title: 'Regiões',
 			allCountries: [],
-			countryAtivos: [],
+			countryAtivos: store.new(),
 			qtdAtivos: 50,
 			qtdTotal: 0,
 			qtdCarregamento: 20
 		};
 
-		$scope.selected = {
-			country: {},
-			actived: false 
-		}
+		homeAPI.homepost('odd/get',{'country': 'ALL'}).then(function (response) {
+			console.log(response.data);
+		});
 
-		$scope.oneAtATime = true;
-
-		$scope.status = {
-			isCustomHeaderOpen: false,
-			isFirstOpen: true,
-			isFirstDisabled: false
-		};
-
-		$scope.leagues = {};
-
-
+		// Primeiro
+		/*
 		homeAPI.homeget('country/getall').then(function (response) { // OK
 			$scope.main.allCountries = response.data;
 			$scope.main.qtdTotal = response.data.length;
@@ -57,58 +47,22 @@ angular.module('homeApp').controller(
 					$scope.getOddsByCountry($scope.main.countryAtivos[0]);
 				}
 			});
-
+			
 		});
+		*/
 
 	//////////////////////////////////////////////////////////////////////////////////////////
 	//// ODDS
 
-		$scope.odd = [];
-
-		$scope.getOddsByCountry = function (country) {
-
-			var dataAtual = new Date();
-			
-			var send = {
-				idcountry: country.idcountry,
-				idleagues: []
-			};
-
-			country.leagues.forEach(function(element) {
-				send.idleagues.push(element.idleague);
-			});
-
-			homeAPI.homepost('odd/getbycountry', send).then(function (response){
-				console.log( response.data );
-			});
-
-		}
 
 	//////////////////////////////////////////////////////////////////////////////////////////
 
-		$scope.selectCountry = function (country) { // OK
-
-			if ( $scope.selected.country.idcountry == country.idcountry ) {
-				$scope.selected.country = {};
-				$scope.selected.actived = false;
-			} else {
-				$scope.selected.country = country;
-				$scope.selected.actived = true;
-				$scope.getOddsByCountry(country);
-			}
-
-		};
-
-		$scope.isCountrySelected =  function (country) { // OK
-			if ($scope.selected.country.idcountry == country.idcountry) {
-				return true;
-			} else {
-				return false;
-			}
-		};
 
 		$scope.loadCountry = function () { // OK
 
+			console.log("Carregando países");
+
+			/*
 			$scope.main.countryAtivos = $scope.main.allCountries.slice(
 				0,
 				$scope.main.qtdAtivos + $scope.main.qtdCarregamento
@@ -119,19 +73,8 @@ angular.module('homeApp').controller(
 			if ( $scope.main.qtdTotal <= $scope.main.qtdAtivos ) {
 				$scope.main.qtdAtivos = $scope.main.qtdTotal;
 			}
-
+			*/
 			// console.log($scope.main);
 		};
 
-		$scope.isCountryActive = function (country) { // OK
-			var find = $scope.main.countryAtivos.some(function (element) {
-				return country.idcountry == element.idcountry;
-			});
-
-			return find;
-		};
-
-		$scope.selectLeague = function (league) {
-			console.log(league);
-		};
 });

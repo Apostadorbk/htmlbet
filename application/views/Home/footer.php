@@ -31,6 +31,7 @@
         <!-- Directives -->
         <script type="text/javascript" src="<?php echo base_url('assets/home/app/lib/betting/betting-services.js') ?>"></script>
         <script type="text/javascript" src="<?php echo base_url('assets/home/app/lib/ui/ui.js') ?>"></script>
+        <script type="text/javascript" src="<?php echo base_url('assets/home/app/lib/store/store.js') ?>"></script>
         <!-- <script type="text/javascript" src="<?php echo base_url('assets/home/app/lib/validate/validate.js') ?>"></script> -->
 
         <!-- Services -->
