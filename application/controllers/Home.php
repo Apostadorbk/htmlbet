@@ -51,6 +51,9 @@ class Home extends BASE_Controller {
 
 				break;
 
+				default:
+					$this->teste();
+				break;
 			}
 
 			// Atualiza a URL atual acessada
@@ -71,6 +74,7 @@ class Home extends BASE_Controller {
 	*/
 	public function index() {
 		
+		
 		$page = $this->cachePage('Home/index');
 
 		if ( !$page->isValid() ) {
@@ -87,6 +91,7 @@ class Home extends BASE_Controller {
 		
 		echo $page->getCache();
 		
+		
 	}
 
 	public function logged() {
@@ -101,6 +106,125 @@ class Home extends BASE_Controller {
 			'footer'
 		], $data);
 	
+	}
+
+	public function teste() {
+
+		$this->getLibrary(['Time']);
+		
+		//------------------------------------------------------------------------
+		//------------------------------------------------------------------------
+		//------------------------------------------------------------------------
+
+		echo '<pre>';
+		
+		$d1 = new DateTime('now', new DateTimeZone('America/Sao_Paulo'));
+		// $d2 = new DateTime('now', new DateTimeZone('Australia/Sydney'));
+		// $d2 = new DateTime('now', new DateTimeZone('Europe/London'));
+		$d2 = new DateTime('now', new DateTimeZone('UTC'));
+		// $d2 = new DateTime('now', new DateTimeZone('America/Los_Angeles'));
+
+		$offset1 = $d1->getOffset();
+		$offset2 = $d2->getOffset();
+		
+		// $diff=$d2->diff($d1);
+
+		// var_dump( $diff );
+
+		//--------------------------------------------------
+
+		// Calculando o fuso horário GMT+0
+		$timeOfDay = gettimeofday();
+
+		$GMT = $timeOfDay['sec'] + ($timeOfDay['minuteswest']*60);
+
+		// var_dump( getdate($GMT) );
+		echo '<h1>GMT</h1>';
+		echo '<br>';
+
+		// var_dump( $timeOfDay );
+		var_dump( date('Y-m-d H:i:s', $GMT) );
+		// var_dump( getdate($GMT) );
+
+		echo '<hr>';
+
+		//--------------------------------------------------
+		
+		
+		// Calculando horario local
+		$localTime = $GMT + $offset1;
+
+		echo '<h1>Recife</h1>';
+		echo '<br>';
+
+		// var_dump( getdate($localTime) );
+		var_dump( date('Y-m-d H:i:s', $localTime) );
+
+		echo '<hr>';
+
+		// -------------------------------------------------
+		
+		// Calculando horario de um lugar qualquer
+		$targetTime = $GMT + $offset2;
+
+		echo '<h1>UTC</h1>';
+		echo '<br>';
+
+		// var_dump( getdate($targetTime) );
+		var_dump( date('Y-m-d H:i:s', $targetTime) );
+
+		echo '<hr>';
+
+		// -------------------------------------------------
+		
+
+		$diff = ($offset1 - $offset2);
+
+
+		$initialTime = $targetTime;
+
+		// Calculando horario de um lugar qualquer
+		$finalTime = $initialTime + $diff;
+
+		echo '<h1>Recife</h1>';
+		echo '<br>';
+
+		// var_dump( getdate($finalTime) );
+		var_dump( date('Y-m-d H:i:s', $finalTime) );
+
+		echo '<hr>';
+
+
+		var_dump( $finalTime );
+
+		// -------------------------------------------------
+		// -------------------------------------------------
+		// -------------------------------------------------
+
+		$p = new Time('UTC');
+
+		var_dump( $p );
+
+		echo '>> ';
+		var_dump( $p->getTimeOf($targetTime) );
+
+
+		echo '<hr>';
+		echo '<hr>';
+
+		/*
+		echo '<h1>Teste</h1>';
+		echo '<br>';
+
+		// var_dump( getdate($finalTime) );
+		var_dump( date('Y-m-d H:i:s', 1490799600) );
+
+		echo '<hr>';
+
+		// -------------------------------------------------
+		*/
+
+		echo '<br><br>';
 	}
 
 }
