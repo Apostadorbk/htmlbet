@@ -4,11 +4,23 @@
 
 define("BET365PATH", __DIR__.DS.'Bet365');
 
+/*
+define("BET365_LIBRARY", [
+	'League'		=> BET365PATH.DS.'League.php',
+	'Event'			=> BET365PATH.DS.'Event.php',
+	'Result'		=> BET365PATH.DS.'Result.php',
+	'UpcomingEvent'	=> BET365PATH.DS.'UpcomingEvent.php',
+	'CacheEvent'	=> BET365PATH.DS.'CacheEvent.php'
+]);
+*/
+
 require_once BET365PATH.DS.'League.php';
 require_once BET365PATH.DS.'Event.php';
 require_once BET365PATH.DS.'Odd.php';
 require_once BET365PATH.DS.'Result.php';
 require_once BET365PATH.DS.'UpcomingEvent.php';
+require_once BET365PATH.DS.'CacheEvent.php';
+
 
 define("TYPE_REQUEST", [
 	'upcoming'		=> "upcoming?",
@@ -228,6 +240,20 @@ class Bet365 {
 	public function result() {
 		return new Result();
 	}
+
+	public function cacheEvent(string $file) {
+		return new cacheEvent($file);
+	}
+
+	/*
+	private function getLibrary(string $library = '') {
+		if ( isset(BET365_LIBRARY[$library]) ) {
+			require_once BET365_LIBRARY[$library];
+		} else {
+			throw new \Exception("Library {$library} not found", 100);
+		}
+	}
+	*/
 
 	public function teste() {
 

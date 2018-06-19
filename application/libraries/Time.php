@@ -81,6 +81,12 @@ class Time {
 
 	public static function currentDate(string $format = 'Y-m-d H:i:s', string $local = 'America/Sao_Paulo'):string {
 
+		return date($format, self::currentTime($local));
+
+	}
+
+	public static function currentTime(string $local = 'America/Sao_Paulo'):int {
+
 		$date 			= new DateTime('now', new DateTimeZone($local));
 
 		$localOffset 	= $date->getOffset();
@@ -95,7 +101,7 @@ class Time {
 
 		$localTimestamp = $systemDate['sec'] + $offset;
 
-		return date($format, $localTimestamp);
+		return $localTimestamp;
 
 	}
 

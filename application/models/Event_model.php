@@ -272,6 +272,7 @@ class Event_model extends Model {
 
 	public function setUpcoming(array $allowed):bool { // OK
 
+
 		if ( empty($allowed) || !isset($allowed) ) return false;
 
 		$numberRow = $this->getNumberRows('tb_upcomingevent');
@@ -328,6 +329,8 @@ class Event_model extends Model {
 		echo '<hr>';
 		*/
 
+
+
 		$this->updateAllUpcoming(
 			$allowed,
 			$numberRow
@@ -342,6 +345,23 @@ class Event_model extends Model {
 		// echo '<hr>';
 
 		return true;
+
+	}
+
+	public function setEventByDate(string $start, string $final):bool { // OK
+
+		if ( empty($start) || empty($final) ) return false;
+
+		$result = $this->db->select("
+			SELECT * 
+			FROM tb_upcomingevent
+			WHERE (dtetime BETWEEN :START AND :FINAL) AND intactive = 1
+		", [
+			':START'	=> $start,
+			':FINAL'	=> $final
+		]);
+
+		return $this->setValues($result);
 
 	}
 

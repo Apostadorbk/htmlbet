@@ -17,13 +17,14 @@ class UpcomingEvent {
 	private $startTS;
 	private $finalTS;
 	private $match; 	// Todas as partidas
+	private $time;
 
 	private $allowed; 	// Partidas que tem liga no BD
 	private $unallowed; // Partidas que não tem liga no BD
 
 	// now = é a hora exata da requisição
 	// time é até a hora maxima dos jogos a ser requisitados
-	public function __construct(string $time) { // OK
+	public function __construct(string $time = '+2 hours') { // OK
 		// $this->startTS = strtotime('now');
 		// $this->finalTS = strtotime($time);
 
@@ -32,16 +33,17 @@ class UpcomingEvent {
 		$this->match 		= []; 
 		$this->allowed 		= []; 
 		$this->unallowed 	= []; 
+		$this->time 		= $time;
 	
 		// var_dump( date('Y-m-d H:i:s', 1490811300) );
 		// var_dump( date('Y-m-d H:i:s', $this->startTS) );
 		// var_dump( date('Y-m-d H:i:s', $this->finalTS) );
 	}
 	
-	public function getExactTime(string $time = 'now'):int {
+	public function getExactTime(string $time = 'now', string $timezone = 'Europe/London'):int { // OK
 
 		if ( $time == 'now' ) {
-			// $timestamp = strtotime(Time::currentDate('Y-m-d H:i:s', 'Europe/London'));
+			// $timestamp = strtotime(Time::currentDate('Y-m-d H:i:s', $timezone));
 			$timestamp = 1490799600;
 		} else {
 			$timestamp = strtotime($time, $this->startTS);
@@ -66,16 +68,18 @@ class UpcomingEvent {
 
 		$time = new Time('Europe/London');
 
-		foreach ($results as $value) {
 
-			// $value['time'] = $time->convert($value['time'])->getTime();
+		foreach ($results as $value) {
 			
 			if ( 
 				$value['time'] >= $this->startTS 
 				&&
 				$value['time'] <= $this->finalTS 
 			) {
+			
+				// var_dump( $value );
 
+			
 				array_push($this->match, [
 					'idevent'		=> $value['id'],
 					'dtetime'		=> $time->convert($value['time'])->format(),
@@ -87,8 +91,10 @@ class UpcomingEvent {
 					'deshometeam'	=> addslashes($value['home']['name']),
 					'idawayteam'	=> $value['away']['id'],
 					'desawayteam'	=> addslashes($value['away']['name']),
-					'intss'			=> $value['ss']
+					'intss'			=> $value['ss'],
+					'time'			=> $value['time']
 				]);
+			
 
 				// var_dump( $value['id'] );
 
@@ -104,7 +110,7 @@ class UpcomingEvent {
 
 	}
 
-	public function prepare(array $leagues):bool {
+	public function prepare(array $leagues):bool { // OK
 
 		if ( empty($leagues) || !isset($leagues) ) return false;
 
@@ -128,13 +134,14 @@ class UpcomingEvent {
 			}
 		}
 
+		// Desalocando as partidas já classificadas
 		$this->match = [];
 
 		return true;
 
 	}
 
-	public function saveUnallowed(string $fileDir):bool {
+	public function saveUnallowed(string $fileDir):bool { // OK
 
 		if ( empty($fileDir) ) return false;
 
@@ -144,8 +151,9 @@ class UpcomingEvent {
 
 	}
 
+
 	public function hasMatch():bool {
-		return !empty($this->match) || $this->hasAllowed() || $this->hasUnallowed();
+		return !empty($this->match);
 	}
 
 	

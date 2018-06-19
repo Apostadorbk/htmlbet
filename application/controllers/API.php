@@ -123,18 +123,15 @@ class API extends BASE_Controller {
 		$start = microtime(true);
 
 		
-		$m = $this->model('League');
+		// $upcoming = $this->api->upcomingEvent('+2 hours');
 
-		$m->setLeague(['idleague']);
+		// var_dump( $upcoming->cacheAllowed('uadhw/haudw') );
 		
-		var_dump( $m->getValues() );
+		echo '<hr>';
 
+		$cache = $this->api->cacheEvent('Next-Events');
 
-		
-		$t = new Time('Europe/London');
-
-		var_dump( $t->convert(1490799600)->format() );
-		var_dump( $t->convert(strtotime('+2 hours', 1490799600))->format() );
+		$cache->update('+2 hours');
 		
 
 
@@ -154,7 +151,7 @@ class API extends BASE_Controller {
 
 	public function upcoming() { // OK
 
-		// echo '<pre>';
+		echo '<pre>';
 
 		$intervalHours 	= "+2 hours";
 		$midnight 		= false;
@@ -165,8 +162,8 @@ class API extends BASE_Controller {
 		}
 		
 		// Teste
-		// $midnight = false;
-		// $intervalHours = "+2 hours";
+		// $midnight 		= true;
+		// $intervalHours 	= "+24 hours";
 		// -------------------------
 
 
@@ -190,7 +187,11 @@ class API extends BASE_Controller {
 
 			// --------------------------------------------------------
 
+
 			if ( $upcoming->hasMatch() ) {
+
+				
+				// var_dump( 'Teste' );
 
 				$leagueModel = $this->model('League');
 
@@ -205,9 +206,27 @@ class API extends BASE_Controller {
 				// Salvar no BD tb_leagues oa jogos permitidos
 				if ( $upcoming->hasAllowed() ) {
 
+
 					$eventModel = $this->model('Event');
 
-					( $midnight ) ? $eventModel->setUpcoming($upcoming->getAllowed()) : $eventModel->updateUpcoming($upcoming->getAllowed());
+					if ( $midnight ) {
+						// var_dump( $upcoming );
+
+						// Salvar no BD
+						$eventModel->setUpcoming($upcoming->getAllowed());
+
+					} else {
+
+						// Atualizar os jogos existente
+						$eventModel->updateUpcoming($upcoming->getAllowed());
+
+					}
+
+
+					// Atualizar o cache
+					$cache = $this->api->cacheEvent('Next-Events');
+
+					$cache->update('+2 hours');
 
 				}
 
@@ -223,7 +242,7 @@ class API extends BASE_Controller {
 
 		}
 		
-		// echo '</pre>';
+		echo '</pre>';
 
 	}
 

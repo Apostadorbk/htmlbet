@@ -4,9 +4,9 @@ define("CACHEJSONDIR", APPPATH."cache");
 
 class Json {
 
-	private $cache;
-	private $cacheFile;
-	private $time;
+	protected $cache;
+	protected $cacheFile;
+	protected $time;
 
 	public function __construct(string $filename, int $time = 0) {
 
@@ -15,6 +15,8 @@ class Json {
 		$this->createDir("cache_json/".$filename.".json");
 
 		$this->setTime($time);
+
+		$this->cache = [];
 
 	}
 
@@ -61,18 +63,14 @@ class Json {
 	// ---------------------------------------------------------------------
 
 	public function setVar($key, $value):bool { // OK
-		if ( !$this->readCache() ) return false;
+		$this->readCache();
 		$this->cache[$key] = $value;
 		return $this->saveCache();
 	}
 
 	public function setVars(array $array = []):bool { // OK
-		if ( empty($array) || !isset($array) ) return false;
 
-		/*
-		echo 'teste';
-		exit;
-		*/
+		if ( empty($array) || !isset($array) ) return false;
 
 		$this->readCache();
 
@@ -80,7 +78,6 @@ class Json {
 			$this->cache[$key] = $value;
 		}
 		
-
 		return $this->saveCache();
 	}
 
@@ -175,11 +172,11 @@ class Json {
 
 	}
 
-	public function saveJson(string $json = 'NULL'):bool {
+	public function saveJson(string $json = 'NULL'):bool { // OK
 		return (bool) file_put_contents($this->cacheFile, $json);
 	}
 
-	public function readJson() {
+	public function readJson() { // OK
 
 		$read = file_get_contents($this->cacheFile);
 		
@@ -188,6 +185,32 @@ class Json {
 
 		return $read;
 	
+	}
+
+	public function hasFile():bool { // OK
+		return file_exists($this->cacheFile);
+	}
+
+	public function isEmpty():bool { // OK
+		
+		if ( !$this->hasFile() ) return false;
+
+		$data = $this->readJson();
+
+		return empty($data);
+
+	}
+
+	// -------------------------------------------------------------------------
+	// TEMPO
+
+	protected function getDate(string $time = 'now', string $format = 'Y-m-d H:i:s'):string {
+
+		if ( $time == 'now' ) 
+			return Time::currentDate();
+		else 
+			return date( $format, strtotime($time, Time::currentTime()) );
+
 	}
 
 }
