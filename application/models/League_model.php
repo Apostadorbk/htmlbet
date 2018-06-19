@@ -1,100 +1,51 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-require_once __DIR__.'\Database.php';
+require_once 'Model.php';
 
-
-//use Database;
-
-class League_model extends Database {
+class League_model extends Model {
 
 	public function __construct() {
 		parent::__construct();
 	}
 
-	/*
-	public function getall() { // OK
-		$results = $this->select("SELECT idcountry, descountry, intactive, intbetting, intclick FROM tb_country WHERE intactive = '1'");
+	public function teste() {
+		
+		$this->select("SELECT * FROM tb_country");
 
-		return $this->encoded($results, 'descountry');
+		/*
+		echo '<pre>';
+		var_dump( $this->select("SELECT * FROM tb_country") );
+		echo '</pre>';
+		*/
 	}
-	*/
 
+	public function setLeague(array $fields = []):bool { // OK
 
-	public function setLeagues($countries) { // OK
+		if ( count($fields) < 0 ) return false;
 
-		$_leagues = [];
+		$query = "SELECT ";
 
-		foreach ($countries as $key => $league) {
-			if ( !empty($league) ) {
-				$_leagues[$key] = $league;
+		if ( count($fields) > 0 ) {
+
+			$query .= "{$fields[0]}";
+
+			for ( $i = 1; $i < count($fields); $i++ ) { 
+				$query .= ", {$fields[$i]}";
 			}
+
+		} else {
+			$query .= "*";
 		}
 
-		if ( empty($_leagues) ) {
-			return true;
-		}
+		$query .= " FROM tb_league WHERE intactive = 1";
 
-		$counter = 0;
-		
-		$query = "INSERT INTO tb_league (idleague, idcountry, desleague) VALUES (:idleague, :idcountry, :desleague);";
-		$values = [];
-		$result = [];
+		return $this->setValues(
+			$this->db->select($query)
+		);
 
-		foreach ($_leagues as $keyCountry => $country) {
-			foreach ($country as $keyLeague => $league) {
-
-				$values[":idleague"] 	= $keyLeague;
-				$values[":idcountry"] 	= $keyCountry;
-				$values[":desleague"] 	= (isset($league[1])) ? $this->decoded($league[1]) : NULL;
-
-				$result[$keyCountry][$keyLeague] = $this->query( $query, $values );
-
-			}
-		}
-		
-		return $result;
-		
 	}
 
-	public function setActiveByCountry($idcountry) { // OK
-		return $this->query("UPDATE tb_league
-			SET intactive = '1'
-			WHERE idcountry = :idcountry", [
-			':idcountry' => $idcountry
-		]);
-	}
-
-	public function getLeagueByCountry($idcountry) { // OK
-		$results = $this->select("SELECT idleague, idcountry, desleague 
-			FROM tb_league 
-			WHERE idcountry = :idcountry AND intactive = '1'", [
-			':idcountry' => $idcountry
-		]);
-
-		
-		if ( !(count($results) > 0) ) {
-			return false;
-		}
-		
-		return $this->encoded($results, 'desleague');
-	}
-	
-	public function getLeagues($active = true) { // OK
-
-		$sql = "SELECT idleague, idcountry, desleague 
-			FROM tb_league".( ($active) ? " WHERE intactive = '1;'" : ';' );
-
-		$results = $this->select($sql);
-
-		if ( !(count($results) > 0) ) {
-			return false;
-		}
-
-		$results = $this->encoded($results, 'desleague');
-
-		return $results;
-	}
 }
 
  ?>

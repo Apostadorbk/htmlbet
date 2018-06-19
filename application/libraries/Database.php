@@ -3,10 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Database {
 
-	protected $pdo;
-
-	private $results;
-
+	private $pdo;
 
 	public function __construct() {
 		$this->connect();
@@ -50,7 +47,7 @@ class Database {
 	}
 
 	// Consulta que não retorna nada
-	protected function query($rawQuery, $params = array()):bool {
+	public function query($rawQuery, $params = array()):bool {
 
 		$stmt = $this->pdo->prepare($rawQuery);
 		$this->setParams($stmt, $params);
@@ -61,7 +58,7 @@ class Database {
 	}
 
 	// Operação que precisa retorna resultados do DB
-	protected function select($rawQuery, $params = array()) {
+	public function select($rawQuery, $params = array()) {
 		
 		$stmt = $this->pdo->prepare($rawQuery);
 		$this->setParams($stmt, $params);
@@ -72,6 +69,7 @@ class Database {
 		
 	}
 
+	/*
 	protected function encoded($array, $keyEncoded) {
 
 		$encoded = $array;
@@ -99,7 +97,7 @@ class Database {
 		return $decoded;
 
 	}
-
+	*/
 }
 
  ?>

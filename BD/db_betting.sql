@@ -71,9 +71,9 @@ CREATE TABLE `tb_enderecos` (
 
 
 CREATE TABLE `tb_country` (
-	`idcountry` int(11) UNSIGNED NOT NULL,
+	`idcountry` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`descountry` varchar(40) NOT NULL,
-	`intactive` tinyint(3) UNSIGNED DEFAULT '0',
+	`intactive` tinyint(3) UNSIGNED DEFAULT '1',
 	`intbetting` int(10) UNSIGNED DEFAULT '0',
 	`intclick` int(10) UNSIGNED DEFAULT '0',
 	`dteregistro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -83,13 +83,35 @@ CREATE TABLE `tb_country` (
 
 
 CREATE TABLE `tb_league` (
-	`idleague` int(11) UNSIGNED NOT NULL,
+	`idleague` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`idcountry` int(11) UNSIGNED NOT NULL,
 	`desleague` varchar(50) NOT NULL,
+	`intactive` tinyint(3) UNSIGNED DEFAULT '1',
 	`dteregistro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   	CONSTRAINT `PK_league` PRIMARY KEY (`idleague`),
   	CONSTRAINT `FK_league_country` FOREIGN KEY (`idcountry`) 
 		REFERENCES `tb_country` (`idcountry`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+CREATE TABLE `tb_upcomingevent` (
+	`idupcomingevent` int(11) UNSIGNED NOT NULL,
+	`idleague` 	int(11) UNSIGNED NOT NULL,
+
+	`idevent` 		int(11) UNSIGNED NOT NULL,
+	`idhometeam`	int(11) UNSIGNED NOT NULL,
+	`idawayteam`	int(11) UNSIGNED NOT NULL,
+	`deshometeam`	varchar(50) NOT NULL,
+	`desawayteam`	varchar(50) NOT NULL,
+	`dtetime`		datetime NOT NULL,
+	`inttimestatus`	tinyint(3) DEFAULT '0',
+	`intactive`		tinyint(3) UNSIGNED DEFAULT '1',
+	`dteupdate` 	timestamp DEFAULT NOW(),
+	`dteregistro` 	timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  	CONSTRAINT `PK_upcomingevent` PRIMARY KEY (`idupcomingevent`),
+  	CONSTRAINT `FK_upcomingevent_league` FOREIGN KEY (`idleague`) 
+		REFERENCES `tb_league` (`idleague`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 

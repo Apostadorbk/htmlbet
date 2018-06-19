@@ -43,102 +43,75 @@ class Time {
 	private $offset_final;
 	private $offset;
 
-	private $date;
-	private $format;
 	private $time;
 
 	public function __construct(string $start, string $final = 'America/Sao_Paulo') {
+		$this->setDiffTimeZone($start, $final);
+	}
+
+	private function setDiffTimeZone(string $start, string $final = 'America/Sao_Paulo') {
 		$this->diffTimeZone(
 			new DateTime('now', new DateTimeZone($start)), 
 			new DateTime('now', new DateTimeZone($final))
 		);
 	}
 
-	public function diffTimeZone(DateTime $start, DateTime $final) { // OK
+	private function diffTimeZone(DateTime $start, DateTime $final) { // OK
 		$this->offset_start = $start->getOffset();
 		$this->offset_final = $final->getOffset();
 
 		$this->offset = $this->offset_start - $this->offset_final;
 	}
 
-	public function getTimeOf(int $timestamp, string $format = 'Y-m-d H:i:s'):string { // OK
+	public function convert(int $timestamp):Time { // OK
 
 		$this->time = $timestamp - $this->offset;
 
-		return date($format, $this->time);
+		return $this;
 	
+	}
+
+	public function format(string $format = 'Y-m-d H:i:s'):string {
+		return date($format, $this->time);
 	}
 
 	public function getTime():int {
 		return $this->time;
 	}
 
-	public function setFormat(string $format) {
-		$this->$format = $format;
+	public static function currentDate(string $format = 'Y-m-d H:i:s', string $local = 'America/Sao_Paulo'):string {
+
+		$date 			= new DateTime('now', new DateTimeZone($local));
+
+		$localOffset 	= $date->getOffset();
+
+
+		$systemDate 	= gettimeofday();
+
+		$systemOffset 	= $systemDate['minuteswest']*60;
+
+		$offset 		= $systemOffset + $localOffset;
+
+
+		$localTimestamp = $systemDate['sec'] + $offset;
+
+		return date($format, $localTimestamp);
+
 	}
 
-	/*
-	public function setTimeZone($uf) {
-		return date_default_timezone_set(TIMEZONE[$uf]);
-	}
-	*/
+	public static function isHour(int $hour):bool {
 
-	/*
-	public function getDate($input = []) { // OK
+		$currentHour 	= self::currentDate('G');
 
-		$date = '';
-		$format = 'Y-m-d H:i:s';
-		$output = '';
+		// var_dump( $currentHour );
 
-		if ( empty($input) ) {
-			return (new DateTime("now"))->format($format);
+		if ( $currentHour == "{$hour}" ) {
+			return true;
 		} else {
-
-			$format = (isset($input['format']) && !empty($input['format'])) ? $input['format'] : $format;
-
-			if ( isset($input['date']) && !empty($input['date']) ) {
-				$date = new DateTime($input['date']);
-			} else {
-				$date = new DateTime('now');
-			}
-
-			if ( isset($input['interval']) && !empty($input['interval']) ) {
-
-				$interval = $input['interval'];
-
-				$interval_spec = 'P' . ((isset($interval['year'])) ? $interval['year'] : 0) . 'Y';
-
-				$interval_spec .= ((isset($interval['month'])) ? $interval['month'] : 0) . 'M';
-
-				$interval_spec .= ((isset($interval['week'])) ? $interval['week'] : 0) . 'W';
-
-				$interval_spec .= ((isset($interval['day'])) ? $interval['day'] : 0) . 'D';
-
-				$interval_spec .= 'T' . ((isset($interval['hour'])) ? $interval['hour'] : 0) . 'H';
-
-				$interval_spec .= ((isset($interval['minute'])) ? $interval['minute'] : 0) . 'M';
-
-				$interval_spec .= ((isset($interval['second'])) ? $interval['second'] : 0) . 'S';
-
-				$this->dateInterval = new DateInterval($interval_spec);
-
-				if ( isset($interval['sub']) && !empty($interval['sub']) ) {
-
-					if ($interval['sub'])
-						$date->sub($this->dateInterval);
-
-				} else {
-					$date->add($this->dateInterval);
-				}
-
-			}
-
-			return $date->format($format);
-
+			return false;
 		}
 
 	}
-	*/
 
 }
 

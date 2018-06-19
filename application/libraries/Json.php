@@ -14,25 +14,73 @@ class Json {
 
 		$this->createDir("cache_json/".$filename.".json");
 
-		$this->time = ($time >= 0) ? $time : 0;
+		$this->setTime($time);
 
 	}
 
-	public function setVar(string $name, $value):bool { // OK
-		$this->readCache();
-		$this->cache[$name] = $value;
+	/*
+	public function setCache($key, $value) {
+		$this->cache[$key] = $value;
+	}
+
+	public function getCache() {
+		return $this->cache;
+	}
+	*/
+
+	public function hasValue($key):bool {
+		return isset($this->cache[$key]);
+	}
+
+	public function sortKey(string $flag = 'STRING'):bool {
+
+		if ( !isset($this->cache) || empty($this->cache) ) return false;
+
+		switch ( $flag ) {
+
+			case 'STRING':
+				return ksort($this->cache, SORT_STRING);
+			break;
+
+			case 'REGULAR':
+				return ksort($this->cache, SORT_REGULAR);
+			break;
+
+			case 'NUMERIC':
+				return ksort($this->cache, SORT_NUMERIC);
+			break;
+
+		}
+
+	}
+
+	public function setTime(int $time) {
+		$this->time = ($time >= 0) ? $time : 0;
+	}
+
+	// ---------------------------------------------------------------------
+
+	public function setVar($key, $value):bool { // OK
+		if ( !$this->readCache() ) return false;
+		$this->cache[$key] = $value;
 		return $this->saveCache();
 	}
 
 	public function setVars(array $array = []):bool { // OK
-		if ( empty($array) ) return false;
+		if ( empty($array) || !isset($array) ) return false;
+
+		/*
+		echo 'teste';
+		exit;
+		*/
 
 		$this->readCache();
-		
+
 		foreach ($array as $key => $value) {
 			$this->cache[$key] = $value;
 		}
 		
+
 		return $this->saveCache();
 	}
 
@@ -60,6 +108,8 @@ class Json {
 
 		return $aux;
 	}
+
+	// ---------------------------------------------------------------------
 	
 	// Opcional
 	public function isValid() { // OK
@@ -79,6 +129,7 @@ class Json {
 
 	}
 
+
 	private function readCache():bool { // OK
 
 		$this->cache = [];
@@ -86,9 +137,13 @@ class Json {
 		if ( !file_exists($this->cacheFile) ) return false;
 
 		$read = file_get_contents($this->cacheFile);
-		
+
+		// Caso o arquivo seja novo e não tem nada escrito nele
+		if ( empty($read) ) return true;
+
 		// Caso dê falhan a leitura
-		if ( !$read ) return false;
+		if ( $read == false ) return false;
+
 
 		$this->cache = json_decode($read, true);
 
@@ -118,6 +173,21 @@ class Json {
 			
 		$this->cacheFile .= $array[$index];
 
+	}
+
+	public function saveJson(string $json = 'NULL'):bool {
+		return (bool) file_put_contents($this->cacheFile, $json);
+	}
+
+	public function readJson() {
+
+		$read = file_get_contents($this->cacheFile);
+		
+		// Caso dê falhan a leitura
+		if ( !$read ) return false;
+
+		return $read;
+	
 	}
 
 }

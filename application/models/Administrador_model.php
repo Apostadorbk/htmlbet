@@ -1,9 +1,6 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-require_once __DIR__.'\Database.php';
-
-
 //use Database;
 
 class Administrador_model extends Database {
@@ -43,7 +40,6 @@ class Administrador_model extends Database {
 	}
 
 	public function setCountry() {
-
 		
 		$APIkey = Constant::APIKEY;
 

@@ -1,14 +1,10 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Vinculo_model extends BASE_Model {
+class Vinculo_model extends Database {
 
 	public function __construct() {
 		parent::__construct();
-
-		$this->setTable("tb_vinculos");
-
-		$this->getLibrary('constant');
 	}
 	
 	/*

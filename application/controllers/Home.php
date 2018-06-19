@@ -7,10 +7,11 @@ class Home extends BASE_Controller {
 		parent::__construct("Home");
 
 		// Adicionar as bibliotecas que não precisam ser instanciadas
-		$this->getLibrary(['redirect', 'constant', 'session', 'auth']);
+
+		$this->getLibrary(['Time']);
 
 		// Inicialização da sessão
-		Session::init();
+		// Session::init();
 	}
 
 	/*
@@ -37,7 +38,7 @@ class Home extends BASE_Controller {
 			
 				// Função padrão
 				case 'index':
-
+					/*
 					// Se tiver logado
 					if ( Auth::checkLogged() ) {
 
@@ -48,6 +49,7 @@ class Home extends BASE_Controller {
 						$this->index();
 
 					}
+					*/
 
 				break;
 
@@ -57,7 +59,7 @@ class Home extends BASE_Controller {
 			}
 
 			// Atualiza a URL atual acessada
-			Redirect::updateURL();
+			// Redirect::updateURL();
 
         }
 
@@ -98,7 +100,7 @@ class Home extends BASE_Controller {
 
 		$data['title'] = "Elite Sports";
 
-		$data['user'] = Auth::get();
+		// $data['user'] = Auth::get();
 		
 		echo $this->view([
 			'header',
@@ -110,7 +112,9 @@ class Home extends BASE_Controller {
 
 	public function teste() {
 
-		$this->getLibrary(['Time']);
+		$start = microtime(true);
+
+		// $this->getLibrary(['Time']);
 		
 		//------------------------------------------------------------------------
 		//------------------------------------------------------------------------
@@ -119,9 +123,9 @@ class Home extends BASE_Controller {
 		echo '<pre>';
 		
 		$d1 = new DateTime('now', new DateTimeZone('America/Sao_Paulo'));
-		// $d2 = new DateTime('now', new DateTimeZone('Australia/Sydney'));
+		$d2 = new DateTime('now', new DateTimeZone('Australia/Sydney'));
 		// $d2 = new DateTime('now', new DateTimeZone('Europe/London'));
-		$d2 = new DateTime('now', new DateTimeZone('UTC'));
+		// $d2 = new DateTime('now', new DateTimeZone('UTC'));
 		// $d2 = new DateTime('now', new DateTimeZone('America/Los_Angeles'));
 
 		$offset1 = $d1->getOffset();
@@ -167,7 +171,7 @@ class Home extends BASE_Controller {
 		// Calculando horario de um lugar qualquer
 		$targetTime = $GMT + $offset2;
 
-		echo '<h1>UTC</h1>';
+		echo '<h1>Sydney</h1>';
 		echo '<br>';
 
 		// var_dump( getdate($targetTime) );
@@ -201,12 +205,15 @@ class Home extends BASE_Controller {
 		// -------------------------------------------------
 		// -------------------------------------------------
 
-		$p = new Time('UTC');
+		// Library::get('Time');
+
+		// $p = new Time('UTC');
+		$p = new Time('Europe/London');
 
 		var_dump( $p );
 
 		echo '>> ';
-		var_dump( $p->getTimeOf($targetTime) );
+		var_dump( $p->convert(1490810400)->format() );
 
 
 		echo '<hr>';
@@ -225,6 +232,11 @@ class Home extends BASE_Controller {
 		*/
 
 		echo '<br><br>';
+
+		echo '<hr>';
+		echo 'Time Elapsed: ';
+		$time_elapsed_secs = microtime(true) - $start;
+		var_dump( $time_elapsed_secs );
 	}
 
 }
