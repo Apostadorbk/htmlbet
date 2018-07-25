@@ -1,23 +1,55 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
-//use Database;
 
-class Country_model extends Database {
+require_once 'Model.php';
+
+class Country_model extends Model {
 
 	public function __construct() {
 		parent::__construct();
 	}
 
-	public function get() {
-		$results = $this->select("SELECT idcountry, descountry FROM tb_country");
+	public function setCountry(array $fields = []):bool { // OK
 
-		return $this->encoded($results, 'descountry');
+		if ( count($fields) < 0 ) return false;
+
+
+		$query = "SELECT ".$this->field($fields)->getField();
+
+		$query .= " FROM tb_mycountry WHERE intactive = 1";
+
+		return $this->setValues(
+			$this->db->select($query)
+		);
+
 	}
 
-	public function getall() { // OK
-		$results = $this->select("SELECT idcountry, descountry, intactive, intbetting, intclick FROM tb_country WHERE intactive = '1'");
+	public function insertCountry(array $countries = []):bool {
+		
+		if ( empty($countries) ) return false;
 
-		return $this->encoded($results, 'descountry');
+		$query = "INSERT INTO `tb_mycountry`(`idmycountry`, `desmycountry`, `intbetting`, `intactive`, `dteregistro`) VALUES ";
+		$total = count($countries);
+		$count = 0;
+
+		do {
+
+			$query .= "(
+				NULL,
+				'{$countries[$count]}',
+				'0',
+				'1',
+				CURRENT_TIMESTAMP
+			)";
+
+			$count++;
+
+			if ( $count < $total ) $query .= ", "; 
+
+		} while ( $count < $total );
+
+		return $this->db->query($query);		
+
 	}
 
 	

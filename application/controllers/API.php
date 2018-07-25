@@ -10,7 +10,8 @@ class API extends BASE_Controller {
 
 		$this->getLibrary([
 			'Bet365', 
-			'Time', 
+			'Time',
+			'TimeZone',
 			'Constant',
 			'Database',
 			'Json'
@@ -18,7 +19,8 @@ class API extends BASE_Controller {
 
 		$this->getModel([
 			'Event',
-			'League'
+			'League',
+			'Country'
 		]);
 
 		$this->api = new Bet365('Token de teste');
@@ -44,6 +46,8 @@ class API extends BASE_Controller {
 
         } else {
 
+        	
+
 			switch ($method) {
 
 				// Função padrão
@@ -56,6 +60,14 @@ class API extends BASE_Controller {
 					$this->upcoming();
 				break;
 
+				// Função padrão
+				case 'prematchodd':
+					$this->prematchodd();
+				break;
+
+				case 'updatecountry':
+					$this->updatecountry();
+				break;
 
 				default:
 					$this->teste();
@@ -67,8 +79,7 @@ class API extends BASE_Controller {
 	}
 	
 	
-	public function index()
-	{
+	public function index() {
 		
 		$t = new Time('Europe/London');
 
@@ -114,35 +125,21 @@ class API extends BASE_Controller {
 		var_dump( $unready_league->getVars() );
 		echo '</pre>';
 		
-
 	}
 
 	public function teste() {
 
 		echo '<pre>';
 		$start = microtime(true);
-
-		
-		// $upcoming = $this->api->upcomingEvent('+2 hours');
-
-		// var_dump( $upcoming->cacheAllowed('uadhw/haudw') );
-		
 		echo '<hr>';
 
-		$cache = $this->api->cacheEvent('Next-Events');
+		$t = new Json("Bet365/League/Unallowed-League");
 
-		$cache->update('+2 hours');
-		
+		var_dump( $t->getVar('league') );
 
 
-		// var_dump( Time::isHour(12) );
-
-		
-
-		// $this->api->request('prematchodd', ['event_id' => 12345678]);
-
+		echo '<hr>';
 		$time_elapsed_secs = microtime(true) - $start;
-		echo '<hr>';
 		echo 'Time Elapsed: ';
 		var_dump( $time_elapsed_secs );
 		echo '</pre>';
@@ -153,30 +150,39 @@ class API extends BASE_Controller {
 
 		echo '<pre>';
 
-		$intervalHours 	= "+2 hours";
+		$intervalHours 	= "+2 hour";
 		$midnight 		= false;
 
 		if ( Time::isHour(0) ) {
-			$intervalHours 	= "+24 hours";
+			$intervalHours 	= "+48 hours";
 			$midnight 		= true;
 		}
 		
 		// Teste
-		// $midnight 		= true;
-		// $intervalHours 	= "+24 hours";
+		$midnight 		= true;
+		$intervalHours 	= "+24 hours";
 		// -------------------------
+
+		$upcoming = $this->api->upcomingEvent($intervalHours);
 
 
 		// Requisição da pagina
 		$this->api->request('upcoming');
 
-		
+		// var_dump( $this->api->getResults() );
+
+		// $upcoming->readMatch( $this->api->getResults() );
+
+		//$this->api->request('upcoming');
+
+		//var_dump( $this->api->getResults() );
+
+		// exit;
+
 		// Requisição com sucesso
 		if ( $this->api->status() ) {
 
-			$upcoming = $this->api->upcomingEvent($intervalHours);
-
-
+			// Lendo todas as partidas requisitadas dentro do intervalo
 			while ( $upcoming->readMatch( $this->api->getResults() ) ) {
 
 				$this->api->request('upcoming');
@@ -185,27 +191,33 @@ class API extends BASE_Controller {
 
 			}
 
+			// var_dump( $upcoming );
+			// exit;
+
 			// --------------------------------------------------------
 
 
 			if ( $upcoming->hasMatch() ) {
 
-				
 				// var_dump( 'Teste' );
 
 				$leagueModel = $this->model('League');
 
-				$leagueModel->setLeague(['idleague']);
+				$leagueModel->setLeague(['idmyleague', 'idleague', 'desmyleague']);
 				
 
-				$upcoming->prepare(
-					$leagueModel->getValues()
-				);
+				$leagues = [];
 
+				$leagues = $leagueModel->getValues(['idmyleague', 'idleague', 'desmyleague']);
+				
+				if ( !$leagues ) $leagues = [];
+
+				$upcoming->prepare(
+					$leagues
+				);
 
 				// Salvar no BD tb_leagues oa jogos permitidos
 				if ( $upcoming->hasAllowed() ) {
-
 
 					$eventModel = $this->model('Event');
 
@@ -213,30 +225,45 @@ class API extends BASE_Controller {
 						// var_dump( $upcoming );
 
 						// Salvar no BD
-						$eventModel->setUpcoming($upcoming->getAllowed());
+						$eventModel->setEvent($upcoming->getAllowed());
 
 					} else {
 
 						// Atualizar os jogos existente
-						$eventModel->updateUpcoming($upcoming->getAllowed());
+						$eventModel->updateEvent($upcoming->getAllowed());
 
 					}
 
+					echo 'EVENTOS PERMITIDOS'.'<br>';
+					var_dump( $upcoming->getAllowed() );
+					echo '<hr>';
+					echo '<hr>';
 
 					// Atualizar o cache
+					/*
 					$cache = $this->api->cacheEvent('Next-Events');
 
-					$cache->update('+2 hours');
+					$cache->update(
+						$intervalHours
+					);
+					*/
 
 				}
 
 				// Salvar no arquivo os jogos não permitidos
+				
 				if ( $upcoming->hasUnallowed() ) {
+
+					echo 'EVENTOS NÃO PERMITIDOS'.'<br>';
+					var_dump( $upcoming->getUnallowed() );
+					echo '<hr>';
+					echo '<hr>';
 					
 					// Salvar as partidas nao permitidas em Bet365/Event/Unallowed-Upcoming-Event
-					$upcoming->saveUnallowed('Bet365/Event/Unallowed-Upcoming-Event');
+					$upcoming->saveUnallowed('Bet365/League/Unallowed-League');
 
 				}
+				
 
 			}
 
@@ -246,11 +273,188 @@ class API extends BASE_Controller {
 
 	}
 
-	public function prematchodds() {
+	public function prematchodd() {
 		
+		echo '<pre>';
+
+		$eventModel 	= $this->model('Event');
+		
+		$intervalHours 	= "+24 hours";
+		$midnight 		= false;
+
+		if ( Time::isHour(0) ) {
+			$intervalHours 	= "+72 hours";
+			$midnight 		= true;
+		}
+
+		$startTime 		= Time::date('now');
+		$finalTime		= Time::date($intervalHours);
+
+		/*
+			1. Pegar todas as partidas em um intervalo
+				A cada hora atualizo as odds de todos proximos jogos em um intervalo de 24h;
+				A cada meia noite eu atualizo as odds dos 3 próximo dias
+
+		*/
+
+
+		// ------------------------------------------------------------------
+		// Teste
+		$startTime		= '2017-03-29 13:00:00';
+
+		// tempo final correspodente ao intervalo somado com a data inicial
+		$finalTime		= '2017-03-30 13:00:00';
+		
+		// ------------------------------------------------------------------
+				
+		/*
+		var_dump ( 
+			$eventModel,
+			$startTime,
+			$finalTime
+		);
+		*/
+
+		// Buscar todos os IDs dos próximos jogos dentro do intervalo
+		if ( $eventModel->field('idevent')->setEventByDate($startTime, $finalTime) ) {
+
+			// instanciar prematchodd
+			$odd = $this->api->prematchOdd(
+				$eventModel->getValues('idevent')
+			);
+
+
+			// var_dump( $odd );
+
+			// OK
+
+			// Buscar as Odds partida por partida
+			while ( $idevent = $odd->nextEvent() ) {
+				
+				// Se recebeu a resposta do Betapi
+				if ( $this->api->request('prematchodd', ['idevent' => $idevent])->success() ) {
+					// $match = $this->api->getResults();
+
+					// Tratar a resposta do servidor
+					$odd->readOdd( $this->api->getResults() );
+
+					/*
+					if ( $match[0]['FI'] == $idevent ) {
+						var_dump( $match );
+					}
+					*/
+
+				} else {
+					var_dump( "Não sucedido: ".$idevent );
+				}
+
+				echo '<hr>';
+
+			}
+
+		}
+
+
+
+
+
+
+
+
+
+
+		/*
+		echo '<hr>';
+
+		if ( $eventModel->field('idevent')->setEventByDate($startTime, $finalTime) ) {
+
+			// instanciar prematchodd
+			$odd = $this->api->prematchOdd(
+				$eventModel->getValues('idevent')
+			);
+
+			echo '<hr>';
+
+			// ---------------------------------------------------------
+		*/
+			/*
+			var_dump( 
+				$this->api->request('prematchodd', ['idevent' => 0])->getError()
+			);
+			*/
+
+			/*
+			$i = 0;
+
+			// while ( (
+				$idevent = $odd->nextEvent();
+			// ) ) {
+				
+				$odd->setStatus(
+					$this->api->request('prematchodd', ['idevent' => $idevent])->success()
+				);
+
+				// var_dump( $this->api->getResults() );
+				// echo '<hr>';
+
+				
+				if ( $odd->getStatus() ) {
+					$odd->readOdd( 
+						$this->api->getResults()
+					);
+				}
+				*/
+			// }
+			
+			/*
+			var_dump( $odd->getReceived() );
+			echo '<hr>';
+
+			var_dump( $odd->getUnreceived() );
+			echo '<hr>';
+			*/
+		
+		//}
+		
+
+
+
+		echo '</pre>';
+	
 	}
 
 	public function result() {
+
+	}
+
+	// Ler os países adicionados em Bet365/Country/Country.json
+	public function updatecountry() { // OK
+
+		$file = new Json('Bet365/Country/Country');
+
+		$update 		= $file->getVar('update');
+		$countryFile 	= $file->getVar('country');
+
+		if ( !$update ) {
+
+			$countryModel = $this->model('Country');
+
+			$countryModel->setCountry(['desmycountry']);
+
+
+			if ( !($country = $countryModel->getValues('desmycountry')) ) {
+				$country = [];
+			}
+
+			$newCountry = array_values(array_diff($countryFile, $country));
+
+			if ( $countryModel->insertCountry($newCountry) ) {
+				$file->setVar('update', true);
+				$file->setVar('country', []);
+			}
+
+		}
+
 
 	}
 

@@ -20,12 +20,13 @@ require_once BET365PATH.DS.'Odd.php';
 require_once BET365PATH.DS.'Result.php';
 require_once BET365PATH.DS.'UpcomingEvent.php';
 require_once BET365PATH.DS.'CacheEvent.php';
+require_once BET365PATH.DS.'PrematchOdd.php';
 
 
 define("TYPE_REQUEST", [
-	'upcoming'		=> "upcoming?",
-	'prematchodd'	=> "start_sp?",
-	'result'		=> "result?"
+	'UPCOMING'		=> "upcoming?",
+	'PREMATCHODD'	=> "start_sp?",
+	'RESULT'		=> "result?"
 ]);
 
 define("TYPE", [
@@ -37,16 +38,17 @@ define("TYPE", [
 class Bet365 {
 
 	private $token;
-	private $url		= "Bet365/";
+	private $url		= NULL;
 	private $type 		= NULL;
-	private $status		= 0;
-	// private $error 		= true;
+	private $status		= false;	// Status da requisição
+	private $error 		= false;	// Se ocorreu um error após a requisição
 	private $msgError 	= NULL;
+	private $required	= false; 	// Os parametros da requisição está prontas
 
 	// Variaveis do upcoming
 	private $sportID 	= '1';
-	private $totalPage	= 0;
-	private $perPage 	= 0;
+	private $totalPage	= 5000;
+	private $perPage 	= 50;
 	private $page 		= 0;
 
 
@@ -58,47 +60,140 @@ class Bet365 {
 		$this->token = $token;
 	}
 
-	public function setPager(int $page = 0, int $perPage = 0, int $totalPage = 0) { // OK
-		$this->page 		= ($page > 0) 		? $page 		: $this->page;
-		$this->perPage 		= ($perPage > 0) 	? $perPage 		: $this->perPage;
-		$this->totalPage 	= ($totalPage > 0) 	? $totalPage 	: $this->totalPage;
+	public function setPager(int $page = 0, int $perPage = 50, int $total = 5000) { // OK
+		$this->perPage 		= ($perPage > 0) 	? $perPage 							: $this->perPage;
+		$this->totalPage 	= ($total > 0) 		? (int) ceil($total/$this->perPage) : $this->totalPage;
+		$this->page 		= ($page > 0) 		? $page 							: $this->page;
 	}
 
 
-	public function request(string $type = ''):Bet365 {
+	public function request(string $type = '', array $params = []):Bet365 {
 
-		$this->type = NULL;
-		$this->url 	= "Bet365/";
+		// -------------------------------------------------------------------
+		// VARIAVEIS 
+
+		// $this->url 		= "Bet365/";
+		$this->url 		= "https://api.betsapi.com/v1/bet365/";
+		$this->type 	= NULL;
+		$this->msgError = NULL;
+		$this->response = NULL;
+		$this->status 	= false;
+		$this->error 	= false;
+
+		$parameters 			= [];
+		// $parameters['token'] 	= Constant::APIKEY;
+
+		// var_dump( $parameters );
+		// exit;
+
+		// -------------------------------------------------------------------
 
 		switch ($type) {
 
 			case 'upcoming':
 
-				$this->type = TYPE['UPCOMING'];
-				$this->nextPage();
-				$this->url .= 'Upcoming-Events'.$this->page;
+				$this->type 	= TYPE['UPCOMING'];
 
+				if( !$this->nextPage() ) {
+					$this->error 	= true;
+					$this->msgError = "EXCEEDED PAGE LIMIT";
+				} 
+				// $this->url 	.= 'Upcoming-Events'.$this->page;
+				$this->url 	.= TYPE_REQUEST['UPCOMING'];
+				
+				$parameters['sport_id'] = '1';
+				$parameters['page'] 	= $this->page;
+
+			break;
+
+			case 'prematchodd':
+
+				$this->type 	= TYPE['PREMATCHODD'];
+
+				if ( !isset($params['idevent']) ) {
+
+					$this->error 	= true;
+					$this->msgError = "PARAMETER 'idevent' REQUIRED";
+
+				} else {
+
+					if ( $params['idevent'] <= 0 ) {
+						$this->error 	= true;
+						$this->msgError = "PARAMETER 'idevent' INVALID";
+					}
+
+				}
+
+				// $this->url .= 'Prematch-Odds';
+				$this->url 	.= TYPE_REQUEST['PREMATCHODD'];
+
+			break;
+
+			default:
+				$this->error 	= true;
+				$this->msgError = "REQUEST TYPE INVALID";
 			break;
 			
 		}
 
-		$file = new Json($this->url);
-		$this->response = $file->readJson();
+		if ( !$this->error ) {
 
+			// --------------------------------------------
+			// Teste
+			/*
+			$file = new Json($this->url);
+			
+			if( !($this->response = $file->readJson()) ) {
+
+				$this->error 	= true;
+				$this->msgError = "FILE NOT FOUND";
+				$this->response = NULL;
+
+			} else {
+				$this->error 	= false;
+				$this->status 	= true;
+			}
+			*/
+			// --------------------------------------------
+
+
+			foreach ($parameters as $key => $value) {
+				$this->url .= "{$key}={$value}&";
+			}
+
+			$this->url .= "token=".Constant::APIKEY;
+
+			// var_dump( $this->url );
+			// exit;
+
+			$ch = curl_init($this->url);
+			curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+			$data = curl_exec($ch);
+			curl_close($ch);
+
+			if ( !$data ) {
+				$this->error 	= true;
+				$this->msgError = "REQUEST FAILED";
+			} else { 
+				$this->status 	= true;
+				$this->response = $data; 
+			}
+
+			$this->prepare();
+
+		}
 
 
 		// var_dump( $this->url );
 		// var_dump( $this->response );
 		
-		/*
-		$this->url .= TYPE_REQUEST[$type];
+		
+		// $this->url .= TYPE_REQUEST[$type];
 
-		foreach ($params as $key => $value) {
-			$this->url .= "{$key}={$value}&";
-		}
-
-		$this->url .= "token=".$this->token;
-		*/
+		
 		
 		//exit;
 
@@ -119,63 +214,108 @@ class Bet365 {
 		curl_close($ch);
 		*/
 
+		/*
+		if ( !$data ) {
+			$this->error 	= true;
+			$this->msgError = "REQUEST FAILED";
+		} else { 
+			$this->status 	= true;
+			$this->response = $data; 
+		}
+		*/
+
 		//$this->response = ($data) ? $data : NULL;
-		
-		$this->prepare();
+
 
 		return $this;
 
 	}
 
-	private function prepare() {
+	public function required():bool {
+		return !$this->required;
+	}
 
-		$this->array();
+	public function error():bool {
+		return $this->error;
+	}
 
-		$this->results 	= NULL;
+	public function success():bool {
+		return !$this->error;
+	}
+
+	public function getError():string {
+		return $this->msgError ?? "NO ERROR";
+	}
+
+	private function prepare():bool {
+
+		if ( !$this->status() || $this->error  ) return false;
+
+		if ( !$this->array() ) 	return false;
+
+		/*
+		var_dump( $this->response );
+		exit;
+		*/
+
+		// ----------------------------------------------------------
+
+		$this->error 	= !((bool) $this->response['success']);
 		$this->msgError	= NULL;
 
-		if ( isset($this->response) ) {
+		if ( $this->error ) {
+			$this->msgError = $this->response['error'];
+			return false;
+		}
 
-			$this->status = (int) $this->response['success'];
+		// ----------------------------------------------------------
 
+		$this->results 	= NULL;
 
-			if ( !$this->status ) {
+		switch ($this->type) {
 
-				// $this->error 	= true;
-				$this->msgError = $this->response['error'];
+			case TYPE['UPCOMING']:
 
-			} else {
+				$this->setPager(
+					$this->response['pager']['page'],
+					$this->response['pager']['per_page'],
+					$this->response['pager']['total']
+				);
 
-				// $this->error 	= false;
+				$this->results = $this->response['results'];
 
-				switch ($this->type) {
+			break;
 
-					case TYPE['UPCOMING']:
+			case TYPE['PREMATCHODD']:
 
-						$this->setPager(
-							$this->response['pager']['page'],
-							$this->response['pager']['per_page'],
-							$this->response['pager']['total']
-						);
+				$this->results = $this->response['results'];
 
-						$this->results = $this->response['results'];
+				// echo 'Lido com sucesso!';
+				// echo '<hr>';
 
-					break;
-
-				}
-				
-			}
-			
-			// Desaloocando a resposta da API
-			$this->response = NULL;
+			break;
 
 		}
 
+		// ----------------------------------------------------------
+		
+		// Desaloocando a resposta da API
+		$this->response = NULL;	
+
+		return true;
 
 	}
 
-	public function nextPage() { // OK
+	public function nextPage():bool { // OK
+
+		if ( ($this->page + 1) > $this->totalPage ) {
+			return false;
+		}
+		
 		$this->setPager($this->page + 1);
+
+		return true;
+
 	}
 
 	public function status():bool { // OK
@@ -188,31 +328,26 @@ class Bet365 {
 
 	public function array() { // OK
 
-		if ( isset($this->response) ) {
-
-			if ( gettype($this->response) == 'string' ) {
-				$this->response = json_decode($this->response, true);
-			}
-
-			return $this->response;
-		}
+		if ( !isset($this->response) || empty($this->response) ) return false;
 		
-		return false;
+		if ( gettype($this->response) == 'string' ) {
+			$this->response = json_decode($this->response, true);
+		}
+
+		return $this->response;
+	
 	}
 
 	public function json() { // OK
 
-		if ( isset($this->response) ) {
-			
-			if ( gettype($this->response) == 'array' ) {
-				$this->response = json_encode($this->response);
-			}
-
-			return $this->response;
-
-		}
+		if ( !isset($this->response) || empty($this->response) ) return false;
 		
-		return false;
+		if ( gettype($this->response) == 'array' ) {
+			$this->response = json_encode($this->response);
+		}
+
+		return $this->response;
+
 
 	}
 
@@ -234,6 +369,11 @@ class Bet365 {
 	// Instanciando um objeto odd
 	public function upcomingEvent(string $time) {
 		return new UpcomingEvent($time);
+	}
+
+	// Instanciando um objeto Prematch Odds
+	public function prematchOdd(array $idevents) {
+		return new PrematchOdd($idevents);
 	}
 
 	// Instanciando um objeto result

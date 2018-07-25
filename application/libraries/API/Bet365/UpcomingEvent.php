@@ -25,26 +25,35 @@ class UpcomingEvent {
 	// now = é a hora exata da requisição
 	// time é até a hora maxima dos jogos a ser requisitados
 	public function __construct(string $time = '+2 hours') { // OK
-		// $this->startTS = strtotime('now');
-		// $this->finalTS = strtotime($time);
 
-		$this->startTS 		= $this->getExactTime();
-		$this->finalTS 		= $this->getExactTime($time);
+		// Pegando a hora de Londres
+		$t = new Time('Europe/London');
+
+		$this->startTS 		= $t->time()->get();
+		$this->finalTS 		= $t->time()->get($time);
+
+		// Convertendo para a hora local
+		$t = new TimeZone('Europe/London', 'America/Sao_Paulo');
+
+		$this->startTS 		= $t->convert($this->startTS)->getTime();
+		$this->finalTS 		= $t->convert($this->finalTS)->getTime();
+
+
 		$this->match 		= []; 
 		$this->allowed 		= []; 
 		$this->unallowed 	= []; 
 		$this->time 		= $time;
 	
-		// var_dump( date('Y-m-d H:i:s', 1490811300) );
-		// var_dump( date('Y-m-d H:i:s', $this->startTS) );
-		// var_dump( date('Y-m-d H:i:s', $this->finalTS) );
 	}
 	
-	public function getExactTime(string $time = 'now', string $timezone = 'Europe/London'):int { // OK
+	/*
+	private function getExactTime(string $time = 'now', string $timezone = 'America/Sao_Paulo'):int { // OK
+
+		// date_default_timezone_set($timezone);
 
 		if ( $time == 'now' ) {
-			// $timestamp = strtotime(Time::currentDate('Y-m-d H:i:s', $timezone));
-			$timestamp = 1490799600;
+			$timestamp = Time::currentTime($timezone);
+			// $timestamp = 1490799600;
 		} else {
 			$timestamp = strtotime($time, $this->startTS);
 		}
@@ -53,11 +62,10 @@ class UpcomingEvent {
 
 		$date = strtotime($date);
 
-		// var_dump( date( 'Y-m-d H:i:s', $date) );
-
 		return $date;
 
 	}
+	*/
 
 	public function readMatch(array $results):bool { // OK
 
@@ -65,34 +73,104 @@ class UpcomingEvent {
 
 		if ( $this->finalTS < $this->startTS ) return false;
 
-
-		$time = new Time('Europe/London');
-
+		$tz = new TimeZone('Europe/London', 'America/Sao_Paulo');
 
 		foreach ($results as $value) {
-			
-			if ( 
-				$value['time'] >= $this->startTS 
-				&&
-				$value['time'] <= $this->finalTS 
-			) {
-			
-				// var_dump( $value );
 
-			
+			$value['dtetime'] 	= $tz->convert($value['time'])->format();
+			$value['time'] 		= $tz->convert($value['time'])->getTime();
+
+			if (
+					$value['time'] >= $this->startTS 
+					&& 
+					$value['time'] <= $this->finalTS 
+			) {
+
 				array_push($this->match, [
 					'idevent'		=> $value['id'],
-					'dtetime'		=> $time->convert($value['time'])->format(),
-					// 'dtetime'		=> date( 'Y-m-d H:i:s', $value['time'] ),
-					'inttimestatus'	=> $value['time_status'],
+					'inttime'		=> $value['time'],
+					'inttimestatus' => $value['time_status'],
 					'idleague'		=> $value['league']['id'],
 					'desleague'		=> addslashes($value['league']['name']),
 					'idhometeam'	=> $value['home']['id'],
 					'deshometeam'	=> addslashes($value['home']['name']),
 					'idawayteam'	=> $value['away']['id'],
 					'desawayteam'	=> addslashes($value['away']['name']),
-					'intss'			=> $value['ss'],
-					'time'			=> $value['time']
+					'desss'			=> $value['ss'],
+					'idourevent' 	=> $value['our_event_id'],
+
+					'dtetime'		=> $value['dtetime']
+				]);
+
+				/*
+				echo 'Campeonato: '.$value['league']['name'].'<br>';
+				echo $value['home']['name'].' vs '.$value['away']['name'].'<br>';
+				echo 'Horario: '.$value['dtetime'].'<br>';
+				echo 'Horario em TimeStamp: '.$value['time'].'<br>';
+				echo 'Hora Inicial: '.$this->startTS.'<br>';
+				echo 'Hora Final: '.$this->finalTS.'<br>';
+				echo '<hr>';
+				*/
+			}
+
+			if ( $value['time'] > $this->finalTS ) {
+				return false;
+			}
+
+		}
+
+		return true;
+
+		/*
+		echo '<hr><hr><hr>';
+
+		foreach ($results as $value) {
+			
+			$value['dtetime'] 	= $time->convert($value['time'])->format();
+			$value['time'] 		= $time->convert($value['time'])->getTime();
+
+			if ( 
+					$value['time'] >= $this->startTS 
+					&& 
+					$value['time'] <= $this->finalTS 
+			) {
+				echo 'Campeonato: '.$value['league']['name'].'<br>';
+				echo $value['home']['name'].' vs '.$value['away']['name'].'<br>';
+				echo 'Horario: '.$value['dtetime'].'<br>';
+				echo 'Horario em TimeStamp: '.$value['time'];
+				echo '<hr>';
+			}
+		}
+		*/
+
+
+		/*
+
+
+		foreach ($results as $value) {
+
+			$value['dtetime'] = $time->convert($value['time'])->getTime();
+			
+			// A comparação do tempo é em relação ao horário de Londres
+			if ( 
+				$value['dtetime'] >= $this->startTS 
+				&&
+				$value['dtetime'] <= $this->finalTS 
+			) {
+			
+				array_push($this->match, [
+					'idevent'		=> $value['id'],
+					'dtetime'		=> $value['dtetime'],
+					// 'dtetime'		=> date( 'Y-m-d H:i:s', $value['time'] ),
+					'inttimestatus'	=> $value['time_status'],
+					'idleagueapi'	=> $value['league']['id'],
+					'desleague'		=> addslashes($value['league']['name']),
+					'idhometeam'	=> $value['home']['id'],
+					'deshometeam'	=> addslashes($value['home']['name']),
+					'idawayteam'	=> $value['away']['id'],
+					'desawayteam'	=> addslashes($value['away']['name']),
+					'intss'			=> $value['ss']
+					// 'time'			=> $value['time']
 				]);
 			
 
@@ -100,39 +178,48 @@ class UpcomingEvent {
 
 			}
 
-			if ( $value['time'] > $this->finalTS ) {
+			if ( $value['dtetime'] > $this->finalTS ) {
 				return false;
 			}
 			
 		}
+		*/
 		
-		return true;
+		// return true;
 
 	}
 
-	public function prepare(array $leagues):bool { // OK
+	public function prepare(array $league):bool { // OK
 
-		if ( empty($leagues) || !isset($leagues) ) return false;
-
-		$ids = [];
-
-		foreach ($leagues as $key => $value) {
-			$ids[] = $value['idleague'];
-		}
-
-		// var_dump( $ids );
-		// exit;
+		if ( empty($league) || !isset($league) ) return false;
 
 		$this->allowed 		= [];
 		$this->unallowed 	= [];
 		
 		foreach ($this->match as $value) {
-			if ( in_array($value['idleague'], $ids) ) {
-				$this->allowed[] = $value;
+			
+			$index = array_search($value['idleague'], $league['idleague']);
+
+			if ( $index >= 0 && gettype($index) == 'integer' ) {
+
+				$value['idmyleague'] 	= $league['idmyleague'][$index];
+				$value['desleague'] 	= $league['desmyleague'][$index];
+				$this->allowed[] 		= $value;
+
 			} else {
-				$this->unallowed[] = $value;
+
+				$this->unallowed[] 		= $value;
+
 			}
+
 		}
+
+		/*
+		var_dump($this->allowed);
+		echo '<hr>';
+		var_dump($this->unallowed);
+		exit;
+		*/
 
 		// Desalocando as partidas já classificadas
 		$this->match = [];
@@ -147,7 +234,22 @@ class UpcomingEvent {
 
 		$f = new Json($fileDir);
 
-		return $f->setVars($this->unallowed);
+		if ( !($leagues = $f->getVar('league')) ) {
+			$leagues = [];
+		}
+
+		foreach ($this->unallowed as $value) {
+			
+			$leagues[] = [
+				'idleague'		=> $value['idleague'],
+				'desleague' 	=> $value['desleague']
+			];
+
+		}
+
+		$this->unallowed = [];
+
+		return $f->setVar('league', $leagues);
 
 	}
 

@@ -30,6 +30,8 @@ class Database {
 			echo $e->getMessage();
 		}
 
+		$this->pdo->exec("SET CHARACTER SET utf8");
+
 	}
 
 	// Setando os parametros

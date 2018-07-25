@@ -24,9 +24,10 @@ define("VINCULOS", 'tb_vinculos');
 define("ENDERECOS", 'tb_enderecos');
 define("SENHASRECUPERADAS", 'tb_senhasrecuperadas');
 
+
 class Constant {
 
-	const APIKEY = '781f3b505bca14bccc0fe5211401d43e25d6d07eeb40f2411377755ed228598b';
+	const APIKEY = '4118-MkUMJ3jCQehsuu';
 
 	// Banco de dados
 	const HOST = "localhost";

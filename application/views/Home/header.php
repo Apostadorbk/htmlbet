@@ -128,6 +128,179 @@
                 color: #ff8c1a;
             }
 
+            .hero-video {
+                height: 27vh;
+            }
+
+            #nav-games > div > aside {
+                display: none;
+            }
+
+            #nav-games > div > div {
+                width: 100%;
+                flex: 0 0 100%;
+                max-width: 100%;        
+            }
+
+            @media screen and (min-width: 1199px) {
+                
+                #nav-games > div > aside {
+                    display: block;
+                }
+
+                #nav-games > div > div {
+                    flex: 0 0 75%;
+                    max-width: 75%;
+                }
+                
+            }
+
+            .titles {
+                margin-bottom: 0;
+            }
+
+            #head-matches {
+                width: 100%;
+                height: 20px;
+                font-size: 1.1rem;
+            }
+
+            #list-matches {
+                width: 100%;
+                height: 500px;
+            }
+
+            /*----------------------------------------*/ 
+            /* ODDS */
+
+            .match {
+                display: flex;
+                height: 30px;
+                border-left: 5px solid #01d099;
+                border-bottom: 1px solid #ccc;
+                font-size: 1.1rem;
+                justify-content: center;
+            }
+
+            .hometeam {
+                text-align: right;
+            }
+        
+            .time {
+                width: 12%;
+            }
+
+            .teams, .odds {
+                width: 44%;
+            }
+
+            .teams div, .time div {
+                text-align: center;
+            }
+
+            .odds {
+                display: flex;
+                justify-content: space-around;
+            }
+
+            .odds div {
+                position: relative;
+                float: left;
+                width: 37px;
+                height: 18px;
+                color: #000;
+                font-size: 11px;
+                font-family: 'Roboto', Arial, Helvetica, sans-serif;
+                line-height: 18px;
+                text-align: center;
+                background: #fdfdfd;
+                cursor: pointer;
+                margin: 1px;
+                margin-top: 5px;
+                border: 1px solid #01d099;
+                box-sizing: border-box
+            }
+
+            .odds span {
+                width: 100%;
+                height: 100%;
+                text-align: center;
+                vertical-align: middle;
+            }
+            
+            .plus-odds {
+                margin: 7px;
+                width: 10%;
+            }
+
+            .odd-selected {
+                background: #ef8107 !important;
+                color: white !important;
+            }
+
+            @media screen and (min-width: 576px) {
+                
+                .teams > .awayteam:before {
+                    content: "x";
+                    display: block;
+                    width: 12px;
+                    height: 28px;
+                    text-align: center;
+                    float: left;
+                }
+
+                .plus-odds {
+                    width: 30px;
+                }
+
+                .odds {
+                    width: 170px;
+                }
+
+                .time {
+                    width: 20%;
+                    display: flex;
+                    justify-content: space-around;
+                }
+
+                .teams {
+                    width: 50%;
+                    display: flex;
+                    justify-content: center;
+                }
+
+                .content-info {
+                    width: 80%;
+                    margin: 0 auto;
+                }
+
+                .day, .hour, .teams {
+                    margin: 7px;
+                }
+
+            }
+
+            @media screen and (min-width: 768px) {
+                .content-info {
+                    width: 70%;
+                    margin: 0 auto;
+                }
+            }
+
+            @media screen and (min-width: 992px) {
+                .content-info {
+                    width: 60%;
+                    margin: 0 auto;
+                }
+            }
+
+            @media screen and (min-width: 1199px) {
+                .content-info {
+                    width: 80%;
+                    margin: 0 auto;
+                }
+            }
+
         </style>
 
     </head>

@@ -7,102 +7,80 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 *	classe responsavel de manipular quem tá autenticado
 */
 
-define("TIMEZONE", array(
-	'AC' => 'America/Rio_branco',   
-	'AL' => 'America/Maceio',
-	'AP' => 'America/Belem',        
-	'AM' => 'America/Manaus',
-	'BA' => 'America/Bahia',        
-	'CE' => 'America/Fortaleza',
-	'DF' => 'America/Sao_Paulo',    
-	'ES' => 'America/Sao_Paulo',
-	'GO' => 'America/Sao_Paulo',    
-	'MA' => 'America/Fortaleza',
-	'MT' => 'America/Cuiaba',       
-	'MS' => 'America/Campo_Grande',
-	'MG' => 'America/Sao_Paulo',    
-	'PR' => 'America/Sao_Paulo',
-	'PB' => 'America/Fortaleza',    
-	'PA' => 'America/Belem',
-	'PE' => 'America/Recife',       
-	'PI' => 'America/Fortaleza',
-	'RJ' => 'America/Sao_Paulo',    
-	'RN' => 'America/Fortaleza',
-	'RS' => 'America/Sao_Paulo',    
-	'RO' => 'America/Porto_Velho',
-	'RR' => 'America/Boa_Vista',    
-	'SC' => 'America/Sao_Paulo',
-	'SE' => 'America/Maceio',       
-	'SP' => 'America/Sao_Paulo',
-	'TO' => 'America/Araguaia'  
-));
-
 class Time {
 
-	private $offset_start;
-	private $offset_final;
-	private $offset;
+	private $timeZone;
+	private $timeStamp;
 
 	private $time;
 
-	public function __construct(string $start, string $final = 'America/Sao_Paulo') {
-		$this->setDiffTimeZone($start, $final);
+	public function __construct(string $timeZone = 'America/Sao_Paulo') {
+		$this->timeZone = $timeZone;
+		date_default_timezone_set($timeZone);
 	}
 
-	private function setDiffTimeZone(string $start, string $final = 'America/Sao_Paulo') {
-		$this->diffTimeZone(
-			new DateTime('now', new DateTimeZone($start)), 
-			new DateTime('now', new DateTimeZone($final))
-		);
-	}
+	public function time() {
+		$date 				= new DateTime('now', new DateTimeZone($this->timeZone));
 
-	private function diffTimeZone(DateTime $start, DateTime $final) { // OK
-		$this->offset_start = $start->getOffset();
-		$this->offset_final = $final->getOffset();
+		$localOffset 		= $date->getOffset();
 
-		$this->offset = $this->offset_start - $this->offset_final;
-	}
+		$systemDate 		= gettimeofday();
 
-	public function convert(int $timestamp):Time { // OK
+		$systemOffset 		= $systemDate['minuteswest']*60;
 
-		$this->time = $timestamp - $this->offset;
+		$offset 			= $systemOffset + $localOffset;
+
+		$this->timeStamp 	= $systemDate['sec'] + $offset;
 
 		return $this;
-	
 	}
 
 	public function format(string $format = 'Y-m-d H:i:s'):string {
-		return date($format, $this->time);
+		return date($format, $this->timeStamp);
 	}
 
-	public function getTime():int {
-		return $this->time;
+	public function get(string $time = 'now'):int {
+		return strtotime($time, $this->timeStamp);
 	}
 
-	public static function currentDate(string $format = 'Y-m-d H:i:s', string $local = 'America/Sao_Paulo'):string {
+	public static function isDST(string $timeZone = 'America/Sao_Paulo') {
 
-		return date($format, self::currentTime($local));
+		$t = new Time($timeZone);
+		
+		return (bool) $t->time()->format('I');
 
 	}
 
-	public static function currentTime(string $local = 'America/Sao_Paulo'):int {
+	public static function isHour(int $hour):bool {
 
-		$date 			= new DateTime('now', new DateTimeZone($local));
+		$t = new Time();
 
-		$localOffset 	= $date->getOffset();
+		$currentHour 	= $t->time()->format('G');
+
+		// var_dump( $currentHour );
+
+		if ( $currentHour == "{$hour}" ) {
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
+	/*
+	public function currentDate(string $format = 'Y-m-d H:i:s'):string {
+
+		return date($format, $this->currentTime($local));
+
+	}
 
 
-		$systemDate 	= gettimeofday();
+	public static function time(string $time = 'now', string $local = 'America/Sao_Paulo'):int {
+		return strtotime($time, self::currentTime($local));
+	}
 
-		$systemOffset 	= $systemDate['minuteswest']*60;
-
-		$offset 		= $systemOffset + $localOffset;
-
-
-		$localTimestamp = $systemDate['sec'] + $offset;
-
-		return $localTimestamp;
-
+	public static function date(string $time = 'now', string $format = 'Y-m-d H:i:s', string $local = 'America/Sao_Paulo'):string {
+		return date($format, self::time($time, $local));
 	}
 
 	public static function isHour(int $hour):bool {
@@ -118,6 +96,7 @@ class Time {
 		}
 
 	}
+	*/
 
 }
 

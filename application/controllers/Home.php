@@ -8,7 +8,7 @@ class Home extends BASE_Controller {
 
 		// Adicionar as bibliotecas que não precisam ser instanciadas
 
-		$this->getLibrary(['Time']);
+		$this->getLibrary(['Time', 'Page']);
 
 		// Inicialização da sessão
 		// Session::init();
@@ -38,6 +38,9 @@ class Home extends BASE_Controller {
 			
 				// Função padrão
 				case 'index':
+
+					$this->index();
+
 					/*
 					// Se tiver logado
 					if ( Auth::checkLogged() ) {
@@ -76,8 +79,9 @@ class Home extends BASE_Controller {
 	*/
 	public function index() {
 		
+		//echo '<h1>Pagina Inicial</h1>';
 		
-		$page = $this->cachePage('Home/index');
+		$page = $this->cachePage('Home/index', -1);
 
 		if ( !$page->isValid() ) {
 
@@ -91,8 +95,7 @@ class Home extends BASE_Controller {
 			
 		}
 		
-		echo $page->getCache();
-		
+		echo $page->getCache();		
 		
 	}
 

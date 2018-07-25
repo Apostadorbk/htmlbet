@@ -15,7 +15,7 @@
                                             Elite
                                         </h2>
                                         <h2>
-                                            Sports
+                                            Sport
                                         </h2>
                                     </a>
                                </div>
@@ -24,11 +24,13 @@
 
                             <!-- Adds nav-->
                             <div class="col col-xl-10">
+
                                 <!-- mainmenu-->
                                 <nav class="mainmenu">
-                                    <div class="container">
+                                    
                                         <!-- Menu-->
                                         <ul class="sf-menu" id="menu">
+
                                             <li class="current">
                                                 <a href="index.html">Home</a>
                                                 <ul class="sub-current">
@@ -54,165 +56,11 @@
                                             </li>
 
                                             <li>
-                                                <a href="#">World Cup</a>
-                                                <div class="sf-mega">
-                                                    <div class="row">
-                                                         <div class="col-md-3">
-                                                            <h5><i class="fa fa-trophy" aria-hidden="true"></i>World Cup</h5>
-                                                            <ul>
-                                                                <li><a href="table-point.html">Point Table</a></li>
-                                                                <li><a href="fixtures.html">Fixtures</a></li>
-                                                                <li><a href="groups.html">Groups</a></li>
-                                                                <li><a href="news-left-sidebar.html">News</a></li>
-                                                                <li><a href="contact.html">Contact Us</a></li>
-                                                            </ul>
-                                                        </div>
-
-                                                        <div class="col-md-3">
-                                                          <h5><i class="fa fa-users" aria-hidden="true"></i> Teams List</h5>
-                                                          <div class="img-hover">
-                                                             <!-- <img src="<?php echo base_url('assets/img/blog/1.jpg') ?>" alt="" class="img-responsive"> -->
-                                                             <div class="overlay"><a href="teams.html">+</a></div>
-                                                          </div>
-                                                        </div>
-
-                                                        <div class="col-md-3">
-                                                          <h5><i class="fa fa-futbol-o" aria-hidden="true"></i> Players List</h5>
-                                                          <div class="img-hover">
-                                                             <!-- <img src="<?php echo base_url('assets/img/blog/2.jpg') ?>" alt="" class="img-responsive"> -->
-                                                             <div class="overlay"><a href="players.html">+</a></div>
-                                                          </div>
-                                                        </div>
-
-                                                        <div class="col-md-3">
-                                                          <h5><i class="fa fa-gamepad" aria-hidden="true"></i> Results Info</h5>
-                                                          <div class="img-hover">
-                                                             <!-- <img src="<?php echo base_url('assets/img/blog/3.jpg') ?>" alt="" class="img-responsive"> -->
-                                                             <div class="overlay"><a href="results.html">+</a></div>
-                                                          </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-
-                                            <li class="current">
-                                                <a href="teams.html">Teams</a>
-                                                <ul class="sub-current">
-                                                    <li>
-                                                        <a href="teams.html">Teams List</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="single-team.html">Single Team</a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-
-                                            <li class="current">
-                                                <a href="players.html">Players</a>
-                                                <ul class="sub-current">
-                                                    <li>
-                                                        <a href="players.html">Players List</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="single-player.html">Single Player</a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-
-                                            <li>
-                                                <a href="fixtures.html">Fixtures</a>
-                                            </li>
-
-                                            <li class="current">
-                                                <a href="results.html">Results</a>
-                                                <ul class="sub-current">
-                                                    <li>
-                                                        <a href="results.html">Results List</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="single-result.html">Single Result</a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-
-                                            <li>
-                                                <a href="table-point.html">Point Table</a>
-                                            </li>
-
-                                            <li>
-                                                <a href="groups.html">Groups</a>
-                                            </li>
-
-                                            <li>
-                                                <a href="#">Features</a>
-                                                <div class="sf-mega">
-                                                    <div class="row">
-                                                        <div class="col-md-3">
-                                                            <h5>Features</h5>
-                                                            <ul>
-                                                                <li><a href="page-full-width.html">Full Width</a></li>
-                                                                <li><a href="page-left-sidebar.html">Left Sidebar</a></li>
-                                                                <li><a href="page-right-sidebar.html">Right Sidebar</a></li>
-                                                                <li><a href="page-404.html">404 Page</a></li>
-                                                                <li><a href="page-faq.html">FAQ</a></li>
-                                                                <li><a href="sitemap.html">Sitemap</a></li>
-                                                                <li><a href="page-pricing.html">Pricing</a></li>
-                                                                <li><a href="page-register.html">Register Form</a></li>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <h5>Headers & Footers</h5>
-                                                            <ul>
-                                                                <li><a href="feature-header-footer-1.html">Header Version 1</a></li>
-                                                                <li><a href="feature-header-footer-2.html">Header Version 2</a></li>
-                                                                <li><a href="feature-header-footer-3.html">Header Version 3</a></li>
-                                                                <li><a href="index-5.html">Header Version 4</a></li>
-                                                                <li><a href="feature-header-footer-1.html#footer">Footer Version 1</a></li>
-                                                                <li><a href="feature-header-footer-2.html#footer">Footer Version 2</a></li>
-                                                                <li><a href="feature-header-footer-3.html#footer">Footer Version 3</a></li>
-                                                            </ul>
-                                                        </div>
-
-                                                        <div class="col-md-3">
-                                                            <h5>Pages</h5>
-                                                            <ul>
-                                                                <li><a href="page-about.html">About Us</a></li>
-                                                                <li><a href="single-player.html">About Me</a></li>
-                                                                <li><a href="services.html">Services</a></li>
-                                                                <li><a href="single-team.html">Club Info</a></li>
-                                                                <li><a href="single-result.html">Match Result</a></li>
-                                                                <li><a href="table-point.html">Positions</a></li>
-                                                            </ul>
-                                                        </div>
-
-                                                        <div class="col-md-3">
-                                                            <h5>News</h5>
-                                                            <ul>
-                                                                <li>
-                                                                    <a href="news-left-sidebar.html">News Lef Sidebar</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="news-right-sidebar.html">News Right Sidebar</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="news-no-sidebar.html">News No Sidebar</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="single-news.html">Single News</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                        <i class="fa fa-trophy big-icon" aria-hidden="true"></i>
-                                                    </div>
-                                                </div>
-                                            </li>
-
-                                            <li>
                                                 <a href="contact.html">Contact</a>
                                             </li>
                                         </ul>
                                         <!-- End Menu-->
-                                    </div>
+                                   
                                 </nav>
                                 <!-- End mainmenu-->
 
@@ -394,25 +242,27 @@
 
             <!-- section-hero-->
             <div class="hero-video">
-
-                <!-- <div class="video-foreground">
-                    <iframe src="https://www.youtube.com/embed/W0LHTWG-UmQ?controls=0&showinfo=0&rel=0&autoplay=1&loop=1&playlist=W0LHTWG-UmQ" frameborder="0" allowfullscreen></iframe>
-                </div>
-
-                <div class="info-hero">
-                    <div class="container">
-                        <div class="row align-items-center justify-content-end">
-                            <div class="col">
-                                <h1>
-                                    World Cup
-                                    <span>Premium Sports Theme</span>
-                                </h1>
-                            </div>
-                        </div>
-                    </div>
-                </div>  -->
-
-            </div>
+           
+               
+               <!-- <div class="video-foreground">
+                   <iframe src="https://www.youtube.com/embed/W0LHTWG-UmQ?controls=0&showinfo=0&rel=0&autoplay=1&loop=1&playlist=W0LHTWG-UmQ" frameborder="0" allowfullscreen></iframe>
+               </div>
+               
+                          
+               <div class="info-hero">
+                   <div class="container">
+                       <div class="row align-items-center justify-content-end">
+                           <div class="col">
+                               <h1>
+                                   World Cup
+                                   <span>Premium Sports Theme</span>
+                               </h1>
+                           </div>
+                       </div>
+                   </div>
+               </div> -->
+           
+           </div>
             <!-- End section-hero-->
 
             <!-- Section Area - Content Central -->
@@ -420,7 +270,7 @@
 
                 <!-- Dark Home -->
                 <div class="container-fluid">
-                   <div class="dark-home above">
+                   <div class="dark-home">
 
                                 <!-- #main-tab -->
                                 <ul class="nav nav-pills mb-3" id="main-tab" role="tablist">
@@ -439,15 +289,9 @@
 
                                     <!-- #nav-livescore-tab -->
                                     <li class="nav-item">
-                                        <a class="nav-link" id="nav-livescore-tab" data-toggle="pill" href="#nav-livescore" role="tab" aria-controls="nav-livescore" aria-selected="false">Jogos ao vivo</a>
+                                        <a class="nav-link" id="nav-livescore-tab" data-toggle="pill" href="#nav-livescore" role="tab" aria-controls="nav-livescore" aria-selected="false">Ao vivo</a>
                                     </li>
                                     <!-- #nav-livescore-tab -->
-
-                                    <!-- #nav-standing-tab -->
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="nav-standing-tab" data-toggle="pill" href="#nav-standing" role="tab" aria-controls="nav-standing" aria-selected="false">Classificação</a>
-                                    </li>
-                                    <!-- #nav-standing-tab -->
 
                                 </ul>
                                 <!-- #main-tab -->
@@ -517,81 +361,94 @@
                                             <div class="col-lg-9">
                                                 <!-- Content Text-->
                                                 <div class="panel-box">
+                                                    
                                                     <div class="titles">
                                                         <h4>Jogos</h4>
                                                     </div>
 
-                                                    <!-- Post Item -->
-                                                    <div class="post-item">
-                                                        <div class="row">
-                                                            <div class="col-md-4">
-                                                                <div class="img-hover">
-                                                                   <!-- <img src="img/blog/1.jpg" alt="" class="img-responsive"> -->
-                                                                   <div class="overlay"><a href="single-news.html">+</a></div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-8">
-                                                                <h5><a href="single-news.html">Group Stage Breakdown</a></h5>
-                                                                <span class="data-info">January 3, 2014  / <i class="fa fa-comments"></i><a href="#">0</a></span>
-                                                                <p>While familiar with fellow European nation France, Hareide admits that South American side Peru.<a href="single-news.html">Read More [+]</a></p>
-                                                            </div>
-                                                       </div>
-                                                    </div>
-                                                     <!-- End Post Item -->
+                                                    <div id='list-matches'>
 
-                                                     <!-- Post Item -->
-                                                    <div class="post-item">
-                                                        <div class="row">
-                                                            <div class="col-md-4">
-                                                                <div class="img-hover">
-                                                                   <!-- <img src="img/blog/2.jpg" alt="" class="img-responsive"> -->
-                                                                   <div class="overlay"><a href="single-news.html">+</a></div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-8">
-                                                                <h5><a href="single-news.html">Russia 2018’s potential classic match-ups</a></h5>
-                                                                <span class="data-info">January 9, 2014  / <i class="fa fa-comments"></i><a href="#">5</a></span>
-                                                                <p>Our goal is very clear, it didn’t change after the draw. We should qualify for the knockout stage.<a href="single-news.html">Read More [+]</a></p>
-                                                            </div>
-                                                       </div>
-                                                    </div>
-                                                     <!-- End Post Item -->
+                                                        <div class="match">
 
-                                                     <!-- Post Item -->
-                                                    <div class="post-item">
-                                                        <div class="row">
-                                                            <div class="col-md-4">
-                                                                <div class="img-hover">
-                                                                   <!-- <img src="img/blog/3.jpg" alt="" class="img-responsive"> -->
-                                                                   <div class="overlay"><a href="single-news.html">+</a></div>
-                                                                </div>
+                                                            <div class="time">
+                                                                <div class="day">Qua</div>
+                                                                <div class="hour">21:45</div>
                                                             </div>
-                                                            <div class="col-md-8">
-                                                                <h5><a href="single-news.html">World Cup rivalries reprised</a></h5>
-                                                                <span class="data-info">January  4, 2014  / <i class="fa fa-comments"></i><a href="#">3</a></span>
-                                                                <p>The outdoor exhibition on Manezhnaya Square comprises 11 figures that symbolise the main sites of interest.<a href="single-news.html">Read More [+]</a></p>
-                                                            </div>
-                                                       </div>
-                                                    </div>
-                                                     <!-- End Post Item -->
 
-                                                     <!-- Post Item -->
-                                                    <div class="post-item">
-                                                        <div class="row">
-                                                            <div class="col-md-4">
-                                                                <div class="img-hover">
-                                                                   <!-- <img src="img/blog/4.jpg" alt="" class="img-responsive"> -->
-                                                                   <div class="overlay"><a href="single-news.html">+</a></div>
-                                                                </div>
+                                                            <div class="teams">
+                                                                <div class="hometeam"><span>Team 1</span></div>
+                                                                <div class="awayteam"><span>Team 2 dawdawd</span></div>        
                                                             </div>
-                                                            <div class="col-md-8">
-                                                                <h5><a href="single-news.html">All set for your trip to Russia?</a></h5>
-                                                                <span class="data-info">January 8, 2014  / <i class="fa fa-comments"></i><a href="#">2</a></span>
-                                                                <p>Colombia play Japan on 19 June at the Mordovia Arena, where the piling and casting operations.<a href="single-news.html">Read More [+]</a></p>
+                                                        
+                                                            <div class="odds">
+                                                                <div class="odd odd-selected"><span>1,75</span></div>
+                                                                <div class="odd odd-selected"><span>5,00</span></div>
+                                                                <div class="odd odd-selected"><span>2,99</span></div>
                                                             </div>
-                                                       </div>
+
+                                                            <div class="plus-odds">
+                                                                <span>
+                                                                    +150
+                                                                </span>
+                                                            </div>
+
+                                                        </div>
+                                                        
+                                                        <div class="match">
+
+                                                            <div class="time">
+                                                                <div class="day">Qua</div>
+                                                                <div class="hour">21:45</div>
+                                                            </div>
+
+                                                            <div class="teams">
+                                                                <div class="hometeam"><span>Team 1</span></div>
+                                                                <div class="awayteam"><span>Team 2 dawdawd</span></div>        
+                                                            </div>
+                                                        
+                                                            <div class="odds">
+                                                                <div class="odd odd-selected"><span>1,75</span></div>
+                                                                <div class="odd odd-selected"><span>5,00</span></div>
+                                                                <div class="odd odd-selected"><span>2,99</span></div>
+                                                            </div>
+
+                                                            <div class="plus-odds">
+                                                                <span>
+                                                                    +150
+                                                                </span>
+                                                            </div>
+
+                                                        </div>
+                                                        
+                                                        <div class="match">
+
+                                                            <div class="time">
+                                                                <div class="day">Qua</div>
+                                                                <div class="hour">21:45</div>
+                                                            </div>
+
+                                                            <div class="teams">
+                                                                <div class="hometeam"><span>Team 1</span></div>
+                                                                <div class="awayteam"><span>Team 2 dawdawd</span></div>        
+                                                            </div>
+                                                        
+                                                            <div class="odds">
+                                                                <div class="odd odd-selected"><span>1,75</span></div>
+                                                                <div class="odd odd-selected"><span>5,00</span></div>
+                                                                <div class="odd odd-selected"><span>2,99</span></div>
+                                                            </div>
+
+                                                            <div class="plus-odds">
+                                                                <span>
+                                                                    +150
+                                                                </span>
+                                                            </div>
+
+                                                        </div>
+                                                        
+                                                        
                                                     </div>
-                                                     <!-- End Post Item -->
+
                                                 </div>
                                                 <!-- End Content Text-->
                                             </div>
@@ -966,275 +823,6 @@
                                                 </div>
                                             </div>
 
-                                        </div>
-                                    </div>
-                                    <!-- #nav-livescore -->
-
-                                    <!-- #nav-livescore -->
-                                    <div class="tab-pane fade" id="nav-standing" role="tabpanel" aria-labelledby="nav-standing-tab">
-                                        <div class="row">
-                                            
-                                            <div class="col-lg-12">
-                                                <table class="table-striped table-responsive table-hover result-point">
-                                                    <thead class="point-table-head">
-                                                        <tr>
-                                                            <th class="text-left">No</th>
-                                                            <th class="text-left">TEAM</th>
-                                                            <th class="text-center">P</th>
-                                                            <th class="text-center">W</th>
-                                                            <th class="text-center">D</th>
-                                                            <th class="text-center">L</th>
-                                                            <th class="text-center">GS</th>
-                                                            <th class="text-center">GA</th>
-                                                            <th class="text-center">+/-</th>
-                                                            <th class="text-center">PTS</th>
-                                                        </tr>
-                                                    </thead>
-
-                                                    <tbody class="text-center">
-                                                        <tr>
-                                                            <td class="text-left number">1 <i class="fa fa-caret-up" aria-hidden="true"></i></td>
-                                                            <td class="text-left">
-                                                                <!-- <img src="img/clubs-logos/colombia.png" alt="Colombia"><span>Colombia</span> -->
-                                                            </td>
-                                                            <td>38</td>
-                                                            <td>26</td>
-                                                            <td>9</td>
-                                                            <td>3</td>
-                                                            <td>73</td>
-                                                            <td>32</td>
-                                                            <td>+41</td>
-                                                            <td>87</td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td class="text-left number">2 <i class="fa fa-caret-up" aria-hidden="true"></i></td>
-                                                            <td class="text-left">
-                                                                <!-- <img src="img/clubs-logos/bra.png" alt="Brazil"><span>Brazil</span> -->
-                                                            </td>
-                                                            <td>38</td>
-                                                            <td>24</td>
-                                                            <td>7</td>
-                                                            <td>7</td>
-                                                            <td>83</td>
-                                                            <td>38</td>
-                                                            <td>+45</td>
-                                                            <td>79</td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td class="text-left number">3 <i class="fa fa-caret-up" aria-hidden="true"></i></td>
-                                                            <td class="text-left">
-                                                                <!-- <img src="img/clubs-logos/arg.png" alt="Argentina"><span>Argentina</span> -->
-                                                            </td>
-                                                            <td>38</td>
-                                                            <td>22</td>
-                                                            <td>9</td>
-                                                            <td>7</td>
-                                                            <td>71</td>
-                                                            <td>36</td>
-                                                            <td>+35</td>
-                                                            <td>75</td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td class="text-left number">4<i class="fa fa-caret-down" aria-hidden="true"></i></td>
-                                                            <td class="text-left">
-                                                                <!-- <img src="img/clubs-logos/japan.png" alt="Japan"><span>Japan</span> -->
-                                                            </td>
-                                                            <td>38</td>
-                                                            <td>20</td>
-                                                            <td>10</td>
-                                                            <td>8</td>
-                                                            <td>62</td>
-                                                            <td>37</td>
-                                                            <td>+25</td>
-                                                            <td>70</td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td class="text-left number">5  <i class="fa fa-caret-up" aria-hidden="true"></td>
-                                                            <td class="text-left">
-                                                                <!-- <img src="img/clubs-logos/sen.png" alt="Senegal"><span>Senegal</span> -->
-                                                            </td>
-                                                            <td>38</td>
-                                                            <td>19</td>
-                                                            <td>7</td>
-                                                            <td>12</td>
-                                                            <td>58</td>
-                                                            <td>53</td>
-                                                            <td>+5</td>
-                                                            <td>64</td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td class="text-left number">6<i class="fa fa-caret-down" aria-hidden="true"></i></td>
-                                                            <td class="text-left">
-                                                                <!-- <img src="img/clubs-logos/pol.png" alt="Poland"><span>Poland</span> -->
-                                                            </td>
-                                                            <td>38</td>
-                                                            <td>18</td>
-                                                            <td>8</td>
-                                                            <td>12</td>
-                                                            <td>52</td>
-                                                            <td>48</td>
-                                                            <td>+4</td>
-                                                            <td>62</td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td class="text-left number">7<i class="fa fa-caret-down" aria-hidden="true"></i></td>
-                                                            <td class="text-left">
-                                                                <!-- <img  src="img/clubs-logos/rusia.png" alt="Russia"><span>Russia</span> -->
-                                                            </td>
-                                                            <td>38</td>
-                                                            <td>18</td>
-                                                            <td>6</td>
-                                                            <td>14</td>
-                                                            <td>54</td>
-                                                            <td>33</td>
-                                                            <td>+21</td>
-                                                            <td>60</td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td class="text-left number">8<i class="fa fa-caret-up" aria-hidden="true"></i></td>
-                                                            <td class="text-left">
-                                                                <!-- <img src="img/clubs-logos/irn.png" alt="Iran"><span>Iran</span> -->
-                                                            </td>
-                                                            <td>38</td>
-                                                            <td>12</td>
-                                                            <td>11</td>
-                                                            <td>15</td>
-                                                            <td>48</td>
-                                                            <td>50</td>
-                                                            <td>-2</td>
-                                                            <td>47</td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td class="text-left number">9 <i class="fa fa-circle" aria-hidden="true"></i></td>
-                                                            <td class="text-left">
-                                                                <!-- <img src="img/clubs-logos/esp.png" alt="Spain"><span>Spain</span> -->
-                                                            </td>
-                                                            <td>38</td>
-                                                            <td>26</td>
-                                                            <td>9</td>
-                                                            <td>3</td>
-                                                            <td>73</td>
-                                                            <td>32</td>
-                                                            <td>+41</td>
-                                                            <td>87</td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td class="text-left number">10<i class="fa fa-circle" aria-hidden="true"></i></td>
-                                                            <td class="text-left">
-                                                                <!-- <img src="img/clubs-logos/fra.png" alt="France"><span>France</span> -->
-                                                            </td>
-                                                            <td>38</td>
-                                                            <td>24</td>
-                                                            <td>7</td>
-                                                            <td>7</td>
-                                                            <td>83</td>
-                                                            <td>38</td>
-                                                            <td>+45</td>
-                                                            <td>79</td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td class="text-left number">11<i class="fa fa-caret-up" aria-hidden="true"></i></td>
-                                                            <td class="text-left">
-                                                                <!-- <img src="img/clubs-logos/aus.png" alt="Australia"><span>Australia</span> -->
-                                                            </td>
-                                                            <td>38</td>
-                                                            <td>22</td>
-                                                            <td>9</td>
-                                                            <td>7</td>
-                                                            <td>71</td>
-                                                            <td>36</td>
-                                                            <td>+35</td>
-                                                            <td>75</td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td class="text-left number">12<i class="fa fa-caret-up" aria-hidden="true"></i></td>
-                                                            <td class="text-left">
-                                                                <!-- <img src="img/clubs-logos/mex.png" alt="Mexico"><span>Mexico</span> -->
-                                                            </td>
-                                                            <td>38</td>
-                                                            <td>20</td>
-                                                            <td>10</td>
-                                                            <td>8</td>
-                                                            <td>62</td>
-                                                            <td>37</td>
-                                                            <td>+25</td>
-                                                            <td>70</td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td class="text-left number">13 <i class="fa fa-circle" aria-hidden="true"></i></td>
-                                                            <td class="text-left">
-                                                                <!-- <img src="img/clubs-logos/pan.png" alt="Panama"><span>Panama</span> -->
-                                                            </td>
-                                                            <td>38</td>
-                                                            <td>19</td>
-                                                            <td>7</td>
-                                                            <td>12</td>
-                                                            <td>58</td>
-                                                            <td>53</td>
-                                                            <td>+5</td>
-                                                            <td>64</td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td class="text-left number">14<i class="fa fa-caret-down" aria-hidden="true"></i></td>
-                                                            <td class="text-left">
-                                                                <!-- <img src="img/clubs-logos/bel.png" alt="Belgium"><span>Belgium</span> -->
-                                                            </td>
-                                                            <td>38</td>
-                                                            <td>18</td>
-                                                            <td>8</td>
-                                                            <td>12</td>
-                                                            <td>52</td>
-                                                            <td>48</td>
-                                                            <td>+4</td>
-                                                            <td>62</td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td class="text-left number">15<i class="fa fa-caret-up" aria-hidden="true"></i></td>
-                                                            <td class="text-left">
-                                                                <!-- <img  src="img/clubs-logos/eng.png" alt="England"><span>England</span> -->
-                                                            </td>
-                                                            <td>38</td>
-                                                            <td>18</td>
-                                                            <td>6</td>
-                                                            <td>14</td>
-                                                            <td>54</td>
-                                                            <td>33</td>
-                                                            <td>+21</td>
-                                                            <td>60</td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td class="text-left number">16<i class="fa fa-caret-down" aria-hidden="true"></i></td>
-                                                            <td class="text-left">
-                                                                <!-- <img src="img/clubs-logos/srb.png" alt="Serbia"><span>Serbia</span> -->
-                                                            </td>
-                                                            <td>38</td>
-                                                            <td>12</td>
-                                                            <td>11</td>
-                                                            <td>15</td>
-                                                            <td>48</td>
-                                                            <td>50</td>
-                                                            <td>-2</td>
-                                                            <td>47</td>
-                                                        </tr>
-                                                      </tbody>
-                                                </table>
-                                            </div>
-                    
                                         </div>
                                     </div>
                                     <!-- #nav-livescore -->

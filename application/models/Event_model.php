@@ -11,27 +11,21 @@ class Event_model extends Model {
 		parent::__construct();
 	}
 
-
 	public function teste() {
 
 		echo 'Event model - teste:'.'<br>';
 
-		$results = $this->db->select("SELECT * FROM tb_upcomingevent");
+		$results = $this->db->select("SELECT * FROM tb_myevent WHERE intactive = 1");
 
-		$idevent = [];
+		return $this->setValues($results);
 
-		foreach ($results as $value) {
-			$idevent[] = (int) $value['idevent'];
-		}
-
-		var_dump( array_unique($idevent) );
 
 		// echo 'Teste do event model';
 		
 	}
 
 	// Atualiza a tabela para todos os jogos para o dia x
-	public function updateAllUpcoming(array $updateTable, int $tableRows):bool { // OK
+	public function updateAllEvent(array $updateTable, int $tableRows):bool { // OK
 
 		if ( empty($updateTable) || !isset($updateTable) || $tableRows < 0 ) return false;
 
@@ -46,36 +40,44 @@ class Event_model extends Model {
 
 		while ( $start <= $rowsUpdate ) {
 			
-			$query = "INSERT INTO tb_upcomingevent (
-				idupcomingevent, 
-				idleague, 
+			$this->query = "INSERT INTO tb_myevent (
+				idmyevent, 
+				idmyleague,
 				idevent, 
+				idleague,
+				desleague,
 				idhometeam, 
 				idawayteam,
 				deshometeam, 
-				desawayteam, 
-				dtetime, 
+				desawayteam,
+				desss,
+				idourevent,
 				inttimestatus, 
-				dteupdate, 
 				intactive, 
-				intss
+				inttime,
+				dtetime, 
+				dteupdate
 			) VALUES ";
 
-			$query .= "(
+			$this->query .= "(
 				'{$start}', 
-				'{$updateTable[$index]['idleague']}', 
+				'{$updateTable[$index]['idmyleague']}', 
 				'{$updateTable[$index]['idevent']}', 
+				'{$updateTable[$index]['idleague']}', 
+				'{$updateTable[$index]['desleague']}', 
 				'{$updateTable[$index]['idhometeam']}', 
 				'{$updateTable[$index]['idawayteam']}',
 				'{$updateTable[$index]['deshometeam']}', 
 				'{$updateTable[$index]['desawayteam']}', 
+				'".
+					(!isset($updateTable[$index]['desss']) ? 'NULL' : $updateTable[$index]['desss'])
+				."', 
+				'{$updateTable[$index]['idourevent']}', 
+				'{$updateTable[$index]['inttimestatus']}',
+				'1',
+				'{$updateTable[$index]['inttime']}', 
 				'{$updateTable[$index]['dtetime']}', 
-				'{$updateTable[$index]['inttimestatus']}', 
-				NOW(), 
-				'1', 
-				".
-				(!isset($updateTable[$index]['intss']) ? 'NULL' : $updateTable[$index]['intss'])
-				."
+				NOW()
 			)";
 
 			$start++;
@@ -84,47 +86,56 @@ class Event_model extends Model {
 
 			for ( $i = 1; $i < MAX_COLUMN_UPDATE && $start <= $rowsUpdate; $i++, $start++, $index++ ) { 
 				
-				$query .= ", (
+				$this->query .= ", (
 					'{$start}', 
-					'{$updateTable[$index]['idleague']}', 
+					'{$updateTable[$index]['idmyleague']}', 
 					'{$updateTable[$index]['idevent']}', 
+					'{$updateTable[$index]['idleague']}', 
+					'{$updateTable[$index]['desleague']}', 
 					'{$updateTable[$index]['idhometeam']}', 
 					'{$updateTable[$index]['idawayteam']}',
 					'{$updateTable[$index]['deshometeam']}', 
 					'{$updateTable[$index]['desawayteam']}', 
+					'".
+						(!isset($updateTable[$index]['desss']) ? 'NULL' : $updateTable[$index]['desss'])
+					."', 
+					'{$updateTable[$index]['idourevent']}', 
+					'{$updateTable[$index]['inttimestatus']}',
+					'1',
+					'{$updateTable[$index]['inttime']}', 
 					'{$updateTable[$index]['dtetime']}', 
-					'{$updateTable[$index]['inttimestatus']}', 
-					NOW(), 
-					'1', 
-					".
-					(!isset($updateTable[$index]['intss']) ? 'NULL' : $updateTable[$index]['intss'])
-					."
+					NOW()
 				)";
 
 			}
 
 
-			$query .= " 
+			$this->query .= " 
 				ON DUPLICATE KEY UPDATE 
-				idleague		= VALUES(idleague), 
-				idevent			= VALUES(idevent), 
-				idhometeam		= VALUES(idhometeam), 
-				idawayteam		= VALUES(idawayteam), 
-				deshometeam		= VALUES(deshometeam), 
-				desawayteam		= VALUES(desawayteam), 
-				dtetime			= VALUES(dtetime),
-				inttimestatus	= VALUES(inttimestatus),
-				dteupdate		= VALUES(dteupdate),
-				intactive		= VALUES(intactive),
-				intss			= VALUES(intss)
+				idmyevent 		= VALUES(idmyevent),
+				idmyleague 		= VALUES(idmyleague),
+				idevent 		= VALUES(idevent),
+				idleague 		= VALUES(idleague),
+				desleague 		= VALUES(desleague),
+				idhometeam 		= VALUES(idhometeam),
+				idawayteam 		= VALUES(idawayteam),
+				deshometeam 	= VALUES(deshometeam),
+				desawayteam 	= VALUES(desawayteam),
+				desss 			= VALUES(desss),
+				idourevent 		= VALUES(idourevent),
+				inttimestatus 	= VALUES(inttimestatus),
+				intactive 		= VALUES(intactive),
+				inttime 		= VALUES(inttime),
+				dtetime 		= VALUES(dtetime),
+				dteupdate 		= VALUES(dteupdate)
 			";
 
 
-			// var_dump( $query );
+			// var_dump( $this->query );
 			// exit;
 
 
-			$this->db->select($query);
+			$this->db->select($this->query);
 
 		}
 		
@@ -133,9 +144,9 @@ class Event_model extends Model {
 		if ( $rowsNull > 0 ) {
 
 			$result = $this->db->select("
-				UPDATE tb_upcomingevent
-				SET intactive = 0
-				WHERE idupcomingevent BETWEEN :IDSTART AND :IDFINAL
+				UPDATE 	tb_myevent
+				SET 	intactive = 0
+				WHERE 	idmyevent BETWEEN :IDSTART AND :IDFINAL
 			", [
 				':IDSTART' => $rowsUpdate + 1,
 				':IDFINAL' => $rowsUpdate + $rowsNull
@@ -159,7 +170,7 @@ class Event_model extends Model {
 
 	// Atualiza todos os jogos que estão num intervalo de 2h a patir do momento do update e que estão ativos
 	// ou seja disponiveis para aposta
-	public function updateUpcoming(array $updateTable):bool { // OK
+	public function updateEvent(array $updateTable):bool { // OK
 
 		if ( empty($updateTable) || !isset($updateTable) ) return false;
 
@@ -179,75 +190,87 @@ class Event_model extends Model {
 
 		// var_dump( $updateTable );
 
-		$query = "
-			UPDATE tb_upcomingevent A 
+		$this->query = "
+			UPDATE tb_myevent A 
 			INNER JOIN ( 
 		";
 
 		// $updateTable[0]['intss'] = 1;
 
-		$query .= "
+		$this->query .= "
 			SELECT 
-			'{$updateTable[0]['idevent']}' 			idevent,
-			'{$updateTable[0]['dtetime']}' 			dtetime,
-			'{$updateTable[0]['inttimestatus']}' 	inttimestatus,
-			'{$updateTable[0]['idleague']}' 		idleague,
-			'{$updateTable[0]['desleague']}' 		desleague,
-			'{$updateTable[0]['idhometeam']}' 		idhometeam,
-			'{$updateTable[0]['deshometeam']}' 		deshometeam,
-			'{$updateTable[0]['idawayteam']}' 		idawayteam,
-			'{$updateTable[0]['desawayteam']}' 		desawayteam,
-		".
-			(!isset($updateTable[0]['intss']) ? 'NULL' : $updateTable[0]['intss'])." intss
+			'{$updateTable[0]['idmyevent']}'		idmyevent, 
+			'{$updateTable[0]['idmyleague']}'		idmyleague,
+			'{$updateTable[0]['idevent']}'			idevent, 
+			'{$updateTable[0]['idleague']}'			idleague,
+			'{$updateTable[0]['desleague']}'		desleague,
+			'{$updateTable[0]['idhometeam']}'		idhometeam, 
+			'{$updateTable[0]['idawayteam']}'		idawayteam,
+			'{$updateTable[0]['deshometeam']}'		deshometeam, 
+			'{$updateTable[0]['desawayteam']}'		desawayteam,
+			'".
+				(!isset($updateTable[$index]['desss']) ? 'NULL' : $updateTable[$index]['desss'])."'	desss,
+			'{$updateTable[0]['idourevent']}'		idourevent,
+			'{$updateTable[0]['inttimestatus']}'	inttimestatus,
+			'{$updateTable[0]['inttime']}'			inttime,
+			'{$updateTable[0]['dtetime']}'			dtetime, 
+			'{$updateTable[0]['dteupdate']}'		dteupdate
 		";
 
 		
 		for ($i = 1; $i < count($updateTable); $i++) { 
 
-			// $updateTable[$i]['intss'] = 1;
-
-			$query .= "
+			$this->query .= "
 			UNION SELECT 
-			'{$updateTable[$i]['idevent']}',
-			'{$updateTable[$i]['dtetime']}',
-			'{$updateTable[$i]['inttimestatus']}',
+			'{$updateTable[$i]['idmyevent']}', 
+			'{$updateTable[$i]['idmyleague']}',
+			'{$updateTable[$i]['idevent']}', 
 			'{$updateTable[$i]['idleague']}',
 			'{$updateTable[$i]['desleague']}',
-			'{$updateTable[$i]['idhometeam']}',
-			'{$updateTable[$i]['deshometeam']}',
+			'{$updateTable[$i]['idhometeam']}', 
 			'{$updateTable[$i]['idawayteam']}',
+			'{$updateTable[$i]['deshometeam']}', 
 			'{$updateTable[$i]['desawayteam']}',
-		".
-			(!isset($updateTable[$i]['intss']) ? 'NULL' : $updateTable[$i]['intss'])." intss
+			'".
+				(!isset($updateTable[$i]['desss']) ? 'NULL' : $updateTable[$i]['desss'])."',
+			'{$updateTable[$i]['idourevent']}',
+			'{$updateTable[$i]['inttimestatus']}',
+			'{$updateTable[$i]['inttime']}',
+			'{$updateTable[$i]['dtetime']}', 
+			'{$updateTable[$i]['dteupdate']}'
 		";
 		}
 		
 
-		$query .= "
-			) B USING (idevent)
+		$this->query .= "
+			) B USING (idmyevent)
 			SET 
-			A.idleague 		= B.idleague,
-			A.idevent 		= B.idevent,
-			A.idhometeam 	= B.idhometeam,
-			A.idawayteam 	= B.idawayteam,
-			A.deshometeam 	= B.deshometeam,
-			A.desawayteam 	= B.desawayteam,
-			A.dtetime 		= B.dtetime,
-			A.inttimestatus = B.inttimestatus,
-			A.intss 		= B.intss,
-			A.dteupdate 	= NOW()
+			A.idmyleague 		= B.idmyleague, 
+			A.idevent 			= B.idevent, 
+			A.idleague 			= B.idleague,
+			A.desleague 		= B.desleague,
+			A.idhometeam 		= B.idhometeam, 
+			A.idawayteam 		= B.idawayteam,
+			A.deshometeam 		= B.deshometeam, 
+			A.desawayteam 		= B.desawayteam,
+			A.desss 			= B.desss,
+			A.idourevent 		= B.idourevent,
+			A.inttimestatus 	= B.inttimestatus,
+			A.inttime 			= B.inttime,
+			A.dtetime 			= B.dtetime, 
+			A.dteupdate 		= B.dteupdate
 			WHERE 
-			A.intactive 	= 1;
+			A.intactive 		= 1;;
 		";
 
-		// var_dump( $query );
+		// var_dump( $this->query );
 
-		$result = $this->db->select($query);
+		$result = $this->db->select($this->query);
 
 		// var_dump( $result );
 
 		/*
-			update tb_upcomingevent A inner join
+			update tb_myevent A inner join
 			(
 			    SELECT 63615848 idevent, 0 intactive UNION
 			    SELECT 63613497, 0
@@ -256,7 +279,7 @@ class Event_model extends Model {
 			SET A.intactive = B.intactive;
 
 
-			update tb_upcomingevent A inner join
+			update tb_myevent A inner join
 			(
 			    SELECT 63615848 idevent UNION
 			    SELECT 63613497
@@ -270,81 +293,19 @@ class Event_model extends Model {
 
 	}
 
-	public function setUpcoming(array $allowed):bool { // OK
+	public function setEvent(array $allowed):bool { // OK
 
 
 		if ( empty($allowed) || !isset($allowed) ) return false;
 
-		$numberRow = $this->getNumberRows('tb_upcomingevent');
+		$numberRow = $this->getNumberRows('tb_myevent');
 
 		if ( !isset($numberRow) ) return false;
 
-		$numberAllowed = count($allowed);
-		$newRows 	= 0;
-		$updateRows = 0;
-		$diffRows 	= 0;
-
-		// Simulação
-		// $numberRow = 10;
-
-		switch ($numberRow <=> $numberAllowed) {
-			
-			case 1:
-
-				$updateRows = $numberAllowed;
-				$newRows 	= 0;
-
-				// echo 'Number Allowed < Number Rows'.'<br>';
-
-			break;
-
-			case 0:
-
-				$updateRows = $numberRow;
-				$newRows 	= 0;
-
-				// echo 'Number Allowed == Number Rows'.'<br>';
-
-			break;
-
-			case -1:
-
-				$updateRows = $numberRow;
-				$newRows 	= $numberAllowed - $numberRow;
-
-				// echo 'Number Allowed > Number Rows'.'<br>';
-
-			break;
-
-		}
-
-		/*
-		echo '<hr>';
-
-		echo 'Number Allowed: '.$numberAllowed.'<br>';
-		echo 'Number Rows: '.$numberRow.'<br>';
-		echo 'Update Rows: '.$updateRows.'<br>';
-		echo 'New Rows: '.$newRows.'<br>';
-
-		echo '<hr>';
-		*/
-
-
-
-		$this->updateAllUpcoming(
+		return $this->updateAllEvent(
 			$allowed,
 			$numberRow
 		);
-		
-		/*
-		if ( $updateRows > 0 ) {
-			
-		}
-		*/
-
-		// echo '<hr>';
-
-		return true;
 
 	}
 
@@ -352,11 +313,15 @@ class Event_model extends Model {
 
 		if ( empty($start) || empty($final) ) return false;
 
-		$result = $this->db->select("
-			SELECT * 
-			FROM tb_upcomingevent
+		$fields = $this->getField();
+
+		$this->query = "
+			SELECT {$fields}
+			FROM tb_myevent
 			WHERE (dtetime BETWEEN :START AND :FINAL) AND intactive = 1
-		", [
+		";
+
+		$result = $this->db->select($this->query, [
 			':START'	=> $start,
 			':FINAL'	=> $final
 		]);

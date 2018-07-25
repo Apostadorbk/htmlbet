@@ -45,7 +45,7 @@ class CacheEvent extends Json {
 		) {
 
 			$this->setVar("status", false);
-			$this->setVar("result", NULL);
+			$this->setVar("result", []);
 
 			return false;
 		}

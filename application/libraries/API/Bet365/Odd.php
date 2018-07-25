@@ -10,9 +10,7 @@ class Odd {
 	
 	public function teste() {
 
-		$p = new Database();
-
-		var_dump( $p );
+		echo 'Teste';
 
 	}
 

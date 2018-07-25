@@ -12,6 +12,7 @@ define("LIBRARY", [
 	'Database'	=> APPPATH."libraries".DS."Database.php",
 	'Constant'	=> APPPATH."libraries".DS."Constant.php",
 	'Time'		=> APPPATH."libraries".DS."Time.php",
+	'TimeZone'	=> APPPATH."libraries".DS."TimeZone.php",
 	'Bet365'	=> APPPATH."libraries".DS."API".DS."Bet365.php"
 ]);
 
@@ -22,7 +23,7 @@ define("MODEL", [
 	'League'			=> APPPATH."models".DS."League_model.php",
 	'Usuario'			=> APPPATH."models".DS."Usuario_model.php",
 	'Vinculo'			=> APPPATH."models".DS."Vinculo_model.php",
-	'Teste'				=> APPPATH."models".DS."Teste_model.php",
+	'Teste'				=> APPPATH."models".DS."Teste_model.php"
 ]);
 
 // require_once MODEL['Teste'];

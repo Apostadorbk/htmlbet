@@ -70,48 +70,84 @@ CREATE TABLE `tb_enderecos` (
 
 
 
-CREATE TABLE `tb_country` (
-	`idcountry` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-	`descountry` varchar(40) NOT NULL,
-	`intactive` tinyint(3) UNSIGNED DEFAULT '1',
-	`intbetting` int(10) UNSIGNED DEFAULT '0',
-	`intclick` int(10) UNSIGNED DEFAULT '0',
+CREATE TABLE `tb_mycountry` (
+	`idmycountry` 	int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`descountry` 	varchar(40) NOT NULL,
+	`intactive` 	tinyint(3) UNSIGNED DEFAULT '1',
+	`intbetting` 	int(10) UNSIGNED DEFAULT '0',
+	`intclick` 	int(10) UNSIGNED DEFAULT '0',
 	`dteregistro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  	CONSTRAINT `PK_country` PRIMARY KEY (`idcountry`)
+  	CONSTRAINT `PK_mycountry` PRIMARY KEY (`idmycountry`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
-CREATE TABLE `tb_league` (
-	`idleague` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-	`idcountry` int(11) UNSIGNED NOT NULL,
-	`desleague` varchar(50) NOT NULL,
-	`intactive` tinyint(3) UNSIGNED DEFAULT '1',
-	`dteregistro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  	CONSTRAINT `PK_league` PRIMARY KEY (`idleague`),
-  	CONSTRAINT `FK_league_country` FOREIGN KEY (`idcountry`) 
-		REFERENCES `tb_country` (`idcountry`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `tb_myleague` (
+	`idmyleague` 	int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`idmycountry` 	int(11) UNSIGNED NOT NULL,
 
-
-
-CREATE TABLE `tb_upcomingevent` (
-	`idupcomingevent` int(11) UNSIGNED NOT NULL,
-	`idleague` 	int(11) UNSIGNED NOT NULL,
-
-	`idevent` 		int(11) UNSIGNED NOT NULL,
-	`idhometeam`	int(11) UNSIGNED NOT NULL,
-	`idawayteam`	int(11) UNSIGNED NOT NULL,
-	`deshometeam`	varchar(50) NOT NULL,
-	`desawayteam`	varchar(50) NOT NULL,
-	`dtetime`		datetime NOT NULL,
-	`inttimestatus`	tinyint(3) DEFAULT '0',
-	`intactive`		tinyint(3) UNSIGNED DEFAULT '1',
-	`dteupdate` 	timestamp DEFAULT NOW(),
+	`ideventapi` 	int(11) UNSIGNED NOT NULL,
+	`desleague` 	varchar(50) NOT NULL,
+	`intactive` 	tinyint(3) UNSIGNED DEFAULT '1',
 	`dteregistro` 	timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  	CONSTRAINT `PK_upcomingevent` PRIMARY KEY (`idupcomingevent`),
-  	CONSTRAINT `FK_upcomingevent_league` FOREIGN KEY (`idleague`) 
-		REFERENCES `tb_league` (`idleague`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  	CONSTRAINT `PK_myleague` PRIMARY KEY (`idmyleague`),
+  	CONSTRAINT `FK_myleague_mycountry` FOREIGN KEY (`idmycountry`) 
+		REFERENCES `tb_mycountry` (`idmycountry`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+CREATE TABLE `tb_myevent` (
+	`idmyevent` 		int(11) UNSIGNED NOT NULL,
+	`idmyleague` 		int(11) UNSIGNED NOT NULL,
+
+	`idevent` 			int(11) UNSIGNED NOT NULL,
+	`idhometeam`		int(11) UNSIGNED NOT NULL,
+	`idawayteam`		int(11) UNSIGNED NOT NULL,
+	`deshometeam`		varchar(50) NOT NULL,
+	`desawayteam`		varchar(50) NOT NULL,
+	`dtetime`			datetime NOT NULL,
+	`inttimestatus`		tinyint(3) DEFAULT '0',
+	`intactive`			tinyint(3) UNSIGNED DEFAULT '1',
+	`dteupdate` 		timestamp DEFAULT NOW(),
+	`dteregistro` 		timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  	CONSTRAINT `PK_myevent` PRIMARY KEY (`idmyevent`),
+  	CONSTRAINT `FK_myevent_myleague` FOREIGN KEY (`idmyleague`) 
+		REFERENCES `tb_myleague` (`idmyleague`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+CREATE TABLE `tb_mytypeodd` (
+	`idmytypeodd` 	int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+
+	`idodd` 		smallint(5) UNSIGNED NOT NULL,
+	`desodd`		varchar(40) DEFAULT NULL,
+	`intactive`		tinyint(3) UNSIGNED DEFAULT '0',
+	`dteregistro` 	timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  	CONSTRAINT `PK_mytypeodd` PRIMARY KEY (`idmytypeodd`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+CREATE TABLE `tb_myodd` (
+	`idmyodd` 		int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`idmytypeodd`	int(11) UNSIGNED NOT NULL,
+	`idmyevent`		int(11) UNSIGNED NOT NULL,
+
+	`idodd` 		smallint(5) UNSIGNED NOT NULL,
+	`idevent` 		int(11) UNSIGNED NOT NULL,
+
+	`desopp`		varchar(64) NOT NULL,
+	`desodds`		varchar(10) NOT NULL,
+	`desheader`		varchar(10) NOT NULL,
+
+	`dteregistro` 	timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  	CONSTRAINT `PK_myodd` PRIMARY KEY (`idmyodd`),
+  	CONSTRAINT `FK_myodd_myevent` FOREIGN KEY (`idmyevent`) 
+		REFERENCES `tb_myevent` (`idmyevent`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  	CONSTRAINT `FK_myodd_mytypeodd` FOREIGN KEY (`idmytypeodd`) 
+		REFERENCES `tb_mytypeodd` (`idmytypeodd`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 

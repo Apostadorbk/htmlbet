@@ -11,7 +11,7 @@ class League_model extends Model {
 
 	public function teste() {
 		
-		$this->select("SELECT * FROM tb_country");
+		return $this->db->select("SELECT * FROM tb_myleague");
 
 		/*
 		echo '<pre>';
@@ -38,11 +38,39 @@ class League_model extends Model {
 			$query .= "*";
 		}
 
-		$query .= " FROM tb_league WHERE intactive = 1";
+		$query .= " FROM tb_myleague WHERE intactive = 1";
 
 		return $this->setValues(
 			$this->db->select($query)
 		);
+
+	}
+
+	public function insertLeague(array $leagues = []):bool {
+		if ( empty($leagues) ) return false;
+
+		$query = "INSERT INTO `tb_myleague`(`idmyleague`, `idmycountry`, `idleague`, `desmyleague`, `intactive`, `dteregistro`) VALUES ";
+		$total = count($leagues);
+		$count = 0;
+
+		do {
+
+			$query .= "(
+				NULL,
+				'{$leagues[$count]['idmycountry']}',
+				'{$leagues[$count]['idleague']}',
+				'{$leagues[$count]['desmyleague']}',
+				'1',
+				CURRENT_TIMESTAMP
+			)";
+
+			$count++;
+
+			if ( $count < $total ) $query .= ", "; 
+
+		} while ( $count < $total );
+
+		return $this->db->query($query);		
 
 	}
 

@@ -31,7 +31,7 @@ class Page {
 
 		$this->createDir("cache_page/".$filename.".html");
 
-		$this->time = ($time >= 0) ? $time : 0;
+		$this->time = $time;
 
 	}
 
@@ -50,6 +50,8 @@ class Page {
 	public function isValid():bool { // OK
 
 		if ( !file_exists($this->cacheFile) ) return false;
+
+		if ( $this->time < 0 ) return false;
 
 		if ( $this->time == 0 ) return true;
 

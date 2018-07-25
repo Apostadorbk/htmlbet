@@ -176,7 +176,9 @@ class Json {
 		return (bool) file_put_contents($this->cacheFile, $json);
 	}
 
-	public function readJson() { // OK
+	public function readJson(bool $isarray = false) { // OK
+
+		if ( !file_exists($this->cacheFile) ) return false;
 
 		$read = file_get_contents($this->cacheFile);
 		

@@ -12,7 +12,7 @@ class Root extends BASE_Controller {
 	public function __construct() {
 		parent::__construct("Root");
 
-		$this->getLibrary(['redirect']);
+		$this->getLibrary(['Redirect']);
 	}
 
 	public function index() {
