@@ -199,7 +199,6 @@ class Event_model extends Model {
 
 		$this->query .= "
 			SELECT 
-			'{$updateTable[0]['idmyevent']}'		idmyevent, 
 			'{$updateTable[0]['idmyleague']}'		idmyleague,
 			'{$updateTable[0]['idevent']}'			idevent, 
 			'{$updateTable[0]['idleague']}'			idleague,
@@ -209,20 +208,19 @@ class Event_model extends Model {
 			'{$updateTable[0]['deshometeam']}'		deshometeam, 
 			'{$updateTable[0]['desawayteam']}'		desawayteam,
 			'".
-				(!isset($updateTable[$index]['desss']) ? 'NULL' : $updateTable[$index]['desss'])."'	desss,
+				(!isset($updateTable[0]['desss']) ? 'NULL' : $updateTable[$index]['desss'])."'	desss,
 			'{$updateTable[0]['idourevent']}'		idourevent,
 			'{$updateTable[0]['inttimestatus']}'	inttimestatus,
 			'{$updateTable[0]['inttime']}'			inttime,
 			'{$updateTable[0]['dtetime']}'			dtetime, 
-			'{$updateTable[0]['dteupdate']}'		dteupdate
+			NOW()									dteupdate
 		";
 
 		
 		for ($i = 1; $i < count($updateTable); $i++) { 
 
 			$this->query .= "
-			UNION SELECT 
-			'{$updateTable[$i]['idmyevent']}', 
+			UNION SELECT  
 			'{$updateTable[$i]['idmyleague']}',
 			'{$updateTable[$i]['idevent']}', 
 			'{$updateTable[$i]['idleague']}',
@@ -237,13 +235,13 @@ class Event_model extends Model {
 			'{$updateTable[$i]['inttimestatus']}',
 			'{$updateTable[$i]['inttime']}',
 			'{$updateTable[$i]['dtetime']}', 
-			'{$updateTable[$i]['dteupdate']}'
+			NOW()
 		";
 		}
 		
 
 		$this->query .= "
-			) B USING (idmyevent)
+			) B USING (idevent)
 			SET 
 			A.idmyleague 		= B.idmyleague, 
 			A.idevent 			= B.idevent, 
@@ -260,7 +258,7 @@ class Event_model extends Model {
 			A.dtetime 			= B.dtetime, 
 			A.dteupdate 		= B.dteupdate
 			WHERE 
-			A.intactive 		= 1;;
+			A.intactive 		= 1;
 		";
 
 		// var_dump( $this->query );
@@ -286,6 +284,18 @@ class Event_model extends Model {
 
 			) B USING (idevent)
 			SET A.dteupdate = NOW();
+
+
+
+			UPDATE my_table m
+			JOIN (
+			    SELECT 1 as id, 10 as _col1, 20 as _col2
+			    UNION ALL
+			    SELECT 2, 5, 10
+			    UNION ALL
+			    SELECT 3, 15, 30
+			) vals ON m.id = vals.id
+			SET col1 = _col1, col2 = _col2;
 
 		*/
 

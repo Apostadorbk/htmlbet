@@ -69,6 +69,10 @@ class API extends BASE_Controller {
 					$this->updatecountry();
 				break;
 
+				case 'updateleague':
+					$this->updateleague();
+				break;
+
 				default:
 					$this->teste();
 				break;
@@ -133,9 +137,9 @@ class API extends BASE_Controller {
 		$start = microtime(true);
 		echo '<hr>';
 
-		$t = new Json("Bet365/League/Unallowed-League");
+		$t = new Json("Bet365/League/Teste-League");
 
-		var_dump( $t->getVar('league') );
+
 
 
 		echo '<hr>';
@@ -150,17 +154,17 @@ class API extends BASE_Controller {
 
 		echo '<pre>';
 
-		$intervalHours 	= "+2 hour";
+		$intervalHours 	= "+24 hours";
 		$midnight 		= false;
 
 		if ( Time::isHour(0) ) {
-			$intervalHours 	= "+48 hours";
+			$intervalHours 	= "+168 hours"; // Equivalente a 7 dias
 			$midnight 		= true;
 		}
 		
 		// Teste
-		$midnight 		= true;
-		$intervalHours 	= "+24 hours";
+		// $midnight 		= true;
+		// $intervalHours 	= "+144 hours";
 		// -------------------------
 
 		$upcoming = $this->api->upcomingEvent($intervalHours);
@@ -251,7 +255,6 @@ class API extends BASE_Controller {
 				}
 
 				// Salvar no arquivo os jogos não permitidos
-				
 				if ( $upcoming->hasUnallowed() ) {
 
 					echo 'EVENTOS NÃO PERMITIDOS'.'<br>';
@@ -259,8 +262,8 @@ class API extends BASE_Controller {
 					echo '<hr>';
 					echo '<hr>';
 					
-					// Salvar as partidas nao permitidas em Bet365/Event/Unallowed-Upcoming-Event
-					$upcoming->saveUnallowed('Bet365/League/Unallowed-League');
+					// Salvar as ligas nao permitidas 
+					$upcoming->saveUnallowed('Bet365/League/League');
 
 				}
 				
@@ -454,6 +457,93 @@ class API extends BASE_Controller {
 			}
 
 		}
+
+	}
+
+	// Ler as ligas adicionados em Bet365/League/League.json
+	public function updateleague() { // OK
+
+		// echo '<pre>';
+
+		$file = new Json('Bet365/League/League');
+
+		$update 		= $file->getVar('update');
+
+		if ( !$update ) {
+
+			$leagueFile 	= $file->getVar('league');
+
+			//$countryModel 	= $this->model('Country');
+			$leagueModel 	= $this->model('League');
+
+			$leagueModel->setLeague(['idleague']);
+
+
+			// Os indices de idmycountry a patir da tabela league
+			if ( !($idLeague = $leagueModel->getValues('idleague')) ) {
+				$idLeague = [];
+			}
+
+			// Ligas para serem adicionadas
+			$addLeague = [];
+			// Ligas que ja foram adicionadas em addLeague
+			$addedLeague = [];
+			
+			foreach ($leagueFile as $value) {
+
+				$index 		= array_search($value['idleague'], $idLeague);
+				$addedIndex = array_search($value['idleague'], $addedLeague);
+
+				if ( $index == false && $addedIndex == false && gettype($index) == 'boolean' && gettype($addedIndex) == 'boolean' ) {
+					$addLeague[] = $value;
+					$addedLeague[] = $value['idleague'];
+				}
+
+			}
+
+			// Salva as novas ligas no arquivo de já adicionado no BD
+			if ( count($addLeague) > 0 ) {
+
+				// Inserindo as novas Ligas
+				$total = count($addLeague);
+				$start = 0;
+				$offset = 25;
+
+				while ( $start < $total ) {
+
+					$final = $start + $offset;
+
+					if ( $final >= $total ) {
+						$offset = $total - $start;
+					}
+
+					$leagueModel->insertLeague(array_slice($addLeague, $start, $offset));
+
+					$start += $offset;
+
+				}
+
+
+				$f 			= new Json('Bet365/League/Ready-League');
+				$time 		= new Time('America/Sao_Paulo');
+				$leagues 	= $f->getVar('league');
+
+				if( !$leagues ) $leagues = [];
+
+				$f->setVar('update_at', $time->time()->format());
+
+				$f->setVar('league', array_merge($leagues, $addLeague));
+
+				$file->setVar('update', true);
+				$file->setVar('update_at', $time->time()->format());
+				$file->setVar('league', []);
+
+			}
+			
+
+		}
+
+		// echo '</pre>';
 
 
 	}

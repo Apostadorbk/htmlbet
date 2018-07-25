@@ -1,0 +1,310 @@
+{
+	"update": false,
+	"league":[
+		{
+			"idmycountry": 3,
+			"idleague": 887,
+			"desmyleague": "PFL"
+		},
+		{
+			"idmycountry": 2,
+			"idleague": 2279,
+			"desmyleague": "Copa"
+		},
+		{
+			"idmycountry": 9,
+			"idleague": 4580,
+			"desmyleague": "Super Liga Feminina"
+		},
+		{
+			"idmycountry": 5,
+			"idleague": 571,
+			"desmyleague": "Liga 2"
+		},
+		{
+			"idmycountry": 2,
+			"idleague": 363,
+			"desmyleague": "Europa Amigável"
+		},
+		{
+			"idmycountry": 6,
+			"idleague": 350,
+			"desmyleague": "Copa FFA"
+		},
+		{
+			"idmycountry": 7,
+			"idleague": 1273,
+			"desmyleague": "Copa"
+		},
+		{
+			"idmycountry": 2,
+			"idleague": 795,
+			"desmyleague": "Australia Amigável"
+		},
+		{
+			"idmycountry": 8,
+			"idleague": 895,
+			"desmyleague": "Liga J"
+		},
+		{
+			"idmycountry":8,
+			"idleague": 410,
+			"desmyleague": "Liga J2"
+		},
+		{
+			"idmycountry": 9,
+			"idleague": 1271,
+			"desmyleague": "Copa FA"
+		},
+		{
+			"idmycountry": 10,
+			"idleague": 850,
+			"desmyleague": "Copa"
+		},
+		{
+			"idmycountry": 11,
+			"idleague": 1344,
+			"desmyleague": "Copa"
+		},
+		{
+			"idmycountry": 4,
+			"idleague": 2279,
+			"desmyleague": "Copa"
+		},
+		{
+			"idmycountry": 1,
+			"idleague": 312,
+			"desmyleague": "Torneio Sub-19"
+		},
+		{
+			"idmycountry": 12,
+			"idleague": 1141,
+			"desmyleague": "Copa"
+		},
+		{
+			"idmycountry": 1,
+			"idleague": 11325,
+			"desmyleague": "Copa CECAFA"
+		},
+		{
+			"idmycountry": 32,
+			"idleague": 7015,
+			"desmyleague": "Copa"
+		},
+		{
+			"idmycountry": 14,
+			"idleague": 96,
+			"desmyleague": "Elite One"
+		},
+		{
+			"idmycountry": 15,
+			"idleague": 435,
+			"desmyleague": "Copa Rio"
+		},
+		{
+			"idmycountry": 16,
+			"idleague": 572,
+			"desmyleague": "Primeira Divisão"
+		},
+		{
+			"idmycountry": 17,
+			"idleague": 362,
+			"desmyleague": "Liga de Reservas"
+		},
+		{
+			"idmycountry": 2,
+			"idleague": 217,
+			"desmyleague": "Feminino Amigável"
+		},
+		{
+			"idmycountry": 18,
+			"idleague": 11234,
+			"desmyleague": "Liga Feminina"
+		},
+		{
+			"idmycountry": 19,
+			"idleague": 111,
+			"desmyleague": "Divisão 2"
+		},
+		{
+			"idmycountry": 19,
+			"idleague": 794,
+			"desmyleague": "Divisão 3"
+		},
+		{
+			"idmycountry": 21,
+			"idleague": 678,
+			"desmyleague": "Premier League"
+		},
+		{
+			"idmycountry": 20,
+			"idleague": 417,
+			"desmyleague": "Copa"
+		},
+		{
+			"idmycountry": 22,
+			"idleague": 196,
+			"desmyleague": "Divisão 1"
+		},
+		{
+			"idmycountry": 2,
+			"idleague": 631,
+			"desmyleague": "Clubes de Elite"
+		},
+		{
+			"idmycountry": 22,
+			"idleague": 32,
+			"desmyleague": "Kolmonen"
+		},
+		{
+			"idmycountry": 23,
+			"idleague": 3737,
+			"desmyleague": "Liga de Reservas"
+		},
+		{
+			"idmycountry": 24,
+			"idleague": 151,
+			"desmyleague": "Vyscha Liga"
+		},
+		{
+			"idmycountry": 25,
+			"idleague": 460,
+			"desmyleague": "Copa"
+		},
+		{
+			"idmycountry": 25,
+			"idleague": 206,
+			"desmyleague": "Esiliiga B"
+		},
+		{
+			"idmycountry": 2,
+			"idleague": 375,
+			"desmyleague": "Clubes do Mundo"
+		},
+		{
+			"idmycountry": 1,
+			"idleague": 5809,
+			"desmyleague": "Champions League Qualificação"
+		},
+		{
+			"idmycountry": 23,
+			"idleague": 214,
+			"desmyleague": "Primeira Divisão"
+		},
+		{
+			"idmycountry": 15,
+			"idleague": 450,
+			"desmyleague": "Liga Sub-20"
+		},
+		{
+			"idmycountry": 15,
+			"idleague": 9458,
+			"desmyleague": "Campeonato Mineiro Sub-20"
+		},
+		{
+			"idmycountry": 1,
+			"idleague": 1764,
+			"desmyleague": "Reino Unido"
+		},
+		{
+			"idmycountry": 26,
+			"idleague": 685,
+			"desmyleague": "Copa Santa Fe"
+		},
+		{
+			"idmycountry": 13,
+			"idleague": 392,
+			"desmyleague": "1 Deild Feminino"
+		},
+		{
+			"idmycountry": 28,
+			"idleague": 4993,
+			"desmyleague": "Campeonato Feminino"
+		},
+		{
+			"idmycountry": 27,
+			"idleague": 1260,
+			"desmyleague": "Copa da Liga"
+		},
+		{
+			"idmycountry": 28,
+			"idleague": 439,
+			"desmyleague": "Premier League Feminino"
+		},
+		{
+			"idmycountry": 33,
+			"idleague": 3573,
+			"desmyleague": "Clasura"
+		},
+		{
+			"idmycountry": 13,
+			"idleague": 817,
+			"desmyleague": "4 Delid"
+		},
+		{
+			"idmycountry": 34,
+			"idleague": 245,
+			"desmyleague": "Segunda Divisão"
+		},
+		{
+			"idmycountry": 15,
+			"idleague": 8057,
+			"desmyleague": "Campeonato de Aspirantes"
+		},
+		{
+			"idmycountry": 1,
+			"idleague": 11337,
+			"desmyleague": "América Central e Jogos Caribenho"
+		},
+		{
+			"idmycountry": 15,
+			"idleague": 2789,
+			"desmyleague": "Catarinense 2"
+		},
+		{
+			"idmycountry": 15,
+			"idleague": 155,
+			"desmyleague": "Série A"
+		},
+		{
+			"idmycountry": 1,
+			"idleague": 445,
+			"desmyleague": "Copa Sulamericana"
+		},
+		{
+			"idmycountry": 35,
+			"idleague": 257,
+			"desmyleague": "Divisão Profissional"
+		},
+		{
+			"idmycountry": 36,
+			"idleague": 686,
+			"desmyleague": "Segunda"
+		},
+		{
+			"idmycountry": 29,
+			"idleague": 242,
+			"desmyleague": "MLS"
+		},
+		{
+			"idmycountry": 30,
+			"idleague": 1044,
+			"desmyleague": "Copa"
+		},
+		{
+			"idmycountry": 26,
+			"idleague": 438,
+			"desmyleague": "Copa"
+		},
+		{
+			"idmycountry": 29,
+			"idleague": 7,
+			"desmyleague": "USL Pro"
+		},
+		{
+			"idmycountry": 31,
+			"idleague": 254,
+			"desmyleague": "Primeira Divisão"
+		}
+	]
+}

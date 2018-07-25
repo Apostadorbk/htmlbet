@@ -203,7 +203,7 @@ class UpcomingEvent {
 			if ( $index >= 0 && gettype($index) == 'integer' ) {
 
 				$value['idmyleague'] 	= $league['idmyleague'][$index];
-				$value['desleague'] 	= $league['desmyleague'][$index];
+				$value['desmyleague'] 	= $league['desmyleague'][$index];
 				$this->allowed[] 		= $value;
 
 			} else {
@@ -234,6 +234,8 @@ class UpcomingEvent {
 
 		$f = new Json($fileDir);
 
+		$f->setVar('update', false);
+		
 		if ( !($leagues = $f->getVar('league')) ) {
 			$leagues = [];
 		}
@@ -242,7 +244,7 @@ class UpcomingEvent {
 			
 			$leagues[] = [
 				'idleague'		=> $value['idleague'],
-				'desleague' 	=> $value['desleague']
+				'desmyleague' 	=> $value['desleague']
 			];
 
 		}

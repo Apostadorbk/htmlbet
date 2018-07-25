@@ -1,0 +1,90 @@
+{
+	"update":false,
+	"league":[
+		{
+			"idmycountry": 1,
+			"idleague":"4291",
+			"desmyleague":"Campeonato Europeu Sub-19"
+		},
+		{
+			"idmycountry": 10,
+			"idleague":"9394",
+			"desmyleague":"Liga Sub-19"
+		},
+		{
+			"idmycountry": 5,
+			"idleague":"29",
+			"desmyleague":"Liga 1"
+		},
+		{
+			"idmycountry": 37,
+			"idleague":"6947",
+			"desmyleague":"Top Liga"
+		},
+		{
+			"idmycountry": 1,
+			"idleague":"5823",
+			"desmyleague":"Liga Europa Qualificação"
+		},
+		{
+			"idmycountry": 38,
+			"idleague":"4097",
+			"desmyleague":"Copa"
+		},
+		{
+			"idmycountry": 14,
+			"idleague":"4018",
+			"desmyleague":"Elite Dois"
+		},
+		{
+			"idmycountry": 39,
+			"idleague":"24",
+			"desmyleague":"Liga Sub-21"
+		},
+		{
+			"idmycountry": 22,
+			"idleague":"189",
+			"desmyleague":"Veikkausliiga"
+		},
+		{
+			"idmycountry": 22,
+			"idleague":"195",
+			"desmyleague":"Kakkonen Grupo A"
+		},
+		{
+			"idmycountry": 22,
+			"idleague":"500",
+			"desmyleague":"Naisten Liiga Feminino"
+		},
+		{
+			"idmycountry": 22,
+			"idleague":"586",
+			"desmyleague":"Ykkonen Feminino"
+		},
+		{
+			"idmycountry": 25,
+			"idleague":"56",
+			"desmyleague":"Esiliiga"
+		},
+		{
+			"idmycountry": 40,
+			"idleague":"854",
+			"desmyleague":"Liga Pro"
+		},
+		{
+			"idmycountry": 13,
+			"idleague":"472",
+			"desmyleague":"1 Deild"
+		},
+		{
+			"idmycountry": 13,
+			"idleague":"609",
+			"desmyleague":"2 Deild"
+		},
+		{
+			"idmycountry": 13,
+			"idleague":"610",
+			"desmyleague":"3 Deild"
+		}
+	]
+}

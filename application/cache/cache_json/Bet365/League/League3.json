@@ -1,0 +1,91 @@
+{
+	"update":true,
+	"update_at":"2018-07-25 17:09:56",
+	"league":[
+		{
+			"idmycountry": 1,
+			"idleague":"941",
+			"desmyleague":"Internacional Feminino"
+		},
+		{
+			"idmycountry": 6,
+			"idleague":"16",
+			"desmyleague":"Victoria Premier League"
+		},
+		{
+			"idmycountry": 41,
+			"idleague":"186",
+			"desmyleague":"Liga I"
+		},
+		{
+			"idmycountry": 42,
+			"idleague":"6450",
+			"desmyleague":"Super Copa"
+		},
+		{
+			"idmycountry": 39,
+			"idleague":"178",
+			"desmyleague":"Primeira Liga"
+		},
+		{
+			"idmycountry": 44,
+			"idleague":"467",
+			"desmyleague":"3.Liga"
+		},
+		{
+			"idmycountry": 41,
+			"idleague":"125",
+			"desmyleague":"Ekstraklasa"
+		},
+		{
+			"idmycountry": 43,
+			"idleague":"876",
+			"desmyleague":"Liga 2"
+		},
+		{
+			"idmycountry": 45,
+			"idleague":"103",
+			"desmyleague":"Liga Challenge"
+		},
+		{
+			"idmycountry": 46,
+			"idleague":"49",
+			"desmyleague":"Superligaen"
+		},
+		{
+			"idmycountry": 47,
+			"idleague":"95",
+			"desmyleague":"Primeira Divisão A"
+		},
+		{
+			"idmycountry": 48,
+			"idleague":"166",
+			"desmyleague":"Bundesliga"
+		},
+		{
+			"idmycountry": 49,
+			"idleague":"398",
+			"desmyleague":"Divisão Premier"
+		},
+		{
+			"idmycountry": 41,
+			"idleague":"125",
+			"desmyleague":"Ekstraklasa"
+		},
+		{
+			"idmycountry": 19,
+			"idleague":"6048",
+			"desmyleague":"Super Copa"
+		},
+		{
+			"idmycountry": 49,
+			"idleague":"226",
+			"desmyleague":"Primeira Divisão"
+		},
+		{
+			"idmycountry": 13,
+			"idleague":"431",
+			"desmyleague":"Premier League Feminino"
+		}
+	]
+}

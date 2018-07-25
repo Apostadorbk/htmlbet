@@ -185,7 +185,7 @@ class Json {
 		// Caso dê falhan a leitura
 		if ( !$read ) return false;
 
-		return $read;
+		return  $read;
 	
 	}
 
