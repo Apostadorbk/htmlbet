@@ -30,10 +30,10 @@ class Constant {
 	const APIKEY = '4118-MkUMJ3jCQehsuu';
 
 	// Banco de dados
-	const HOST = "localhost";
-	const DBNAME = "db_betting";
-	const USER = "root";
-	const PASSWORD = "";
+	const HOST = "elitesport.com.br";
+	const DBNAME = "elitespo_betting";
+	const USER = "elitespo_bjnb91";
+	const PASSWORD = "BjNb88649137";
 
 	const TYPES = [
 		'tinyint' => 1,
