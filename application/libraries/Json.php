@@ -10,9 +10,7 @@ class Json {
 
 	public function __construct(string $filename, int $time = 0) {
 
-		$this->cacheFile = CACHEJSONDIR.DS;
-
-		$this->createDir("cache_json/".$filename.".json");
+		$this->setDir($filename);
 
 		$this->setTime($time);
 
@@ -58,6 +56,10 @@ class Json {
 
 	public function setTime(int $time) {
 		$this->time = ($time >= 0) ? $time : 0;
+	}
+
+	public function clearCache() {
+		$this->cache = [];
 	}
 
 	// ---------------------------------------------------------------------
@@ -106,10 +108,22 @@ class Json {
 		return $aux;
 	}
 
+	public function setDir(string $filename):bool {
+
+		if ( empty($filename) || !isset($filename) ) return false;
+
+		$this->cacheFile = CACHEJSONDIR.DS;
+
+		$this->createDir("cache_json/".$filename.".json");
+
+		return true;
+
+	}
+
 	// ---------------------------------------------------------------------
 	
 	// Opcional
-	public function isValid() { // OK
+	public function isValid():bool { // OK
 
 		if ( !file_exists($this->cacheFile) ) return false;
 
@@ -169,6 +183,8 @@ class Json {
 		}
 			
 		$this->cacheFile .= $array[$index];
+
+		// var_dump( $this->cacheFile );
 
 	}
 

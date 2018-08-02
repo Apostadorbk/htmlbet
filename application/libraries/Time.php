@@ -11,6 +11,7 @@ class Time {
 
 	private $timeZone;
 	private $timeStamp;
+	private $timeStampOffsetted;
 
 	private $time;
 
@@ -19,7 +20,7 @@ class Time {
 		date_default_timezone_set($timeZone);
 	}
 
-	public function time() {
+	public function time(string $time = 'now') {
 		$date 				= new DateTime('now', new DateTimeZone($this->timeZone));
 
 		$localOffset 		= $date->getOffset();
@@ -32,15 +33,57 @@ class Time {
 
 		$this->timeStamp 	= $systemDate['sec'] + $offset;
 
+		$this->timeStampOffsetted = strtotime($time, $this->timeStamp);
+
 		return $this;
 	}
 
 	public function format(string $format = 'Y-m-d H:i:s'):string {
-		return date($format, $this->timeStamp);
+		return date($format, $this->timeStampOffsetted);
 	}
 
 	public function get(string $time = 'now'):int {
-		return strtotime($time, $this->timeStamp);
+		return ($time == 'now') ? 
+			$this->timeStampOffsetted : 
+			strtotime( $time, $this->timeStampOffsetted );
+	}
+
+	public function interval(string $lastTime, string $time, string $errorMargin = ''):bool {
+		
+		if ( empty($time) || empty($lastTime) ) return false;
+
+		$_last 		= strtotime( $lastTime );
+		$nextTime 	= strtotime( $time, $_last );
+		$margin = [
+			'top' 		=> $nextTime,
+			'bottom' 	=> $nextTime
+		];
+
+		if ( !empty($errorMargin) ) {
+			$margin['top'] = strtotime( "-".$errorMargin, $nextTime );
+			$margin['bottom'] = strtotime( $errorMargin, $nextTime );
+		}
+
+		/*
+		var_dump( 
+			date('Y-m-d H:i:s', $_last),
+			date('Y-m-d H:i:s', $nextTime),
+			date('Y-m-d H:i:s', $margin['top']),
+			date('Y-m-d H:i:s', $margin['bottom'])
+		);
+		echo '<hr>';
+		*/
+		
+		if ( 
+			$this->timeStampOffsetted >= $margin['top']
+			&&
+			$this->timeStampOffsetted <= $margin['bottom']
+		) {
+			return true;
+		} else {
+			return false;
+		}
+
 	}
 
 	public static function isDST(string $timeZone = 'America/Sao_Paulo') {

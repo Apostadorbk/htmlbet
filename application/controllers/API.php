@@ -20,7 +20,8 @@ class API extends BASE_Controller {
 		$this->getModel([
 			'Event',
 			'League',
-			'Country'
+			'Country',
+			'Odd'
 		]);
 
 		$this->api = new Bet365('Token de teste');
@@ -65,9 +66,11 @@ class API extends BASE_Controller {
 					$this->prematchodd();
 				break;
 
+				/*
 				case 'updatecountry':
 					$this->updatecountry();
 				break;
+				*/
 
 				case 'updateleague':
 					$this->updateleague();
@@ -133,20 +136,155 @@ class API extends BASE_Controller {
 
 	public function teste() {
 
+		/*
 		echo '<pre>';
 		$start = microtime(true);
 		echo '<hr>';
+		*/
+		
+		$t = $this->model('Odd');
 
-		$t = new Json("Bet365/League/Teste-League");
+		$t->setTypeOdd();
+
+		var_dump( 
+			$t->getValues(['idmytypeodd','desodd'])
+		);
+
+		/*
+		ini_set('max_execution_time', 6000);
+		
+
+		$baseDir = "H:\\Programas\\xampp\\htdocs\\aposta\\application\\cache\\cache_json\\Bet365\\Odd\\Teste1";
+		
+		$allDir = scandir($baseDir);
+
+		$json = file_get_contents($baseDir.'\\FI=75228278.json');
+
+		echo $json;
+		*/
+
+		
+		// $typeOdds = [];
 
 
+		//for ($i=2; $i < count($allDir); $i++) {
+			
+			// $odds = json_decode(file_get_contents( $baseDir.'\\FI=75228278.json' ), true);
+
+			// $keysOdds = array_keys($odds['odd']['results'][0]);
+
+			// var_dump( $keysOdds );
+
+			// $typeOdds[$i-2] = [];
+			/*
+			for ($j=2; $j < count($keysOdds); $j++) { 
+
+				$typeOdds[0][$keysOdds[$j]] = array_keys($odds['odd']['results'][0][$keysOdds[$j]]['sp']);
+			}
+			*/
+			
+		//}
 
 
+		//var_dump( $typeOdds );
+		
+
+		// $odds = json_decode($json, true);
+
+		// var_dump( $odds );
+
+		// var_dump( array_keys($odds['odd']['results'][0]) );
+
+		/*
+
+		// var_dump( $allDir );
+
+		for ($i=2; $i < count($allDir); $i++) { 
+			
+			$json = file_get_contents($baseDir."\\".$allDir[$i]);
+			
+			$json = str_replace(['"{', '}"'], ['{', '}'], $json);
+
+			file_put_contents($baseDir."\\".$allDir[$i], $json);
+
+			// var_dump( json_decode($json, true) );
+
+			// exit;
+			
+		}
+		*/
+		
+		// for ($i = 2; $i < count($allDir); $i++) { 
+		/*
+		$FI = "FI=75097214";
+
+
+		var_dump( json_decode($json, true) );
+		*/
+
+		// }
+		
+		
+
+		/*
+		$t = new Time();
+		// $f = new Json("Bet365/Odd/Teste/FI=75097214");
+
+		$eventModel 	= $this->model('Event');
+		$intervalHours 	= "+144 hours";
+
+		$startTime = $t->time()->format();
+		$finalTime = $t->time($intervalHours)->format();
+
+		var_dump( $startTime, $finalTime );
+
+		$eventModel->field('idevent')->setEventByDate($startTime, $finalTime);
+
+		$allEvents = $eventModel->getValues('idevent');
+
+		// var_dump( $allEvents );
+		*/
+
+
+		/*
+		
+		foreach ($allEvents as $value) {
+			
+			$f->setDir("Bet365/Odd/Teste1/FI=".$value);
+
+			$f->clearCache();
+
+			$ch = curl_init("https://api.betsapi.com/v1/bet365/start_sp?token=4118-MkUMJ3jCQehsuu&FI=".$value);
+			curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+			$data = curl_exec($ch);
+
+
+			if ( !$data ) {
+				$this->error 	= true;
+				$this->msgError = "REQUEST FAILED";
+			} else { 
+				$this->status 	= true;
+				$this->response = $data; 
+			}
+
+			$f->setVar('odd', $data);
+
+		}
+		
+		curl_close($ch);
+		*/
+
+		/*
 		echo '<hr>';
 		$time_elapsed_secs = microtime(true) - $start;
 		echo 'Time Elapsed: ';
 		var_dump( $time_elapsed_secs );
 		echo '</pre>';
+		*/
+		
 
 	}
 
@@ -238,10 +376,10 @@ class API extends BASE_Controller {
 
 					}
 
-					echo 'EVENTOS PERMITIDOS'.'<br>';
+					/*echo 'EVENTOS PERMITIDOS'.'<br>';
 					var_dump( $upcoming->getAllowed() );
 					echo '<hr>';
-					echo '<hr>';
+					echo '<hr>';*/
 
 					// Atualizar o cache
 					/*
@@ -257,10 +395,10 @@ class API extends BASE_Controller {
 				// Salvar no arquivo os jogos não permitidos
 				if ( $upcoming->hasUnallowed() ) {
 
-					echo 'EVENTOS NÃO PERMITIDOS'.'<br>';
+					/*echo 'EVENTOS NÃO PERMITIDOS'.'<br>';
 					var_dump( $upcoming->getUnallowed() );
 					echo '<hr>';
-					echo '<hr>';
+					echo '<hr>';*/
 					
 					// Salvar as ligas nao permitidas 
 					$upcoming->saveUnallowed('Bet365/League/League');
@@ -280,8 +418,72 @@ class API extends BASE_Controller {
 		
 		echo '<pre>';
 
-		$eventModel 	= $this->model('Event');
+		$this->getModel(['Time']);
+
+		$t = $this->model('Time');
+
+		$t->setTime(['destype', 'destime', 'dteupdate']);
+
+		$response = $t->getValues(['destype', 'destime', 'dteupdate']);
+
+		$type 		= $response['destype'];
+		$interval 	= $response['destime'];
+		$update 	= $response['dteupdate'];
+ 		$choose 	= [];
+
+ 		/*
+		var_dump (
+			$type, $interval, $update
+		);
+		*/
+
+		$time = new Time('America/Sao_Paulo');
+
+		$time->time();
+
+		/*
+		var_dump( 
+			$time->interval( 
+				'2018-08-01 17:51:17', 
+				'1 hour', 
+				'3 minutes'
+			) 
+		);
+		*/
 		
+		for ($i=0; $i < count($type); $i++) {
+			
+			if ( 
+				$time->interval( 
+					$update[$i], 
+					$interval[$i], 
+					'10 minutes'
+				)
+			) {
+				$choose[] = $type[$i];
+				break;
+			}
+
+		}
+		
+		var_dump( $choose );
+
+		foreach ($choose as $value) {
+			var_dump( $t->updateTime($value) );
+		}
+		
+
+		//$eventModel 	= $this->model('Event');
+		
+		/*
+			A cada hora atualizo os jogos das próximas 6h,
+			A cada 3 horas atualizo os jogos entre as 6h e 12h
+			A cada 6 horas atualizo os jogos entre 12h e 18h
+			A cada 12 horas atualizo os jogos entre 18h e 24h
+		*/
+
+
+		/*
 		$intervalHours 	= "+24 hours";
 		$midnight 		= false;
 
@@ -289,9 +491,10 @@ class API extends BASE_Controller {
 			$intervalHours 	= "+72 hours";
 			$midnight 		= true;
 		}
+		*/
 
-		$startTime 		= Time::date('now');
-		$finalTime		= Time::date($intervalHours);
+		// $startTime 		= Time::date('now');
+		// $finalTime		= Time::date($intervalHours);
 
 		/*
 			1. Pegar todas as partidas em um intervalo
@@ -303,10 +506,10 @@ class API extends BASE_Controller {
 
 		// ------------------------------------------------------------------
 		// Teste
-		$startTime		= '2017-03-29 13:00:00';
+		// $startTime		= '2017-03-29 13:00:00';
 
 		// tempo final correspodente ao intervalo somado com a data inicial
-		$finalTime		= '2017-03-30 13:00:00';
+		// $finalTime		= '2017-03-30 13:00:00';
 		
 		// ------------------------------------------------------------------
 				
@@ -318,6 +521,7 @@ class API extends BASE_Controller {
 		);
 		*/
 
+		/*
 		// Buscar todos os IDs dos próximos jogos dentro do intervalo
 		if ( $eventModel->field('idevent')->setEventByDate($startTime, $finalTime) ) {
 
@@ -340,13 +544,13 @@ class API extends BASE_Controller {
 
 					// Tratar a resposta do servidor
 					$odd->readOdd( $this->api->getResults() );
-
+					*/
 					/*
 					if ( $match[0]['FI'] == $idevent ) {
 						var_dump( $match );
 					}
 					*/
-
+					/*
 				} else {
 					var_dump( "Não sucedido: ".$idevent );
 				}
@@ -356,7 +560,7 @@ class API extends BASE_Controller {
 			}
 
 		}
-
+		*/
 
 
 
@@ -431,6 +635,7 @@ class API extends BASE_Controller {
 	}
 
 	// Ler os países adicionados em Bet365/Country/Country.json
+	/*
 	public function updatecountry() { // OK
 
 		$file = new Json('Bet365/Country/Country');
@@ -459,6 +664,7 @@ class API extends BASE_Controller {
 		}
 
 	}
+	*/
 
 	// Ler as ligas adicionados em Bet365/League/League.json
 	public function updateleague() { // OK

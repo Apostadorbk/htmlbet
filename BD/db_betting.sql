@@ -152,6 +152,21 @@ CREATE TABLE `tb_myodd` (
 
 
 
+CREATE TABLE `tb_time` (
+	`idtime` 		tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT,
+
+	`destype` 		varchar(10) NOT NULL,
+	`destime`		varchar(64) NOT NULL,
+	`dteupdate` 	timestamp NOT NULL,
+
+	`dteregistro` 	timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  	CONSTRAINT `PK_time` PRIMARY KEY (`idtime`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+
+
 
 
 

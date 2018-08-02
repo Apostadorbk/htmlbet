@@ -1,0 +1,4 @@
+.gitignore
+application/libraries/Constant.php
+application/libraries/Database.php
+application/config/database.php
